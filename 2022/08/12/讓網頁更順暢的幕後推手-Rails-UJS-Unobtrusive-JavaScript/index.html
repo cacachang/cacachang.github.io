@@ -134,20 +134,65 @@
                         
                     </div>
                     <div class="meta-info">
-                        <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-08-12 01:58:53</span>
-        <span class="mobile">2022-08-12 01:58</span>
-    </span>
-    
-    
+                        .article-meta-info {
+  font-size: 0.8rem;
+  color: var(--third-text-color);
 
-    
-    
-    
-    
-</div>
+  .article-meta-item {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .article-date {
+
+    .mobile {
+      display: none;
+    }
+
+    +keep-tablet() {
+      .pc {
+        display: none;
+      }
+
+      .mobile {
+        display: inline;
+      }
+    }
+
+  }
+
+
+  .article-tags, .article-categories {
+    display: inline;
+
+    ul, li {
+      display: inline;
+    }
+
+    a {
+      color: var(--third-text-color);
+
+      &:hover {
+        color: var(--primary-color);
+      }
+    }
+  }
+
+  .article-tags {
+    +keep-tablet() {
+      display: none;
+    }
+  }
+
+  .article-min2read, .article-wordcount {
+    +keep-mobile() {
+      display: none;
+    }
+  }
+}
 
                     </div>
                 </div>
@@ -209,7 +254,7 @@
 <p>HTML原始碼</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Rails UJS 加入了防雙重點擊的屬性 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">data-disable-with</span>=<span class="string">&quot;Saving...&quot;</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="說了這麼多，Rails-UJS的運作流程是怎麼樣呢？"><a href="#說了這麼多，Rails-UJS的運作流程是怎麼樣呢？" class="headerlink" title="說了這麼多，Rails UJS的運作流程是怎麼樣呢？"></a>說了這麼多，Rails UJS的運作流程是怎麼樣呢？</h3><p>每一小塊流程，可以想像成Rails的callback<br>在還沒發送HTTP請求前，需要做哪些事<br>發送HTTP請求後，又會做哪些事</p>
+<h3 id="說了這麼多，Rails-UJS的運作流程是怎麼樣呢？"><a href="#說了這麼多，Rails-UJS的運作流程是怎麼樣呢？" class="headerlink" title="說了這麼多，Rails UJS的運作流程是怎麼樣呢？"></a>說了這麼多，Rails UJS的運作流程是怎麼樣呢？</h3><p>每一小塊流程，可以想像成Rails的callback<br>在AJAX還沒發送HTTP請求前，需要做哪些事<br>發送HTTP請求後，又會做哪些事</p>
 <p><img src="https://i.imgur.com/T2pWXRv.jpg"></p>
 <h3 id="額外補充：AJAX"><a href="#額外補充：AJAX" class="headerlink" title="額外補充：AJAX"></a>額外補充：AJAX</h3><p>AJAX(Asynchronous JavaScript and XML)<br>是一種非同步的JS及XML機制</p>
 <p>早期網頁載入資料時，需要把所有資料先載入到伺服器中，載入完畢才會渲染到畫面中，這樣的做法不僅增加伺服器的負荷，也讓使用者增加了等待時間</p>
