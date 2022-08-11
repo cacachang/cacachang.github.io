@@ -168,7 +168,7 @@
 <li>data confirm防呆確認</li>
 <li>防止雙點擊</li>
 </ol>
-<h3 id="在表單、連結物件上，加入data-屬性"><a href="#在表單、連結物件上，加入data-屬性" class="headerlink" title="在表單、連結物件上，加入data-*屬性"></a>在表單、連結物件上，加入data-*屬性</h3><p>來看看哪些特殊的物件會被加入屬性吧～</p>
+<h3 id="1-在表單、連結物件上，加入data-屬性"><a href="#1-在表單、連結物件上，加入data-屬性" class="headerlink" title="1. 在表單、連結物件上，加入data-*屬性"></a>1. 在表單、連結物件上，加入data-*屬性</h3><p>來看看哪些特殊的物件會被加入屬性吧～</p>
 <h4 id="form-helper"><a href="#form-helper" class="headerlink" title="form helper"></a>form helper</h4><p>神奇的表單工具，會猜測你的路徑以及表單要做的事</p>
 <p>當我們使用form_for、form_tag、form_with來產生表單時<br>Rails UJS會生出一個隱藏表單<br>在裡面加入屬性，像是方法，並帶token去發送請求</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我們使用form_for來做表單</span></span><br><span class="line">&lt;%= form_for <span class="variable">@article</span> <span class="keyword">do</span> |<span class="params">form</span>| %&gt;</span><br><span class="line">  標題：</span><br><span class="line">  &lt;%= form.text_field <span class="symbol">:title</span> %&gt;</span><br><span class="line">  內容：</span><br><span class="line">  &lt;%= form.text_field <span class="symbol">:content</span> %&gt;</span><br><span class="line">  &lt;%= form.submit <span class="string">&#x27;送出&#x27;</span> %&gt;</span><br><span class="line">&lt;% <span class="keyword">end</span> %&gt;</span><br></pre></td></tr></table></figure>
