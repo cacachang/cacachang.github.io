@@ -152,6 +152,18 @@
 <p>這時候會console出什麼呢？</p>
 <p>A: Amy<br>B: undefined<br>C: not defined</p>
 <p><strong>選完往下滑看答案！</strong></p>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
 <p>答案：B</p>
 <p>為什麼是B?<br><del>因為 hoisting作用，會把var name往上移，值留在原地<br>就變成undefined了！(才怪)</del></p>
 <p>這是因為JS在run code的時候<br>會分為 &#x3D;&#x3D;建立期&#x3D;&#x3D; 以及 &#x3D;&#x3D;執行期&#x3D;&#x3D;</p>
@@ -166,6 +178,7 @@
 <p>這樣對於變數提升的流程更清楚了嗎？<br>那接下來我們再看let</p>
 <h4 id="你可以用更好的方法定義變數"><a href="#你可以用更好的方法定義變數" class="headerlink" title="你可以用更好的方法定義變數"></a>你可以用更好的方法定義變數</h4><p>let，是ES6發明出來的變數定義方法<br>用let定義會讓變數運作的更加嚴謹</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> name = <span class="string">&quot;Amy&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(name); <span class="comment">//Amy</span></span><br></pre></td></tr></table></figure>
+
 <p>無庸置疑地，「正常順序」下印出的是Amy</p>
 <p>那我們轉換一下</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(name);</span><br><span class="line"><span class="keyword">let</span> name = <span class="string">&quot;Amy&quot;</span>;</span><br></pre></td></tr></table></figure>
@@ -173,6 +186,19 @@
 <p>這樣會印出什麼？再來四個答案選項</p>
 <p>A: Amy<br>B: undefined<br>C: not defined<br>D: cannot access ‘name’ before initialization</p>
 <p><strong>選完往下滑看答案</strong></p>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+
 <p>答案：D</p>
 <p>答案好像太明顯了，有一個就很明顯不一樣嘛！</p>
 <p>咦，剛剛不是說建立期的時候會幫name賦予undefined嗎？<br>可以不要欺騙我的感情嗎！<br><del>不是我欺騙你感情，是JS欺騙你感情(誤)</del></p>
@@ -185,7 +211,7 @@
 <h5 id="執行期-1"><a href="#執行期-1" class="headerlink" title="執行期"></a>執行期</h5><p>這時才會抓 &#x3D;&#x3D;定義給變數的值Amy&#x3D;&#x3D; 以及 &#x3D;&#x3D;console.log&#x3D;&#x3D;</p>
 <p>^step1^ 執行console.log，印出name的值，這時並沒有被定義值，所以會跑出未初始化前無法存取name</p>
 <p>與let同時期出生的const，運作原理也跟let一樣哦！</p>
-<br />
+
         </div>
 
         
