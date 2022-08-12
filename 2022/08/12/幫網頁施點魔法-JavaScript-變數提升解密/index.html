@@ -9,7 +9,7 @@
     
     <title>
         
-            Discord Webhook機器人串接 |
+            幫網頁施點魔法 - JavaScript 變數提升解密 |
         
         Ning&#39;s Lab
     </title>
@@ -135,7 +135,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Discord Webhook機器人串接</span>
+            <span class="title-hover-animation">幫網頁施點魔法 - JavaScript 變數提升解密</span>
         </div>
 
         
@@ -154,8 +154,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-08-12 01:57:57</span>
-        <span class="mobile">2022-08-12 01:57</span>
+        <span class="pc">2022-08-12 23:20:40</span>
+        <span class="mobile">2022-08-12 23:20</span>
     </span>
     
     
@@ -172,59 +172,46 @@
         
 
         <div class="article-content markdown-body">
-            <p>🗣️ OOO頻道 歡迎 林小姐 加入<br>🗣️ 陳先生你好 我們是省很大購物網</p>
-<p>機器人式招呼已經充斥我們的生活<br>不曉得你是否好奇 這些機器人是怎麼設定的呢？</p>
-<p>今天我們就來看一下 怎麼在 Discord 上串接機器人</p>
-<h2 id="1-到dicord建立伺服器"><a href="#1-到dicord建立伺服器" class="headerlink" title="1. 到dicord建立伺服器"></a>1. <strong>到dicord建立伺服器</strong></h2><p>通常加入一個群組、頻道，機器人就會被派出來接待<br>所以起手式當然是 建立伺服器 ！<br>跟我一起來打造你的秘密頻道😎</p>
-<p>step1 到discord左側按+ 之後選擇伺服器類型</p>
-<p><img src="https://i.imgur.com/y47V5CR.png"></p>
-<p>step2 建立完成</p>
-<p><img src="https://i.imgur.com/WTALSKK.png"></p>
-<h2 id="2-做一個機器人"><a href="#2-做一個機器人" class="headerlink" title="2. 做一個機器人"></a>2. <strong>做一個機器人</strong></h2><p>環境都架設好了，接下來就是主角登場的時候了吧！<br>機器人打造區 👉 <a class="link"   target="_blank" rel="noopener" href="https://discord.com/developers/applications" >https://discord.com/developers/applications<i class="fas fa-external-link-alt"></i></a></p>
-<p>打造你的機器人囉</p>
-<p>step1 新增Application</p>
-<p><img src="https://i.imgur.com/nKAzTC9.png"></p>
-<p>step2 創建一個機器人</p>
-<p><img src="https://i.imgur.com/qFAYHzU.png"></p>
-<p>step3 do it！</p>
-<p><img src="https://i.imgur.com/Yz8rlvK.png"></p>
-<p>step4 幫機器人取名</p>
-<p><img src="https://i.imgur.com/Y19AHHn.png"></p>
-<p>step5 取得Token(務必好好保存啊！)</p>
-<p><img src="https://i.imgur.com/MFs1JO2.png"></p>
-<p>🤓 小知識時間<br>token：token就像是許可證，只有認證過的API及程式才能導入。<br>簡單來說，就是防衛機制，防止想搞事的壞程式來破壞你的伺服器，我想這種情況大家都不想遇到吧？<br>所以我們要發token給機器人，讓他順利進入我們的秘密頻道<br>＊注意！不要隨便把token給別人，不然你很有可能會引狼入室</p>
-<p>成功做出機器人後，我們就要先讓機器人入場啦！</p>
-<h2 id="3-產出Oauth2-URL，讓機器人加入頻道！"><a href="#3-產出Oauth2-URL，讓機器人加入頻道！" class="headerlink" title="3. 產出Oauth2 URL，讓機器人加入頻道！"></a>3. <strong>產出Oauth2 URL，讓機器人加入頻道！</strong></h2><p>step1 到URL產生頁面，選取bot</p>
-<p><img src="https://i.imgur.com/TdQ1eAF.png"></p>
-<p>step2 選取權限及功能，選完複製網址</p>
-<p><img src="https://i.imgur.com/G8IbOyl.png"></p>
-<p>step3 到新分頁貼上網址，授權機器人</p>
-<img src="https://i.imgur.com/uHLDYWz.png" height="50%" />
+            <h4 id="不可不知的小把戲-hoisting"><a href="#不可不知的小把戲-hoisting" class="headerlink" title="不可不知的小把戲 - hoisting"></a>不可不知的小把戲 - hoisting</h4><p>以下是宣告完變數，要印出變數的語法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">&quot;Amy&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(name); <span class="comment">// &quot;Amy&quot;</span></span><br></pre></td></tr></table></figure>
+<p>這時會在console中印出Amy</p>
+<br />
 
-<p>🤓 小知識時間<br>Oauth2：將保護的資料授權給應用程式的驗證方式，我們使用步驟來說明<br>step1 客戶端(我們)向資源擁有者(discord頻道)提出授權請求<br>step2 授權伺服器(discord)核發Token給客戶端(我們)<br>step3 客戶端(我們)要存取時，必須出示這個Token<br>step4 資源擁有者決定是否要授權</p>
-<h2 id="4-取得discord-webhook"><a href="#4-取得discord-webhook" class="headerlink" title="4. 取得discord webhook"></a>4. <strong>取得discord webhook</strong></h2><p>step1 伺服器下拉選單選伺服器設定</p>
-<img src="https://i.imgur.com/nK6AbFZ.png" height="50%" />
+<p>但，如果是這樣呢？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(name);</span><br><span class="line"><span class="keyword">var</span> name = <span class="string">&quot;Amy&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>這時候會console出什麼呢？三個答案選項</p>
+<p>A: Amy<br>B: undefined<br>C: not defined</p>
+<p><strong>選完往下滑看答案！</strong><br><br /><br><br /><br><br /><br><br /><br><br /><br><br /></p>
+<p>答案：B</p>
+<br />
 
-<p>step2 產生新的webhook</p>
-<p><img src="https://i.imgur.com/UJpgxF4.png"></p>
-<p>step3 複製webhook網址</p>
-<p><img src="https://i.imgur.com/zSYsr1J.png"></p>
-<p>機器人雖然加入到我們的頻道了<br>但需要一個開關讓他開口</p>
-<p>剛剛有提到webhook可以幫我們送請求給伺服器<br>請他呼應我們的需求</p>
-<p>這時候，我們就要拿出webhook叫醒機器人！！</p>
-<h2 id="5-開啟replit，開始寫程式囉～"><a href="#5-開啟replit，開始寫程式囉～" class="headerlink" title="5. 開啟replit，開始寫程式囉～"></a>5. <strong>開啟replit，開始寫程式囉～</strong></h2><p>環境、主角都有了，接下來就是缺劇本啦！<br>讓我們開始來編寫劇本(程式)</p>
-<p>我們採取axios這個套件來解析JSON，並存取裡面的資料</p>
-<p>🤓 小知識時間<br>axios：一種發送HTTP request給伺服器的套件，發送請求後會回傳Promise物件</p>
-<p>打開新的分頁 👉 <a class="link"   target="_blank" rel="noopener" href="https://replit.com/" >https://replit.com/<i class="fas fa-external-link-alt"></i></a>~<br>用下面的程式碼來修改</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 導入axios套件</span></span><br><span class="line"><span class="keyword">var</span> axios = <span class="built_in">require</span>(<span class="string">&#x27;axios&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> data = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">  <span class="string">&quot;content&quot;</span>: <span class="string">&quot;TEST BOT&quot;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 發送API請求的內容，method為打入的方法，url為打入路徑，headers為打入的API是什麼格式，data則是API的參數</span></span><br><span class="line"><span class="keyword">var</span> config = &#123;</span><br><span class="line">  <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">  <span class="attr">url</span>: <span class="string">&#x27;webhook的URL&#x27;</span>,</span><br><span class="line">  <span class="attr">headers</span>: &#123; </span><br><span class="line">    <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span></span><br><span class="line">  &#125;,  </span><br><span class="line">  <span class="attr">data</span>: data</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">axios</span>(config)</span><br><span class="line">.<span class="title function_">then</span>(<span class="keyword">function</span> (<span class="params">response</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(response.<span class="property">data</span>)</span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="keyword">function</span> (<span class="params">error</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(error)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>為什麼是B?<br><del>因為 hoisting作用，會把var name往上移，值留在原地<br>就變成undefined了！(才怪)</del></p>
+<p>這是因為JS在run code的時候<br>會分為 &#x3D;&#x3D;建立期&#x3D;&#x3D; 以及 &#x3D;&#x3D;執行期&#x3D;&#x3D;</p>
+<h5 id="建立期"><a href="#建立期" class="headerlink" title="建立期"></a>建立期</h5><p>只針對變數本人作業，先對你預設立場：<br>^step1^ 找到變數 var name </p>
+<p>^step2^ 此時不想管你的值！先定義值 undefined</p>
+<p><del>console.log在這個時期就是邊緣人被忽略(誤)</del></p>
+<h5 id="執行期"><a href="#執行期" class="headerlink" title="執行期"></a>執行期</h5><p>這時才會抓 &#x3D;&#x3D;定義給變數的值Amy&#x3D;&#x3D; 以及 &#x3D;&#x3D;console.log&#x3D;&#x3D;<br>^step1^ 執行console.log，印出name的值，這時的值為undefined(於建立期step2定義)</p>
+<p>^step2^ 抓當初定義給name的值Amy<br><del>看吧！不要先預設立場，都已經誤會一輪了</del></p>
+<p>這樣對於變數提升的流程更清楚了嗎？<br>那接下來我們再看let</p>
+<h4 id="你可以用更好的方法定義變數"><a href="#你可以用更好的方法定義變數" class="headerlink" title="你可以用更好的方法定義變數"></a>你可以用更好的方法定義變數</h4><p>let，是ES6發明出來的變數定義方法<br>用let定義會讓變數運作的更加嚴謹</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> name = <span class="string">&quot;Amy&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(name); <span class="comment">//Amy</span></span><br></pre></td></tr></table></figure>
+<p>無庸置疑地，「正常順序」下印出的是Amy</p>
+<p>那我們轉換一下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(name);</span><br><span class="line"><span class="keyword">let</span> name = <span class="string">&quot;Amy&quot;</span>;</span><br></pre></td></tr></table></figure>
 
-
-
-<h2 id="6-啟動"><a href="#6-啟動" class="headerlink" title="6. 啟動"></a>6. <strong>啟動</strong></h2><p>萬事俱備，只欠按下按鈕，現在就給他按下去！</p>
-<p>按下去的瞬間會聽到discord清脆的訊息通知聲！</p>
-<p><img src="https://i.imgur.com/h8hv6Sz.png"></p>
-<p>噹啷！機器人成功發訊息囉！</p>
-
+<p>這樣會印出什麼？再來四個答案選項</p>
+<p>A: Amy<br>B: undefined<br>C: not defined<br>D: cannot access ‘name’ before initialization</p>
+<p><strong>選完往下滑看答案</strong><br><br /><br><br /><br><br /><br><br /><br><br /><br><br /></p>
+<p>答案：D<br>答案好像太明顯了，有一個就很明顯不一樣嘛！</p>
+<p>咦，剛剛不是說建立期的時候會幫name賦予undefined嗎？<br>可以不要欺騙我的感情嗎！<br><del>不是我欺騙你感情，是JS欺騙你感情(誤)</del></p>
+<p>使用let定義變數，也是會經過 &#x3D;&#x3D;建立期&#x3D;&#x3D; 與 &#x3D;&#x3D;執行期&#x3D;&#x3D;<br>但是！但是！但是<br><del>我們不能隨意先入為主，程式語言也是啊(誤)</del></p>
+<p>let在建立期的時候，為了不要預設立場，會先將undefined這個想法隱藏起來<br>後來執行期的時候，抓到了值才會幫你定義給變數<br>聽起來是不是好棒棒？</p>
+<p>所以運作流程會是這樣：</p>
+<h5 id="建立期-1"><a href="#建立期-1" class="headerlink" title="建立期"></a>建立期</h5><p>只針對變數本人作業：<br>^step1^ 找到變數 var name </p>
+<p>^step2^ 不做任何定義，目前name<strong>沒有被定義</strong>值</p>
+<h5 id="執行期-1"><a href="#執行期-1" class="headerlink" title="執行期"></a>執行期</h5><p>這時才會抓 &#x3D;&#x3D;定義給變數的值Amy&#x3D;&#x3D; 以及 &#x3D;&#x3D;console.log&#x3D;&#x3D;<br>^step1^ 執行console.log，印出name的值，這時並沒有被定義值，所以會跑出未初始化前無法存取name</p>
+<p>與let同時期出生的const，運作原理也跟let一樣哦！</p>
+<br />
         </div>
 
         
@@ -234,21 +221,21 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
                            href="/2022/08/12/%E8%AE%93%E7%B6%B2%E9%A0%81%E6%9B%B4%E9%A0%86%E6%9A%A2%E7%9A%84%E5%B9%95%E5%BE%8C%E6%8E%A8%E6%89%8B-Rails-UJS-Unobtrusive-JavaScript/"
                         >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
                             <span class="title flex-center">
                                 <span class="post-nav-title-item">小機制大效用 一用就回不去的 Rails UJS - Unobtrusive JavaScript</span>
-                                <span class="post-nav-item">Prev posts</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
                             </span>
                         </a>
                     </div>
-                
                 
             </div>
         

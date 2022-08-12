@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="Hexo Theme Keep">
     <meta name="description" content="Hexo Theme Keep">
-    <meta name="author" content="Keep Team">
+    <meta name="author" content="Ning">
     
     <title>
         
             小機制大效用 一用就回不去的 Rails UJS - Unobtrusive JavaScript |
         
-        Keep Theme
+        Ning&#39;s Lab
     </title>
     
 <link rel="stylesheet" href="/css/style.css">
@@ -49,8 +49,12 @@
     <div class="header-content">
         <div class="left">
             
+                <a class="logo-image" href="/">
+                    <img src="/Users/zhangjianing/Desktop/hexo/ninglab/cacachang.github.io/public/images">
+                </a>
+            
             <a class="logo-title" href="/">
-                Keep Theme
+                Ning&#39;s Lab
             </a>
         </div>
 
@@ -68,9 +72,17 @@
                     
                         <li class="menu-item">
                             <a class=""
-                               href="/archives"
+                               href="/categories"
                             >
-                                ARCHIVES
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
                             </a>
                         </li>
                     
@@ -96,7 +108,12 @@
             
                 <li class="drawer-menu-item flex-center">
                     <a class=""
-                       href="/archives">ARCHIVES</a>
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
                 </li>
             
         </ul>
@@ -128,7 +145,7 @@
                 </div>
                 <div class="info">
                     <div class="author">
-                        <span class="name">Keep Team</span>
+                        <span class="name">Ning</span>
                         
                             <span class="author-label">Lv1</span>
                         
@@ -224,6 +241,21 @@
         
             <div class="article-nav">
                 
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/08/12/%E5%B9%AB%E7%B6%B2%E9%A0%81%E6%96%BD%E9%BB%9E%E9%AD%94%E6%B3%95-JavaScript-%E8%AE%8A%E6%95%B8%E6%8F%90%E5%8D%87%E8%A7%A3%E5%AF%86/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">幫網頁施點魔法 - JavaScript 變數提升解密</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
                 
                     <div class="article-next">
                         <a class="next"
@@ -262,7 +294,7 @@
               <span>2020</span>
               -
             
-            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Keep Team</a>
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Ning</a>
         </div>
         
         <div class="theme-info info-item">
@@ -278,15 +310,58 @@
 
     
         <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="tools-list">
-        <!-- TOC aside toggle -->
-        
+            $li-border-radius = 5px;
+$li-margin-bottom = 12px;
 
-        <!-- go comment -->
-        
-    </ul>
-</div>
+.post-tools-container {
+
+  .tools-list {
+
+    li {
+      cursor: pointer;
+      width: $post-tool-button-width;
+      height: $post-tool-button-width;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: $li-margin-bottom;
+      background: var(--background-color);
+      color: var(--default-text-color);
+
+      i {
+        color: var(--default-text-color);
+      }
+
+      &:hover {
+        background: var(--primary-color);
+        color: var(--background-color);
+
+        i {
+          color: var(--background-color);
+        }
+      }
+
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+
+      hover-style(true, 1.06, 1.06);
+
+      &.page-aside-toggle {
+        display: none;
+
+        +keep-tablet() {
+          display: none !important;
+        }
+      }
+    }
+  }
+
+}
 
         </div>
     
