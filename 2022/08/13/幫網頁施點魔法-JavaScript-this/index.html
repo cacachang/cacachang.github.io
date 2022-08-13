@@ -162,10 +162,11 @@
 
 
 <h3 id="3-有沒有使用new"><a href="#3-有沒有使用new" class="headerlink" title="3. 有沒有使用new"></a>3. 有沒有使用new</h3><p>如果使用new來產生新的物件，this就會指向空物件，<br>而這個空物件的__proto__會引領指向父層的prototype，<br>this就會指向父層的參數</p>
-<p>這樣講有點難以理解，讓我們來點範例！</p>
+<p>這樣講有點難以理解，讓我們來點範例！<br>this會依__proto__指向父層(function)的name以及variety<br>this就會指向name及variety這兩個的值</p>
+<p>神奇的是，用new產生的物件<br>不需要特別寫return，就會直接把this回傳過去！</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cat = <span class="keyword">new</span> <span class="keyword">function</span> (<span class="params">name, variety</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&quot;kitty&quot;</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">variety</span> = <span class="string">&quot;yellow&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">cat <span class="comment">// &#123;name: &#x27;kitty&#x27;, variety: &#x27;yellow&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
 
-<p>神奇的是，用new產生的物件<br>不需要特別設定回傳值，就會直接把this回傳過去！</p>
+
 <br/>
 
 
@@ -184,7 +185,6 @@
 
 <h3 id="5-是否使用嚴謹模式"><a href="#5-是否使用嚴謹模式" class="headerlink" title="5. 是否使用嚴謹模式"></a>5. 是否使用嚴謹模式</h3><p>嚴謹模式是ES6新增的功能<br>只要標注”use_strict”<br>this就不會隨便指向window&#x2F;globol</p>
 <p>也可以針對單一物件做設定</p>
-<p>範例，下！</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">receipt</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="string">&quot;use strict&quot;</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">receipt</span>() <span class="comment">// undefined</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
         </div>
 
