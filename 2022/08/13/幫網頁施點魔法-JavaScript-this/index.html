@@ -195,11 +195,7 @@
 
 <h2 id="this綁定原則"><a href="#this綁定原則" class="headerlink" title="this綁定原則"></a>this綁定原則</h2><p>依照上述五種狀況做個總結，this可分為幾個綁定原則</p>
 <ol>
-<li><p>預設綁定(default binding)<br>  依照環境指向不一樣的地方</p>
-<ul>
-<li>嚴謹模式指向undefined</li>
-<li>沒有呼叫者的情況，會指向預設的全域(window &#x2F; global)</li>
-</ul>
+<li><p>預設綁定(default binding)<br>  依照環境指向不一樣的地方<br> ▶ 嚴謹模式指向undefined<br> ▶ 沒有呼叫者的情況，會指向預設的全域(window &#x2F; global)</p>
 </li>
 <li><p>隱含式綁定(implicit binding)<br>  即便是在全域範圍，有明確呼叫者的情況，this就會指向呼叫者，而非全域</p>
 </li>
