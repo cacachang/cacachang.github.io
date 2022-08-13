@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Ning">
+    
+    <title>
+        
+            幫網頁施點魔法 - JavaScript this |
+        
+        Ning&#39;s Lab
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://scontent.ftpe3-2.fna.fbcdn.net/v/t1.18169-9/23316510_1708559962498367_2084730933387018833_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=EQdPfVAy1vQAX-F9DHR&_nc_ht=scontent.ftpe3-2.fna&oh=00_AT-AtKSzPhqQwY6euRgk31yYKjFXmdw7c0oEy2HoOWnnJQ&oe=631C13B6","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Ning&#39;s Lab
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">幫網頁施點魔法 - JavaScript this</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="https://scontent.ftpe3-2.fna.fbcdn.net/v/t1.18169-9/23316510_1708559962498367_2084730933387018833_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=EQdPfVAy1vQAX-F9DHR&_nc_ht=scontent.ftpe3-2.fna&oh=00_AT-AtKSzPhqQwY6euRgk31yYKjFXmdw7c0oEy2HoOWnnJQ&oe=631C13B6">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Ning</span>
+                        
+                            <span class="author-label">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-08-13 19:28:44</span>
+        <span class="mobile">2022-08-13 19:28</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h2 id="this到底是哪個this？傻傻分不清楚"><a href="#this到底是哪個this？傻傻分不清楚" class="headerlink" title="this到底是哪個this？傻傻分不清楚"></a>this到底是哪個this？傻傻分不清楚</h2><p>相信大家對於this又愛又恨<br>好用的時候超好用<br>失控的時候很失控</p>
+<p>今天就來帶大家認識一下該怎麼判斷<br>現在的this指的是誰</p>
+<p>廢話不多說，直接進入狀況題！</p>
+<hr>
+<h3 id="1-誰呼叫，誰就是this"><a href="#1-誰呼叫，誰就是this" class="headerlink" title="1. 誰呼叫，誰就是this"></a>1. 誰呼叫，誰就是this</h3><h4 id="沒明確的呼叫者，this就是window-x2F-global"><a href="#沒明確的呼叫者，this就是window-x2F-global" class="headerlink" title="沒明確的呼叫者，this就是window&#x2F;global"></a>沒明確的呼叫者，this就是window&#x2F;global</h4><p>owner為呼叫者，所以this會指向owner，<br>在owner中尋找ability並印出來</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> owner = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;Nick&quot;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">20</span>,</span><br><span class="line">  <span class="attr">ability</span>: <span class="string">&quot;baking&quot;</span>,</span><br><span class="line">  <span class="attr">skill</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">ability</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">owner.<span class="title function_">skill</span>() <span class="comment">// baking</span></span><br></pre></td></tr></table></figure>
+
+<p>沒有明確呼叫者，就等於是window呼叫function<br>於是this就會指向window&#x2F;globol</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sleep</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> bedtime = <span class="number">12</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">bedtime</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">sleep</span>() <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<br/>
+
+
+
+<h3 id="2-箭頭函式的this不會指向自己"><a href="#2-箭頭函式的this不會指向自己" class="headerlink" title="2. 箭頭函式的this不會指向自己"></a>2. 箭頭函式的this不會指向自己</h3><h4 id="永遠指向window-x2F-global"><a href="#永遠指向window-x2F-global" class="headerlink" title="永遠指向window&#x2F;global"></a>永遠指向window&#x2F;global</h4><p>即便是在箭頭函式裡面定義了變數<br>裡面的this還是會指向window&#x2F;globol<br>並且尋找window&#x2F;globol中的變數(num1、num2)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num1 = <span class="number">1</span></span><br><span class="line"><span class="keyword">var</span> num2 = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="title function_">numberCalculator</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> num1 = <span class="number">3</span></span><br><span class="line">  <span class="keyword">let</span> num2 = <span class="number">4</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">num1</span> + <span class="variable language_">this</span>.<span class="property">num2</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">numberCalculator</span>() <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<br/>
+
+
+<h3 id="3-有沒有使用new"><a href="#3-有沒有使用new" class="headerlink" title="3. 有沒有使用new"></a>3. 有沒有使用new</h3><p>如果使用new來產生新的物件，this就會指向空物件，<br>而這個空物件的__proto__會引領指向父層的prototype，<br>this就會指向父層的參數</p>
+<p>*詳細的__proto__跟prototype可參見此文章</p>
+<p>這樣講有點難以理解，讓我們來點範例！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cat = <span class="keyword">new</span> <span class="keyword">function</span> (<span class="params">name, variety</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&quot;kitty&quot;</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">variety</span> = <span class="string">&quot;yellow&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">cat <span class="comment">// &#123;name: &#x27;kitty&#x27;, variety: &#x27;yellow&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>神奇的是，用new產生的物件<br>不需要特別設定回傳值，就會直接把this回傳過去！</p>
+<br/>
+
+<h3 id="4-有沒有使用apply-、call-、bind"><a href="#4-有沒有使用apply-、call-、bind" class="headerlink" title="4. 有沒有使用apply()、call()、bind()"></a>4. 有沒有使用apply()、call()、bind()</h3><p>使用上面三個方法時，this會指向這三個方法的參數，而不是物件的參數<br>其中apply()以及bind()會有限制用法</p>
+<p>從下面例子來看，studentA、studentB為apply()及call()的參數，而非function的參數</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> teacher = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;Ray&quot;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">45</span>,</span><br><span class="line">  <span class="attr">ability</span>: <span class="string">&quot;reading &quot;</span>,</span><br><span class="line">  <span class="attr">skill</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">ability</span> += <span class="string">&quot;&amp; conversation&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> studentA = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;Ray&quot;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">45</span>,</span><br><span class="line">  <span class="attr">ability</span>: <span class="string">&quot;listening &quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> studentB = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;Ray&quot;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">45</span>,</span><br><span class="line">  <span class="attr">ability</span>: <span class="string">&quot;listening &quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 老師今天學習了溝通，然後要教給學生</span></span><br><span class="line">teacher.<span class="title function_">skill</span>() <span class="comment">// reading &amp; conversation</span></span><br><span class="line">teacher.<span class="property">skill</span>.<span class="title function_">apply</span>(studentA) <span class="comment">// listening &amp; convensation</span></span><br><span class="line">teacher.<span class="property">skill</span>.<span class="title function_">call</span>(studentB) <span class="comment">// listening &amp; convensation</span></span><br></pre></td></tr></table></figure>
+
+<p>而bind比較特別，會回傳一個function，所以要記得呼叫它<br>範例下～</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> teacher = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;Ray&quot;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">45</span>,</span><br><span class="line">  <span class="attr">ability</span>: <span class="string">&quot;reading &quot;</span>,</span><br><span class="line">  <span class="attr">skill</span>: <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">ability</span> += <span class="string">&quot;&amp; conversation&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> studentA = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;Ray&quot;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">45</span>,</span><br><span class="line">  <span class="attr">ability</span>: <span class="string">&quot;listening &quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">teacher.<span class="property">skill</span>.<span class="title function_">bind</span>(studentA)() <span class="comment">// listening &amp; convensation</span></span><br></pre></td></tr></table></figure>
+
+<p>如果要在apple()、call()後面加上function的參數，需要寫在第二個位置<br>其中apply()需要使用陣列的方式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> num = &#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&quot;number&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span> (a, b)&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">$&#123;<span class="variable language_">this</span>.type&#125;</span> = <span class="subst">$&#123;a&#125;</span> + <span class="subst">$&#123;b&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">add.<span class="title function_">apply</span>(num, [<span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">add.<span class="title function_">call</span>(num, <span class="number">3</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<h3 id="5-是否使用嚴謹模式"><a href="#5-是否使用嚴謹模式" class="headerlink" title="5. 是否使用嚴謹模式"></a>5. 是否使用嚴謹模式</h3><p>嚴謹模式是ES6新增的功能<br>只要標注”use_strict”<br>this就不會隨便指向window&#x2F;globol</p>
+<p>也可以針對單一物件做設定</p>
+<p>範例，下！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">receipt</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="string">&quot;use strict&quot;</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">receipt</span>() <span class="comment">// undefined</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/08/12/%E5%B9%AB%E7%B6%B2%E9%A0%81%E6%96%BD%E9%BB%9E%E9%AD%94%E6%B3%95-JavaScript-%E8%AE%8A%E6%95%B8%E6%8F%90%E5%8D%87%E8%A7%A3%E5%AF%86/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">幫網頁施點魔法 - JavaScript 變數提升解密</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Ning</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
