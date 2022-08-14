@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Ning">
+    
+    <title>
+        
+            從0開始刻 淺談 Rails 的運作魔法 Day01 RMVC架構之為什麼要安裝node.js |
+        
+        Ning&#39;s Lab
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://scontent.ftpe3-2.fna.fbcdn.net/v/t1.18169-9/23316510_1708559962498367_2084730933387018833_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=EQdPfVAy1vQAX-F9DHR&_nc_ht=scontent.ftpe3-2.fna&oh=00_AT-AtKSzPhqQwY6euRgk31yYKjFXmdw7c0oEy2HoOWnnJQ&oe=631C13B6","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Ning&#39;s Lab
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">從0開始刻 淺談 Rails 的運作魔法 Day01 RMVC架構之為什麼要安裝node.js</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="https://scontent.ftpe3-2.fna.fbcdn.net/v/t1.18169-9/23316510_1708559962498367_2084730933387018833_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=EQdPfVAy1vQAX-F9DHR&_nc_ht=scontent.ftpe3-2.fna&oh=00_AT-AtKSzPhqQwY6euRgk31yYKjFXmdw7c0oEy2HoOWnnJQ&oe=631C13B6">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Ning</span>
+                        
+                            <span class="author-label">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-08-15 02:25:55</span>
+        <span class="mobile">2022-08-15 02:25</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="從0開始刻-淺談-Rails-的運作魔法-Day01-RMVC架構之為什麼要安裝node-js"><a href="#從0開始刻-淺談-Rails-的運作魔法-Day01-RMVC架構之為什麼要安裝node-js" class="headerlink" title="從0開始刻 淺談 Rails 的運作魔法 Day01 RMVC架構之為什麼要安裝node.js"></a>從0開始刻 淺談 Rails 的運作魔法 Day01 RMVC架構之為什麼要安裝node.js</h1><p>開始手刻之前，我們來快速認識Rails的運作以及架構吧 🥳<br>直接進入主題 Go!</p>
+<p>Rails採用MVC架構，另外還有R(Route)<br>MVC分別為Model、View、Controller</p>
+<p><img src="https://i.imgur.com/W0Ml2sq.jpg"></p>
+<p>我們用生活中的例子來解說MVC會更好理解<br>到餐廳點餐時，會先看到菜單(View)<br>選好自己想吃的菜餚<br>會由廚師(Controller)依菜餚到食材庫(Model)挑選原料</p>
+<p>挑好適合的原料(Model)後，廚師會開始料理(Controller)<br>料理完成就會送到你的眼前(View)</p>
+<p>View主要處理呈現的畫面，以HTML為架構<br>Controller會跟Model拿取資料並運算，算完會回傳給View呈現<br>Model負責跟資料庫對話，拿取原始資料並物件化</p>
+<p>還有一個很重要的角色，是Route!<br>Route就很像路標，告訴你該何去何從 ➡➡➡</p>
+<h3 id="Route"><a href="#Route" class="headerlink" title="Route"></a>Route</h3><p>Rails的路徑表<br>當路徑被觸發時<br>Rails會依照路徑及REST判斷要去找哪個Controller及action<br>當我們用resources做路徑時，會做出8條路徑7個方法</p>
+<p>👩‍🏫 實做小學堂</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rails檔案中的routes檔</span></span><br><span class="line">resources <span class="symbol">:restaurant</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 終端機下指令</span></span><br><span class="line">&gt; rails routes -c restaurant</span><br><span class="line"></span><br><span class="line">Prefix Verb   <span class="variable constant_">URI</span> Pattern                     Controller<span class="comment">#Action</span></span><br><span class="line">    restaurants <span class="variable constant_">GET</span>    /restaurants(.<span class="symbol">:format</span>)          restaurants<span class="comment">#index</span></span><br><span class="line">                <span class="variable constant_">POST</span>   /restaurants(.<span class="symbol">:format</span>)          restaurants<span class="comment">#create</span></span><br><span class="line"> new_restaurant <span class="variable constant_">GET</span>    /restaurants/new(.<span class="symbol">:format</span>)      restaurants<span class="comment">#new</span></span><br><span class="line">edit_restaurant <span class="variable constant_">GET</span>    /restaurants/<span class="symbol">:id/edit</span>(.<span class="symbol">:format</span>) restaurants<span class="comment">#edit</span></span><br><span class="line">     restaurant <span class="variable constant_">GET</span>    /restaurants/<span class="symbol">:id</span>(.<span class="symbol">:format</span>)      restaurants<span class="comment">#show</span></span><br><span class="line">                <span class="variable constant_">PATCH</span>  /restaurants/<span class="symbol">:id</span>(.<span class="symbol">:format</span>)      restaurants<span class="comment">#update</span></span><br><span class="line">                <span class="variable constant_">PUT</span>    /restaurants/<span class="symbol">:id</span>(.<span class="symbol">:format</span>)      restaurants<span class="comment">#update</span></span><br><span class="line">                <span class="variable constant_">DELETE</span> /restaurants/<span class="symbol">:id</span>(.<span class="symbol">:format</span>)      restaurants<span class="comment">#destroy</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="View"><a href="#View" class="headerlink" title="View"></a>View</h3><p>有寫過Rails的你<br>應該對於erb這個檔名不陌生<br>erb &#x3D; Embedded Ruby<br>可以在HTML中加入Ruby的語法</p>
+<h4 id="View-helper"><a href="#View-helper" class="headerlink" title="View helper"></a>View helper</h4><p>舉凡form_for、form_with、link_to這些表單、連結方法<br>都是view helper的一種<br>當我們把Ruby寫進HTML中<br>程式碼會變得複雜又不直觀<br>Rails的app&#x2F;helper可以幫助我們整理View裡面的程式碼<br>將簡單的運算、程式放到helper中<br>讓View更簡潔 </p>
+<p><strong>💎 Rails developer 必知的Coc</strong><br>erb檔所在的資料夾必須與controller呼應<br>view的檔案名稱需要對應到controller的action名稱<br>當controller運算完畢才知道要往哪邊送</p>
+<p>以下圖為例<br>路徑對應的 controller為article、action為show<br>我們就要在view資料夾下面建立article資料夾<br>article的show方法會取找資料夾中的show.html.erb</p>
+<p><img src="https://i.imgur.com/wtM7ljI.png"></p>
+<h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h3><p>接收需求、依照指令將任務辦妥是Controller的職責<br>就像是上述提到的廚師一樣<br>顧客點了哪些餐點、需要哪些原料<br>從View那邊接收到資訊後<br>會依需求去找Model要資料<br>要完就會開始進行運算</p>
+<p>相較View與Model<br>Controller聽起來真的很辛苦呢！<br>不僅要會溝通、還要懂做事</p>
+<h4 id="action"><a href="#action" class="headerlink" title="action"></a>action</h4><p>controller裡的方法<br>通常會由routes來指定要使用哪個方法<br>當路徑被觸發時<br>action就會被執行</p>
+<p><strong>💎Rails developer 必知的Coc</strong><br>Controller都要用複數來命名<br>檔名是snake_case<br>名稱是camelCase</p>
+<p>以article來看<br>檔名是articles_controller.rb</p>
+<p><img src="https://i.imgur.com/5gPqtxj.png"></p>
+<p>不過檔案中的controller是ArticlesController</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ArticlesController</span> &lt; <span class="title class_ inherited__">ApplicationController</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h3><p>很多人常把Model跟資料庫Database搞混<br>不過他們是不一樣的東西！</p>
+<p>把Model跟Datebase想像成郵局的窗口與倉庫<br>Model會依照Controller提出的需求<br>跟Database要資料</p>
+<p>Database會把資料table傳給Model<br>Model會遵循ORM將這些資料物件化後給Controller<br>*ORM為物件關聯對映：無需使用SQL語法，用程式碼就能以物件化的方式操作資料表</p>
+<p><img src="https://i.imgur.com/iXhvW2V.jpg"></p>
+<p>用剛剛舉的郵局例子來說<br>我們去郵局領過期信件時，會先跟窗口提出需求<br>窗口依我們需求去倉庫拿信件，蓋完章後再交給我們</p>
+<p><strong>💎Rails developer 必知的Coc</strong><br>Model的class名稱為大寫、單數<br>table則是小寫、複數<br>檔名則是小寫、單數</p>
+<table>
+<thead>
+<tr>
+<th>檔名</th>
+<th>Model</th>
+<th>table</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>menu</td>
+<td>Menu</td>
+<td>appetizers</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>dishes</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>desserts</td>
+</tr>
+</tbody></table>
+<h3 id="ActiveRecord"><a href="#ActiveRecord" class="headerlink" title="ActiveRecord"></a>ActiveRecord</h3><p>是一種設計模式，將資料物件化<br>存入及存取都是以物件模式進行</p>
+<p>ActiveRecord在Rails中廣泛應用<br>以下簡短介紹一下各個功能</p>
+<ul>
+<li>ActiveRecord Migration:對資料庫欄位做新增、修改、刪除</li>
+<li>ActiveRecord Validations:對即將寫入的資料做驗證</li>
+<li>ActiveRecord Callbacks:物件在新增到刪除以及資料庫讀取的作業循環</li>
+<li>ActiveRecord Associations:資料表與資料表之間的關係</li>
+<li>ActiveRecord Query Interface:取得資料庫資料的語法</li>
+</ul>
+<p>詳細資料可再多參照 <a class="link"   target="_blank" rel="noopener" href="https://guides.rubyonrails.org/index.html" >Rails 官方網站<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="Asset-Pipeline"><a href="#Asset-Pipeline" class="headerlink" title="Asset Pipeline"></a>Asset Pipeline</h3><p>JavaScript、CSS等被稱為靜態檔案<br>瀏覽器從public資料夾中讀取靜態檔案，所以靜態檔案都要放在這個資料夾<br>不過Asset Pipeline中的Tilt會去解析檔名，解析後讓Sprockets去各個目錄中收集靜態檔案並打包，放到public資料夾中</p>
+<p><img src="https://i.imgur.com/0r9y96F.jpg"></p>
+<p>把Pipeline的功能整理一下：</p>
+<ol>
+<li>整合靜態檔案，減少瀏覽器的request</li>
+<li>改用fingerprint，快速比對版本差異，減少對瀏覽器的request</li>
+<li>支援CSS、coffeeScript等語言，寫css跟js更方便</li>
+</ol>
+<h4 id="📌-題外話：Rails的安裝之路既繁瑣又複雜"><a href="#📌-題外話：Rails的安裝之路既繁瑣又複雜" class="headerlink" title="📌 題外話：Rails的安裝之路既繁瑣又複雜"></a>📌 題外話：Rails的安裝之路既繁瑣又複雜</h4><p>為什麼安裝Rails還要另外安裝node.js呢？</p>
+<p>早期的Rails版本其實不用安裝<br>但後期引進了用node.js寫的webpack套件<br>會將所有的js檔案快速打包<br>所以我們就得安裝node.js</p>
+<p>不過rails 7 有另外的打包方式<br>所以使用rails 7 就不用裝囉</p>
+
+        </div>
+
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/08/13/%E5%B9%AB%E7%B6%B2%E9%A0%81%E6%96%BD%E9%BB%9E%E9%AD%94%E6%B3%95-JavaScript-this/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">幫網頁施點魔法 - JavaScript this</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Ning</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
