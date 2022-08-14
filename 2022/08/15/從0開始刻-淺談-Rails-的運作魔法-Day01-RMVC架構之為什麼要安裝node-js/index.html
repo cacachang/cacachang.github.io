@@ -158,13 +158,13 @@
 
 <h3 id="View"><a href="#View" class="headerlink" title="View"></a>View</h3><p>有寫過Rails的你<br>應該對於erb這個檔名不陌生<br>erb &#x3D; Embedded Ruby<br>可以在HTML中加入Ruby的語法</p>
 <h4 id="View-helper"><a href="#View-helper" class="headerlink" title="View helper"></a>View helper</h4><p>舉凡form_for、form_with、link_to這些表單、連結方法<br>都是view helper的一種<br>當我們把Ruby寫進HTML中<br>程式碼會變得複雜又不直觀<br>Rails的app&#x2F;helper可以幫助我們整理View裡面的程式碼<br>將簡單的運算、程式放到helper中<br>讓View更簡潔 </p>
-<p><strong>💎 Rails developer 必知的Coc</strong><br>erb檔所在的資料夾必須與controller呼應<br>view的檔案名稱需要對應到controller的action名稱<br>當controller運算完畢才知道要往哪邊送</p>
+<p><strong>💎 Rails developer 必知的CoC</strong><br>erb檔所在的資料夾必須與controller呼應<br>view的檔案名稱需要對應到controller的action名稱<br>當controller運算完畢才知道要往哪邊送</p>
 <p>以下圖為例<br>路徑對應的 controller為article、action為show<br>我們就要在view資料夾下面建立article資料夾<br>article的show方法會取找資料夾中的show.html.erb</p>
 <p><img src="https://i.imgur.com/wtM7ljI.png"></p>
 <h3 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h3><p>接收需求、依照指令將任務辦妥是Controller的職責<br>就像是上述提到的廚師一樣<br>顧客點了哪些餐點、需要哪些原料<br>從View那邊接收到資訊後<br>會依需求去找Model要資料<br>要完就會開始進行運算</p>
 <p>相較View與Model<br>Controller聽起來真的很辛苦呢！<br>不僅要會溝通、還要懂做事</p>
 <h4 id="action"><a href="#action" class="headerlink" title="action"></a>action</h4><p>controller裡的方法<br>通常會由routes來指定要使用哪個方法<br>當路徑被觸發時<br>action就會被執行</p>
-<p><strong>💎Rails developer 必知的Coc</strong><br>Controller都要用複數來命名<br>檔名是snake_case<br>名稱是camelCase</p>
+<p><strong>💎Rails developer 必知的CoC</strong><br>Controller都要用複數來命名<br>檔名是snake_case<br>名稱是camelCase</p>
 <p>以article來看<br>檔名是articles_controller.rb</p>
 <p><img src="https://i.imgur.com/5gPqtxj.png"></p>
 <p>不過檔案中的controller是ArticlesController</p>
@@ -176,7 +176,7 @@
 <p>Database會把資料table傳給Model<br>Model會遵循ORM將這些資料物件化後給Controller<br>*ORM為物件關聯對映：無需使用SQL語法，用程式碼就能以物件化的方式操作資料表</p>
 <p><img src="https://i.imgur.com/iXhvW2V.jpg"></p>
 <p>用剛剛舉的郵局例子來說<br>我們去郵局領過期信件時，會先跟窗口提出需求<br>窗口依我們需求去倉庫拿信件，蓋完章後再交給我們</p>
-<p><strong>💎Rails developer 必知的Coc</strong><br>Model的class名稱為大寫、單數<br>table則是小寫、複數<br>檔名則是小寫、單數</p>
+<p><strong>💎Rails developer 必知的CoC</strong><br>Model的class名稱為大寫、單數<br>table則是小寫、複數<br>檔名則是小寫、單數</p>
 <table>
 <thead>
 <tr>
