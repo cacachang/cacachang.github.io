@@ -147,13 +147,11 @@
 <p>以下Ruby程式碼來說<br>call的參數是一個hash<br>這個hash包含了CGI-like環境的變數<br>回傳為陣列，分別為HTTP狀態、HTTP header、Body</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Application</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">call</span>(<span class="params">env</span>)</span><br><span class="line">      [</span><br><span class="line">        <span class="number">200</span>, </span><br><span class="line">        &#123;<span class="string">&#x27;Content-Type&#x27;</span> =&gt; <span class="string">&#x27;text/html&#x27;</span>&#125;,</span><br><span class="line">        [<span class="string">&quot;Hello from Ruby on Rulers!&quot;</span>]</span><br><span class="line">      ]</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">run Application.new</span><br></pre></td></tr></table></figure>
 
-<p>看看流程圖加速理解👇</p>
-<p><img src="https://i.imgur.com/ZyYTeDl.jpg"></p>
-</br>
-
 <p>當我們跑Rack時，會啟用一個叫做WEBrick的伺服器<br>看到下列訊息就可以進入 <a class="link"   target="_blank" rel="noopener" href="http://localhost:9292/" >http://localhost:9292/<i class="fas fa-external-link-alt"></i></a> 伺服器囉！<br>(之後手刻也會看到它)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[2022-08-16 02:08:12] INFO  WEBrick 1.6.0</span><br><span class="line">[2022-08-16 02:08:12] INFO  ruby 2.7.2 (2020-10-01) [arm64-darwin20]</span><br><span class="line">[2022-08-16 02:08:12] INFO  WEBrick::HTTPServer#start: pid=45085 port=9292</span><br></pre></td></tr></table></figure>
 
+<p>看看流程圖加速理解👇</p>
+<p><img src="https://i.imgur.com/ZyYTeDl.jpg"></p>
 </br>
 
 <p>📃 web小辭典</p>
