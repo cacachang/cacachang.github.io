@@ -157,28 +157,29 @@
 </br>
 
 <p>📃 web小辭典</p>
-<p>▶ CGI:是一種標準介面程式，讓網頁跟www server溝通，讓使用者能跟網頁互動</p>
-<p>▶ WEBrick：屬於Ruby library，提供簡單的HTTP server</p>
+<p>▶  CGI: 是一種標準介面程式，讓網頁跟www server溝通，讓使用者能跟網頁互動</p>
+<p>▶  WEBrick：屬於Ruby library，提供簡單的HTTP server</p>
 </br>
 
 
-<h2 id="Rack在Rails中的角色"><a href="#Rack在Rails中的角色" class="headerlink" title="Rack在Rails中的角色"></a>Rack在Rails中的角色</h2><p>Rack是一種Middleware，算是框架與伺服器之間的API<br>Rails.application 是屬於 Rack 應用程式物件<br>與Rack相容的web server都應該要採用Rails.application來運作、執行</p>
-<h3 id="rails-server"><a href="#rails-server" class="headerlink" title="rails server"></a>rails server</h3><p>Rails::Server繼承Rack::Server特性<br>可以用來啟動web server</p>
-<p>當我們輸入rails server時<br>會建立Rack::Server物件<br>並且開啟server</p>
+<h2 id="Rack在Rails中的角色"><a href="#Rack在Rails中的角色" class="headerlink" title="Rack在Rails中的角色"></a>Rack在Rails中的角色</h2><p>Rack是一種Middleware，是框架與伺服器之間的API<br>Rails.application 是屬於 Rack 應用程式物件<br>與Rack相容的web server都應該要採用Rails.application來運作、執行</p>
+<h3 id="rails-server"><a href="#rails-server" class="headerlink" title="rails server"></a>rails server</h3><p>Rails::Server 繼承 Rack::Server特性<br>可以用來啟動 web server</p>
+<p>當我們輸入rails server時<br>會建立 Rack::Server 物件<br>並且開啟server</p>
 <h3 id="rackup"><a href="#rackup" class="headerlink" title="rackup"></a>rackup</h3><p>如果不想用rails server啟動伺服器<br>可改用rackup<br>不過你得先有config.ru的設定檔(.ru就是rackup的縮寫)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">開啟server</span></span><br><span class="line">rackup config.ru </span><br></pre></td></tr></table></figure>
 
 <h4 id="Rack並不是只拿來啟動伺服器"><a href="#Rack並不是只拿來啟動伺服器" class="headerlink" title="Rack並不是只拿來啟動伺服器"></a>Rack並不是只拿來啟動伺服器</h4><p>Rack這麼厲害，怎麼可能只會啟動伺服器<br>Rails中許多應用程式都是使用Rack Middleware來操作</p>
 <p>不過這些應用程式運作的對象也都跟瀏覽器脫離不了關係</p>
 <p>這邊來提幾個應用程式</p>
-<p>Rack::Sendfile：用標準化的資料格式(<a class="link"   target="_blank" rel="noopener" href="https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/" >X-Sendfile<i class="fas fa-external-link-alt"></i></a>)設定Header</p>
-<p>Rack::Lock：設定應用程式是否可以多工作業(<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E4%BA%92%E6%96%A5%E9%94%81" >Mutex<i class="fas fa-external-link-alt"></i></a>)</p>
-<p>Rack::MethodOverride：有設定params[:_method]，就可以重新設定方法</p>
+<p>Rack::Sendfile 👉 用標準化的資料格式(<a class="link"   target="_blank" rel="noopener" href="https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/" >X-Sendfile<i class="fas fa-external-link-alt"></i></a>)設定Header</p>
+<p>Rack::Lock 👉 設定應用程式是否可以多工作業(<a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E4%BA%92%E6%96%A5%E9%94%81" >Mutex<i class="fas fa-external-link-alt"></i></a>)</p>
+<p>Rack::MethodOverride 👉 有設定params[:_method]，就可以重新設定方法</p>
 <p>其他應用程式詳細資料可以參照 <a class="link"   target="_blank" rel="noopener" href="https://guides.rubyonrails.org/rails_on_rack.html" >Rails官方網站<i class="fas fa-external-link-alt"></i></a></p>
 <h2 id="Rack-Middleware-運作"><a href="#Rack-Middleware-運作" class="headerlink" title="Rack Middleware 運作"></a>Rack Middleware 運作</h2><p>採用pipeline方式(管線化)<br>用這種方式運作會讓效率大幅提升<br>讓我們來看一下他的運作流程</p>
 <p><img src="https://i.imgur.com/LbGVuOM.jpg"></p>
 <p>Rack會依照不同類型請求來區分<br>執行順序1：認證的讀取指令開始執行<br>執行順序2：認證的指令解碼及讀取暫存、授權的讀取指令會一起進行<br>⋯⋯依此類推</p>
-<p>📌 生活小例子<br>以選舉流程來說<br>當A開始進入投票流程時，其他人的個別進度也可以同時被推進<br>減少等待時間，提升效率</p>
+<p>📌 生活小例子</p>
+<p>以選舉流程來說<br>當A開始進入投票流程時，其他人的個別進度也可以同時被推進<br>減少等待時間、提升效率</p>
 <p><img src="https://i.imgur.com/2NCyqsQ.jpg"></p>
 <h2 id="Rake、Rack-傻傻分不清"><a href="#Rake、Rack-傻傻分不清" class="headerlink" title="Rake、Rack 傻傻分不清"></a>Rake、Rack 傻傻分不清</h2><p>他們簡直就是雙胞胎<br>稍一不留神就認錯了啊</p>
 <p>Rack 是一種Middleware，主要負責處理跟HTTP request有關的任務<br>Rake 是Rails中的task執行者，讀取Rakefile會開始執行task</p>
