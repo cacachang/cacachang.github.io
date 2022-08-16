@@ -21,7 +21,7 @@
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
     KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en"};
-    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://scontent.ftpe3-2.fna.fbcdn.net/v/t1.18169-9/23316510_1708559962498367_2084730933387018833_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=EQdPfVAy1vQAX-F9DHR&_nc_ht=scontent.ftpe3-2.fna&oh=00_AT-AtKSzPhqQwY6euRgk31yYKjFXmdw7c0oEy2HoOWnnJQ&oe=631C13B6","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://scontent.ftpe3-2.fna.fbcdn.net/v/t1.18169-9/23316510_1708559962498367_2084730933387018833_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=EQdPfVAy1vQAX-F9DHR&_nc_ht=scontent.ftpe3-2.fna&oh=00_AT-AtKSzPhqQwY6euRgk31yYKjFXmdw7c0oEy2HoOWnnJQ&oe=631C13B6","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Welcome to Ning's Lab"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
 <meta name="generator" content="Hexo 6.2.0"></head>
@@ -38,13 +38,23 @@
 <main class="page-container">
 
     
+        <div class="first-screen-container flex-center fade-in-down-animation">
+    <div class="content flex-center">
+        <div class="description">
+            Welcome to Ning&#39;s Lab
+        </div>
+        
+    </div>
+</div>
+
+    
 
     <div class="page-main-content">
 
         <div class="page-main-content-top">
             <header class="header-wrapper">
 
-    <div class="header-content">
+    <div class="header-content has-first-screen">
         <div class="left">
             
             <a class="logo-title" href="/">
@@ -331,11 +341,19 @@ JQuery UJS咦，不是說要介紹Rails UJS嗎？為什麼會出現一...
     </ul>
 
     <div class="home-paginator">
-        <div class="paginator">
-    
+        .paginator {
+  font-size: 1rem;
+  margin-top: 30px;
 
-    
-</div>
+  a.prev {
+    float: left;
+  }
+
+  a.next {
+    float: right;
+  }
+
+}
 
     </div>
 </div>
