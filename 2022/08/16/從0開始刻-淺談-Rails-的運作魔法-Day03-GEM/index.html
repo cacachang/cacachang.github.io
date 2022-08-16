@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="程式實習生日常，紀錄隱藏在字元裡的小細節及思維邏輯">
+    <meta name="author" content="Ning">
+    
+    <title>
+        
+            從0開始刻 淺談 Rails 的運作魔法 - Day03 GEM |
+        
+        Ning&#39;s Lab
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://scontent.ftpe3-2.fna.fbcdn.net/v/t1.18169-9/23316510_1708559962498367_2084730933387018833_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=EQdPfVAy1vQAX-F9DHR&_nc_ht=scontent.ftpe3-2.fna&oh=00_AT-AtKSzPhqQwY6euRgk31yYKjFXmdw7c0oEy2HoOWnnJQ&oe=631C13B6","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Keep writing and Keep loving."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Ning&#39;s Lab
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">從0開始刻 淺談 Rails 的運作魔法 - Day03 GEM</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="https://scontent.ftpe3-2.fna.fbcdn.net/v/t1.18169-9/23316510_1708559962498367_2084730933387018833_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=EQdPfVAy1vQAX-F9DHR&_nc_ht=scontent.ftpe3-2.fna&oh=00_AT-AtKSzPhqQwY6euRgk31yYKjFXmdw7c0oEy2HoOWnnJQ&oe=631C13B6">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Ning</span>
+                        
+                            <span class="author-label">Lv1</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-08-16 23:27:08</span>
+        <span class="mobile">2022-08-16 23:27</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>用過Rails應該對於gem不會太陌生<br>好用一直用，但你知道gem是什麼嗎？</p>
+<h2 id="Rubygem"><a href="#Rubygem" class="headerlink" title="Rubygem"></a>Rubygem</h2><p>Rubygem就很像一個五金行<br>囊括所有應用在Ruby上的套件</p>
+<p><img src="https://i.imgur.com/Fdf9rk1.jpg"></p>
+<h2 id="GEM是什麼？"><a href="#GEM是什麼？" class="headerlink" title="GEM是什麼？"></a>GEM是什麼？</h2><p>想像一下，當我們要組家具<br>大部分的人應該都直接去家具店挑<br>或是到IKEA買回來DIY<br>少數專業的師傅可能會自己取材製作</p>
+<p>其中IKEA販售的傢俱組合<br>被完善處理過的零組件就像是GEM<br>可以讓我們更快速地組好傢俱<br>且功能也很完整✨</p>
+<p>寫程式時，不可能所有功能都手刻<br>所以我們需要適時引入套件<br>讓我們寫的網頁、應用程式功能更完善</p>
+<p><img src="https://i.imgur.com/UqV5nHz.jpg"></p>
+<p>不同的GEM套件有不同的功能<br>這邊舉例一些比較常用的GEM</p>
+<ol>
+<li>加入特別的功能到專案中</li>
+<li>更順利的安裝API</li>
+<li>建立一個網頁應用程式</li>
+</ol>
+<p>有這些套件，我們就能專心在開發上👩‍💻👨‍💻🧑‍💻<br>順帶一提，我們所使用的rails也是gem的一種哦！</p>
+</br>
+
+<h2 id="GEM套件組成"><a href="#GEM套件組成" class="headerlink" title="GEM套件組成"></a>GEM套件組成</h2><p>讓我們來拆解一下GEM裡面的檔案<br>之後手刻會遇到，各位可以稍微了解一下😉</p>
+<p><img src="https://i.imgur.com/9kQkc9i.jpg"></p>
+<h2 id="gem指令"><a href="#gem指令" class="headerlink" title="gem指令"></a>gem指令</h2><p>既然知道GEM這麼好用<br>那我們也要知道如何使用！</p>
+<h3 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h3><p>在終端機打gem install + GEM名稱即可安裝</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install nokogiri</span><br></pre></td></tr></table></figure>
+
+<h3 id="搜尋"><a href="#搜尋" class="headerlink" title="搜尋"></a>搜尋</h3><p>搜尋Rubygem裡面的套件，可以搭配正則表示法</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; gem search rack</span><br><span class="line"></span><br><span class="line">*** <span class="variable constant_">REMOTE</span> <span class="variable constant_">GEMS</span> ***</span><br><span class="line"></span><br><span class="line">airake (<span class="number">0.4</span>.<span class="number">5</span>)</span><br><span class="line">airbrake (<span class="number">13.0</span>.<span class="number">2</span>)</span><br><span class="line">airbrake-api (<span class="number">4.6</span>.<span class="number">1</span>)</span><br><span class="line">airbrake-extended (<span class="number">0.0</span>.<span class="number">8</span>)</span><br><span class="line">airbrake-faraday_sender (<span class="number">0.1</span>.<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="列出已經安裝的套件"><a href="#列出已經安裝的套件" class="headerlink" title="列出已經安裝的套件"></a>列出已經安裝的套件</h3><p>開啟套件清點簿！</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; gem list</span><br><span class="line"></span><br><span class="line">*** <span class="variable constant_">LOCAL</span> <span class="variable constant_">GEMS</span> ***</span><br><span class="line"></span><br><span class="line">actioncable (<span class="number">7.0</span>.<span class="number">3</span>, <span class="number">6.1</span>.<span class="number">6.1</span>, <span class="number">6.1</span>.<span class="number">6</span>, <span class="number">6.1</span>.<span class="number">4.6</span>)</span><br><span class="line">actionmailbox (<span class="number">7.0</span>.<span class="number">3</span>, <span class="number">6.1</span>.<span class="number">6.1</span>, <span class="number">6.1</span>.<span class="number">6</span>, <span class="number">6.1</span>.<span class="number">4.6</span>)</span><br><span class="line">actionmailer (<span class="number">7.0</span>.<span class="number">3</span>, <span class="number">6.1</span>.<span class="number">6.1</span>, <span class="number">6.1</span>.<span class="number">6</span>, <span class="number">6.1</span>.<span class="number">4.6</span>)</span><br><span class="line">actionpack (<span class="number">7.0</span>.<span class="number">3</span>, <span class="number">6.1</span>.<span class="number">6.1</span>, <span class="number">6.1</span>.<span class="number">6</span>, <span class="number">6.1</span>.<span class="number">4.6</span>, <span class="number">5.2</span>.<span class="number">2</span>)</span><br><span class="line">actiontext (<span class="number">7.0</span>.<span class="number">3</span>, <span class="number">6.1</span>.<span class="number">6.1</span>, <span class="number">6.1</span>.<span class="number">6</span>, <span class="number">6.1</span>.<span class="number">4.6</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="卸載"><a href="#卸載" class="headerlink" title="卸載"></a>卸載</h3><p>一言不合就解除！解除安裝套件 </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem uninstall rake</span><br></pre></td></tr></table></figure>
+
+</br>
+
+<h2 id="我知道GEM是什麼了，但是Gemfile又是什麼？"><a href="#我知道GEM是什麼了，但是Gemfile又是什麼？" class="headerlink" title="我知道GEM是什麼了，但是Gemfile又是什麼？"></a>我知道GEM是什麼了，但是Gemfile又是什麼？</h2><p>像是食譜的食材清單<br>要成就一道美食需要哪些食材</p>
+<p>Gemfile寫著你的專案需要哪些gem套件及版本<br>而且不需要使用require就能安裝好</p>
+<p>下圖是Gemfile檔案，裡面清楚註明套件及版本</p>
+<p><img src="https://i.imgur.com/5nZIR5D.png"></p>
+<p>咦，不用require的話，又沒有下達gem指令，這些套件要怎麼安裝？</p>
+<p>這時候我們就要提到Bundler</p>
+<h2 id="Bundler"><a href="#Bundler" class="headerlink" title="Bundler"></a>Bundler</h2><p>Bundler像是一種相依性管理的工具<br>雖然說gem可以幫我們安裝套件<br>但套件有各種版本<br>版本與版本之間也不一定相依<br>Bundler可以幫我們解決版本相依性的問題</p>
+<p>📌 生活小例子<br>Bundler很像調解會<br>負責調解人跟人之間的衝突<br>期待化解爭執</p>
+<p>雖然Bundler會幫我們解決版本相依性問題<br>不過Bundler之前，還是要記得確認gemfile裡面的套件及版本哦 😉</p>
+<h2 id="除了Gemfile，還有gemspec說明書"><a href="#除了Gemfile，還有gemspec說明書" class="headerlink" title="除了Gemfile，還有gemspec說明書"></a>除了Gemfile，還有gemspec說明書</h2><p>.gemspec包含了gem的名字、簡短介紹、作者名稱、相依套件的清單、gem所包含的檔案清單，可能還會有hompage等等</p>
+<p>如果你想看gem的資訊，就可以來這個檔案參觀🤓</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Gem::Specification.new do |spec|</span><br><span class="line"> spec.name          = &quot;rulers&quot;</span><br><span class="line"> spec.version       = Rulers::VERSION</span><br><span class="line"> spec.authors       = [&quot;Ning&quot;]</span><br><span class="line"> spec.email         = [&quot;a24701770@gmail.com&quot;]</span><br><span class="line"></span><br><span class="line"> spec.summary       = %q&#123;&quot;rulers&quot;&#125;</span><br><span class="line"> spec.description   = %q&#123;&#125;</span><br><span class="line"> spec.homepage      = &quot;https://ninglab.com/&quot;</span><br><span class="line"> spec.required_ruby_version = Gem::Requirement.new(&quot;&gt;= 2.3.0&quot;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Bundler後出現的-Gemfile-lock"><a href="#Bundler後出現的-Gemfile-lock" class="headerlink" title="Bundler後出現的 Gemfile.lock"></a>Bundler後出現的 Gemfile.lock</h2><p>gemfile.lock像是版本管理資料<br>說明你安裝的套件現在是用哪個版本的</p>
+<h2 id="版本介紹"><a href="#版本介紹" class="headerlink" title="版本介紹"></a>版本介紹</h2><p>在gemfile應該很常看到一堆數字<br>有時候還會出現 ~&gt;<br>我們來了解一下這些符號跟數字是什麼意思</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定安裝版本 6.1.4.6</span></span><br><span class="line">gem <span class="string">&#x27;rails&#x27;</span>, <span class="string">&#x27;6.1.4.6&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安裝大於或等於 1.4.4 的版本</span></span><br><span class="line">gem <span class="string">&#x27;bootsnap&#x27;</span>, <span class="string">&#x27;&gt;= 1.4.4&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安裝大於 5.0 且相對穩定的版本</span></span><br><span class="line">gem <span class="string">&#x27;webpacker&#x27;</span>, <span class="string">&#x27;~&gt; 5.0&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>現在我們來看一下數字的部分<br>以1.0.2這個版本來看<br>每個數字及位置各有代表的版本意思</p>
+<p>主要版號：將功能大修改，通常硬裝都會失敗，要解除原版本再重裝<br>次要版號：增加新功能，可以覆蓋安裝在原有版本，但有時也會有失敗風險<br>修正版本：微幅調整現有功能，通常可以覆蓋安裝</p>
+<p><img src="https://i.imgur.com/0chz1AI.jpg"></p>
+<p>參考資料：</p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://rubygems.org/" >https://rubygems.org/<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://railsbook.tw/chapters/09-using-gems" >https://railsbook.tw/chapters/09-using-gems<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://medium.com/never-hop-on-the-bandwagon/gemfile-and-gemfile-lock-in-ruby-65adc918b856" >https://medium.com/never-hop-on-the-bandwagon/gemfile-and-gemfile-lock-in-ruby-65adc918b856<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
+
+        </div>
+
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/08/16/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day02-Rack/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">從0開始刻 淺談 Rails 的運作魔法 Day02 - Rack</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Ning</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
