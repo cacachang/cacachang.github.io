@@ -159,7 +159,7 @@
 <p>為你的框架取個好聽的名字吧！</p>
 <p>我們這邊會用Rainbow作為名稱</p>
 <p>*如果之後想把框架推到rubygem.org中，記得別用到重複的名字，而無法推上去</p>
-<h3 id="建立套件需要的檔案"><a href="#建立套件需要的檔案" class="headerlink" title="建立套件需要的檔案"></a>建立套件需要的檔案</h3><h4 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h4><p>下指令後，終端機會跳出幾個問題</p>
+<h4 id="step-1-建立套件基本檔案"><a href="#step-1-建立套件基本檔案" class="headerlink" title="step 1 建立套件基本檔案"></a>step 1 建立套件基本檔案</h4><p>下指令後，終端機會跳出幾個問題</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">是否要針對你的套件設定持續整合(CI)</span></span><br><span class="line">Do you want to set up continuous integration for your gem? </span><br></pre></td></tr></table></figure>
 
 <p>📃 web小辭典</p>
@@ -182,19 +182,19 @@
 
 </br>
 
-<h4 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h4><p>到README.md檔案中<br>執行 Installation 裡面的指令</p>
+<h4 id="step-2-修改-README-檔案並安裝"><a href="#step-2-修改-README-檔案並安裝" class="headerlink" title="step 2 修改 README 檔案並安裝"></a>step 2 修改 README 檔案並安裝</h4><p>到README.md檔案中<br>執行 Installation 裡面的指令</p>
 <figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## Installation</span></span><br><span class="line"></span><br><span class="line"><span class="section"># 安裝GEM 讓他加入到 Gemfile中</span></span><br><span class="line">Install the gem and add to the application&#x27;s Gemfile by executing:</span><br><span class="line"></span><br><span class="line"><span class="code">    $ bundle add rainbow</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="section"># bundler沒有作用的話，就用gem安裝</span></span><br><span class="line">If bundler is not being used to manage dependencies, install the gem by executing:</span><br><span class="line"></span><br><span class="line"><span class="code">    $ gem install rainbow</span></span><br><span class="line"><span class="code">    </span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安裝成功</span></span><br><span class="line"></span><br><span class="line">Fetching rainbow-3.1.1.gem</span><br><span class="line">Successfully installed rainbow-3.1.1</span><br><span class="line">Parsing documentation for rainbow-3.1.1</span><br><span class="line">Installing ri documentation for rainbow-3.1.1</span><br><span class="line">Done installing documentation for rainbow after 0 seconds</span><br><span class="line">1 gem installed</span><br></pre></td></tr></table></figure>
 
 </br>
 
-<h4 id="step-3-到gemspec裡面設定套件資訊"><a href="#step-3-到gemspec裡面設定套件資訊" class="headerlink" title="step 3 到gemspec裡面設定套件資訊"></a>step 3 到gemspec裡面設定套件資訊</h4><p>務必要把TODO跟FIXME改掉<br>否則之後gem build的時候會出現錯誤訊息</p>
+<h4 id="step-3-到-gemspec-裡面設定套件資訊"><a href="#step-3-到-gemspec-裡面設定套件資訊" class="headerlink" title="step 3 到 gemspec 裡面設定套件資訊"></a>step 3 到 gemspec 裡面設定套件資訊</h4><p>務必要把TODO跟FIXME改掉<br>否則之後gem build的時候會出現錯誤訊息</p>
 <figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Gem::Specification.new do |spec|</span><br><span class="line">  spec.name = &quot;rainbow&quot;</span><br><span class="line">  spec.version = Rainbow::VERSION</span><br><span class="line">  spec.authors = [&quot;Ning&quot;]</span><br><span class="line">  spec.email = [&quot;ning@ninglab.com&quot;]</span><br><span class="line"></span><br><span class="line">  spec.summary = &quot;Make coding colorful&quot;</span><br><span class="line">  spec.description = &quot;A ruby frameword&quot;</span><br><span class="line">  spec.homepage = &quot;https://github.com/cacachang/Rainbow&quot;</span><br><span class="line">  spec.required<span class="emphasis">_ruby_</span>version = &quot;&gt;= 2.6.0&quot;</span><br><span class="line"></span><br><span class="line">  spec.metadata[&quot;allowed<span class="emphasis">_push_</span>host&quot;] = &quot;https://ninglab.com/&quot;</span><br><span class="line"></span><br><span class="line">  spec.metadata[&quot;homepage<span class="emphasis">_uri&quot;] = &quot;https://ninglab.com/&quot;</span></span><br><span class="line"><span class="emphasis">  spec.metadata[&quot;source_</span>code<span class="emphasis">_uri&quot;] = &quot;https://github.com/cacachang/Rainbow&quot;</span></span><br><span class="line"><span class="emphasis">  spec.metadata[&quot;changelog_</span>uri&quot;] = &quot;https://github.com/cacachang/Rainbow&quot;</span><br></pre></td></tr></table></figure>
 
 </br>
 
-<h4 id="step-4-加入runtime-depandency"><a href="#step-4-加入runtime-depandency" class="headerlink" title="step 4 加入runtime depandency"></a>step 4 加入runtime depandency</h4><p>前幾天有介紹到 Rack 在 Rails 中扮演著與HTTP溝通的橋樑<br>Rainbow 也會需要 Rack 來幫忙<br>我們先用 dependency 加入 Rack</p>
+<h4 id="step-4-加入-runtime-depandency"><a href="#step-4-加入-runtime-depandency" class="headerlink" title="step 4 加入 runtime depandency"></a>step 4 加入 runtime depandency</h4><p>前幾天有介紹到 Rack 在 Rails 中扮演著與HTTP溝通的橋樑<br>Rainbow 也會需要 Rack 來幫忙<br>我們先用 dependency 加入 Rack</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">rainbow.gemspec 最後一行加入</span></span><br><span class="line">spec.add_runtime_dependency &quot;rack&quot;</span><br></pre></td></tr></table></figure>
 
 <p>📃 <strong>web小辭典：dependency</strong></p>
@@ -206,7 +206,7 @@
 
 </br>
 
-<h4 id="step-6-建立gemspec及版本"><a href="#step-6-建立gemspec及版本" class="headerlink" title="step 6 建立gemspec及版本"></a>step 6 建立gemspec及版本</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem build rainbow.gemspec</span><br></pre></td></tr></table></figure>
+<h4 id="step-6-建立-gemspec-及版本"><a href="#step-6-建立-gemspec-及版本" class="headerlink" title="step 6 建立 gemspec 及版本"></a>step 6 建立 gemspec 及版本</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem build rainbow.gemspec</span><br></pre></td></tr></table></figure>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install rainbow-0.0.1.gem</span><br></pre></td></tr></table></figure>
 
 <p>▶ 假如失敗了<br>請回去檢查gemspec的TODO及URL是否都有填妥、填正確</p>
