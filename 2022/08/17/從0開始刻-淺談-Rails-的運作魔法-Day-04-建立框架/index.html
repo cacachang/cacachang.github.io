@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="程式實習生日常，紀錄隱藏在字元裡的小細節及思維邏輯">
+    <meta name="author" content="Ning">
+    
+    <title>
+        
+            從0開始刻 淺談 Rails 的運作魔法 - Day 04 建立框架 |
+        
+        Ning&#39;s Lab
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://i.imgur.com/sPHhND7.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Welcome to Ning's Lab"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Ning&#39;s Lab
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">從0開始刻 淺談 Rails 的運作魔法 - Day 04 建立框架</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="https://i.imgur.com/sPHhND7.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Ning</span>
+                        
+                            <span class="author-label">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-08-17 23:41:48</span>
+        <span class="mobile">2022-08-17 23:41</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>我們終於要開始來復刻 Rails 囉！</p>
+<p>為你的框架取個好聽的名字吧！</p>
+<p>我們這邊會用Rainbow作為名稱</p>
+<p>*如果之後想把框架推到rubygem.org中，記得別用到重複的名字，而無法推上去</p>
+<h3 id="建立套件需要的檔案"><a href="#建立套件需要的檔案" class="headerlink" title="建立套件需要的檔案"></a>建立套件需要的檔案</h3><h4 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h4><p>下指令後，終端機會跳出幾個問題</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">是否要針對你的套件設定持續整合(CI)</span></span><br><span class="line">Do you want to set up continuous integration for your gem? </span><br></pre></td></tr></table></figure>
+
+<p>📃 web小辭典</p>
+<p>▶ CI 持續整合( Continuous Integration )</p>
+<p>開發應用程式時<br>我們會頻繁的修改功能、push檔案進行版控<br>並非每次push檔案都會順利的整合<br>以人工來編譯既耗時又沒效率</p>
+<p>CI不僅可以幫我們自動化找出錯誤<br>還會再上線以前做測試<br>來確保程式碼是沒有問題的</p>
+<p>▶ CD 持續部署( Continuous Deployment )</p>
+<p>當CI測試沒問題後，就可以透過CD來自動化部署應用程式上線</p>
+<p>比較常見的CI&#x2F;CD工具：Github、Git</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">輸入CI service</span></span><br><span class="line">Enter a CI service. github/travis/gitlab/circle/(none): </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">要包含變更紀錄嗎？ (含錯誤修復、新功能等)</span></span><br><span class="line">Do you want to include a changelog?</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">要加入程式碼偵錯、格式檢查功能嗎？</span></span><br><span class="line">Do you want to add a code linter and formatter to your gem?</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">選擇 coding style 偵測工具</span></span><br><span class="line">Enter a linter. rubocop/standard/(none): </span><br></pre></td></tr></table></figure>
+
+<p>上述用好之後，就會生成套件基本的檔案<br><a href="https://ninglab.com/2022/08/16/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day03-GEM/">點一下幫助回想GEM</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">bundle gem rainbow</span></span><br><span class="line"></span><br><span class="line">create  rainbow/Gemfile</span><br><span class="line">create  rainbow/lib/rainbow.rb</span><br><span class="line">create  rainbow/lib/rainbow/version.rb</span><br><span class="line">create  rainbow/sig/rainbow.rbs</span><br><span class="line">create  rainbow/rainbow.gemspec</span><br><span class="line">create  rainbow/Rakefile</span><br><span class="line">create  rainbow/README.md</span><br><span class="line">create  rainbow/bin/console</span><br><span class="line">create  rainbow/bin/setup</span><br><span class="line">create  rainbow/.gitignore</span><br></pre></td></tr></table></figure>
+
+</br>
+
+<h4 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h4><p>到README.md檔案中<br>執行 Installation 裡面的指令</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## Installation</span></span><br><span class="line"></span><br><span class="line"><span class="section"># 安裝GEM 讓他加入到 Gemfile中</span></span><br><span class="line">Install the gem and add to the application&#x27;s Gemfile by executing:</span><br><span class="line"></span><br><span class="line"><span class="code">    $ bundle add rainbow</span></span><br><span class="line"><span class="code"></span></span><br><span class="line"><span class="section"># bundler沒有作用的話，就用gem安裝</span></span><br><span class="line">If bundler is not being used to manage dependencies, install the gem by executing:</span><br><span class="line"></span><br><span class="line"><span class="code">    $ gem install rainbow</span></span><br><span class="line"><span class="code">    </span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安裝成功</span></span><br><span class="line"></span><br><span class="line">Fetching rainbow-3.1.1.gem</span><br><span class="line">Successfully installed rainbow-3.1.1</span><br><span class="line">Parsing documentation for rainbow-3.1.1</span><br><span class="line">Installing ri documentation for rainbow-3.1.1</span><br><span class="line">Done installing documentation for rainbow after 0 seconds</span><br><span class="line">1 gem installed</span><br></pre></td></tr></table></figure>
+
+</br>
+
+<h4 id="step-3-到gemspec裡面設定套件資訊"><a href="#step-3-到gemspec裡面設定套件資訊" class="headerlink" title="step 3 到gemspec裡面設定套件資訊"></a>step 3 到gemspec裡面設定套件資訊</h4><p>務必要把TODO跟FIXME改掉<br>否則之後gem build的時候會出現錯誤訊息</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Gem::Specification.new do |spec|</span><br><span class="line">  spec.name = &quot;rainbow&quot;</span><br><span class="line">  spec.version = Rainbow::VERSION</span><br><span class="line">  spec.authors = [&quot;Ning&quot;]</span><br><span class="line">  spec.email = [&quot;ning@ninglab.com&quot;]</span><br><span class="line"></span><br><span class="line">  spec.summary = &quot;Make coding colorful&quot;</span><br><span class="line">  spec.description = &quot;A ruby frameword&quot;</span><br><span class="line">  spec.homepage = &quot;https://github.com/cacachang/Rainbow&quot;</span><br><span class="line">  spec.required<span class="emphasis">_ruby_</span>version = &quot;&gt;= 2.6.0&quot;</span><br><span class="line"></span><br><span class="line">  spec.metadata[&quot;allowed<span class="emphasis">_push_</span>host&quot;] = &quot;https://ninglab.com/&quot;</span><br><span class="line"></span><br><span class="line">  spec.metadata[&quot;homepage<span class="emphasis">_uri&quot;] = &quot;https://ninglab.com/&quot;</span></span><br><span class="line"><span class="emphasis">  spec.metadata[&quot;source_</span>code<span class="emphasis">_uri&quot;] = &quot;https://github.com/cacachang/Rainbow&quot;</span></span><br><span class="line"><span class="emphasis">  spec.metadata[&quot;changelog_</span>uri&quot;] = &quot;https://github.com/cacachang/Rainbow&quot;</span><br></pre></td></tr></table></figure>
+
+</br>
+
+<h4 id="step-4-加入runtime-depandency"><a href="#step-4-加入runtime-depandency" class="headerlink" title="step 4 加入runtime depandency"></a>step 4 加入runtime depandency</h4><p>前幾天有介紹到 Rack 在 Rails 中扮演著與HTTP溝通的橋樑<br>Rainbow 也會需要 Rack 來幫忙<br>我們先用 dependency 加入 Rack</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">rainbow.gemspec 最後一行加入</span></span><br><span class="line">spec.add_runtime_dependency &quot;rack&quot;</span><br></pre></td></tr></table></figure>
+
+<p>📃 <strong>web小辭典：dependency</strong></p>
+<p>Rubygem 提供兩種 dependency<br>分別是 Runtime dependency 以及 Development dependency</p>
+<p>Runtime dependency :套件需要哪些東西才能運作<br>Development dependency :通常會在修改套件功能時使用</p>
+</br>
+
+<h4 id="step-5-設定套件版本"><a href="#step-5-設定套件版本" class="headerlink" title="step 5 設定套件版本"></a>step 5 設定套件版本</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># lib/rainbow/version.rb</span></span><br><span class="line"><span class="comment"># 修改成 0.0.1版本</span></span><br><span class="line"><span class="keyword">module</span> Rainbow</span><br><span class="line">  <span class="variable constant_">VERSION</span> = <span class="string">&quot;0.0.1&quot;</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+</br>
+
+<h4 id="step-6-建立gemspec及版本"><a href="#step-6-建立gemspec及版本" class="headerlink" title="step 6 建立gemspec及版本"></a>step 6 建立gemspec及版本</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem build rainbow.gemspec</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install rainbow-0.0.1.gem</span><br></pre></td></tr></table></figure>
+
+<p>▶ 假如失敗了<br>請回去檢查gemspec的TODO及URL是否都有填妥、填正確</p>
+<p>基本設定都差不多了，不過要怎麼讓應用程式在這個框架中運作呢？<br>我們明天來做個簡單的小應用程式玩玩</p>
+<p>參考文獻：<br><a class="link"   target="_blank" rel="noopener" href="https://rebuilding-rails.com/" >https://rebuilding-rails.com/<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://5xruby.tw/posts/rubocop-intro" >https://5xruby.tw/posts/rubocop-intro<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://guides.rubygems.org/patterns/" >https://guides.rubygems.org/patterns/<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://blog.kennycoder.io/2020/04/07/CI-CD-%E6%8C%81%E7%BA%8C%E6%80%A7%E6%95%B4%E5%90%88-%E9%83%A8%E7%BD%B2-%E5%9B%A0%E7%82%BA%E6%87%B6%EF%BC%8C%E6%89%80%E4%BB%A5%E6%9B%B4%E8%A6%81CI-CD%EF%BC%81%E6%A6%82%E5%BF%B5%E8%AC%9B%E8%A7%A3%EF%BC%81/" >https://blog.kennycoder.io/2020/04/07/CI-CD-%E6%8C%81%E7%BA%8C%E6%80%A7%E6%95%B4%E5%90%88-%E9%83%A8%E7%BD%B2-%E5%9B%A0%E7%82%BA%E6%87%B6%EF%BC%8C%E6%89%80%E4%BB%A5%E6%9B%B4%E8%A6%81CI-CD%EF%BC%81%E6%A6%82%E5%BF%B5%E8%AC%9B%E8%A7%A3%EF%BC%81/<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/08/16/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day03-GEM/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">從0開始刻 淺談 Rails 的運作魔法 - Day03 GEM</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Ning</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
