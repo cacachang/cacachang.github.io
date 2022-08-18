@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="程式實習生日常，紀錄隱藏在字元裡的小細節及思維邏輯">
+    <meta name="author" content="Ning">
+    
+    <title>
+        
+            從0開始刻 淺談 Rails 的運作魔法 - Day 05 建立應用程式 |
+        
+        Ning&#39;s Lab
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://i.imgur.com/sPHhND7.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Welcome to Ning's Lab"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Ning&#39;s Lab
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">從0開始刻 淺談 Rails 的運作魔法 - Day 05 建立應用程式</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="https://i.imgur.com/sPHhND7.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Ning</span>
+                        
+                            <span class="author-label">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-08-19 01:22:41</span>
+        <span class="mobile">2022-08-19 01:22</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>昨天把初步框架架起來<br>今天就來做個應用程式來試看看吧！</p>
+<h3 id="step1-初始化"><a href="#step1-初始化" class="headerlink" title="step1 初始化"></a>step1 初始化</h3><p>我們要做一個 quotations 的應用程式<br>首先在 rainbow 外建立一個資料夾</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">建立 quotations 資料夾</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash"><span class="built_in">mkdir</span> quotations</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">進入 quotations</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash"><span class="built_in">cd</span> quotations</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">git 初始化</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">git init</span></span><br><span class="line"></span><br><span class="line">Initialized empty Git repository in src/</span><br><span class="line">quotitions/.git/</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">建立 config 資料夾</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash"><span class="built_in">mkdir</span> config</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">建立 app 資料夾</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash"><span class="built_in">mkdir</span> app</span></span><br></pre></td></tr></table></figure>
+
+<p>📃 web小辭典</p>
+<p>▶ config檔</p>
+<p>內容包含框架載入前的程式碼設定<br>以及框架中的組成元件、環境設定等<br>可以說框架最基本的設定都放在這個檔案中了</p>
+<p>▶ app檔</p>
+<p>基本的架構及框架功能都會放在這裡<br>包含 controllers、models、views、helpers 等</p>
+</br>
+
+<h3 id="step-2-加入-gemfile"><a href="#step-2-加入-gemfile" class="headerlink" title="step 2 加入 gemfile"></a>step 2 加入 gemfile</h3><p>quotations 的框架是 Rainbow<br>所以我們要在 gemfile 加入 rainbow 並安裝</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">加入gemfile檔</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash"><span class="built_in">source</span> <span class="string">&#x27;https://rubygems.org&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">gem <span class="string">&quot;rainbow&quot;</span> <span class="comment"># Your gem name</span></span></span><br></pre></td></tr></table></figure>
+
+<p>還記得gemfile是什麼嗎？ <a href="https://ninglab.com/2022/08/16/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day03-GEM/">點我回想</a></p>
+</br>
+
+<h3 id="step-3-bundle-install"><a href="#step-3-bundle-install" class="headerlink" title="step 3 bundle install"></a>step 3 bundle install</h3><p>建立 rainbow 套件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">bundle install</span></span><br><span class="line"></span><br><span class="line">Fetching gem metadata from https://rubygems.org/..</span><br><span class="line">Resolving dependencies...</span><br><span class="line">Using bundler 2.3.20</span><br><span class="line">Using rainbow 3.1.1</span><br><span class="line">Bundle complete! 1 Gemfile dependency, 2 gems now installed.</span><br><span class="line">Use `bundle info [gemname]` to see where a bundled gem is installed.</span><br></pre></td></tr></table></figure>
+
+<p>建立完成就會跑出 Gemfile.lock (版本管理資料)</p>
+<p><img src="https://i.imgur.com/A9uA8UY.png"></p>
+</br>
+
+<h3 id="step4-建立-Rack"><a href="#step4-建立-Rack" class="headerlink" title="step4 建立 Rack"></a>step4 建立 Rack</h3><p>應用程式免不了傳送 HTTP request</p>
+<p>所以我們要來設定 Rack</p>
+<p>還記得 Rack 嗎？ <a href="https://ninglab.com/2022/08/16/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day02-Rack/">點我回想</a></p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># quotations/config.ru</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 proc 把 block 物件化，讓它可以回應 call 方法</span></span><br><span class="line"></span><br><span class="line">run <span class="built_in">proc</span> &#123;</span><br><span class="line">  [</span><br><span class="line">     <span class="number">200</span>, </span><br><span class="line">     &#123;<span class="string">&#x27;Content-Type&#x27;</span> =&gt; <span class="string">&#x27;text/html&#x27;</span>&#125;,</span><br><span class="line">     [<span class="string">&quot;Hello, world!&quot;</span>]</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>📃 web小辭典</p>
+<p>▶ config.ru檔</p>
+<p>Rack 基本設定，包含如何用 Rack 啟用應用程式 </p>
+<h2 id="HTTP狀態介紹"><a href="#HTTP狀態介紹" class="headerlink" title="HTTP狀態介紹"></a>HTTP狀態介紹</h2><h3 id="step5-啟動應用程式！"><a href="#step5-啟動應用程式！" class="headerlink" title="step5 啟動應用程式！"></a>step5 啟動應用程式！</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">rackup -p 3001</span></span><br><span class="line"></span><br><span class="line">* Puma version: 5.6.4 (ruby 2.7.2-p137) (&quot;Birdie&#x27;s Version&quot;)</span><br><span class="line">*  Min threads: 0</span><br><span class="line">*  Max threads: 5</span><br><span class="line">*  Environment: development</span><br><span class="line">*          PID: 83450</span><br><span class="line">* Listening on http://127.0.0.1:3001</span><br><span class="line">* Listening on http://[::1]:3001</span><br></pre></td></tr></table></figure>
+
+<p><a class="link"   target="_blank" rel="noopener" href="http://localhost:3001/" >http://localhost:3001<i class="fas fa-external-link-alt"></i></a></p>
+<p>按進超連結就能看到 Hello World!</p>
+<p><img src="https://i.imgur.com/BQUUL3a.png"></p>
+<p><strong>無法順利啟動，請確認下列幾件事情</strong></p>
+<ol>
+<li>確認PATH environment variable 有沒有包含 gem，沒有請更新</li>
+<li>返回到最初，重新安裝 Ruby 及 gem</li>
+<li>確認 gemspec 的 rack dependency 是設定在 runtime dependency 而非 development dependency</li>
+</ol>
+<p>📃 web小辭典</p>
+<p>▶ 怎麼確認 PATH environment variable </p>
+<p>輸入下列指令，就會出現 RubyGems 的相關資訊<br>如果出現沒有這個指令的訊息就是要去更新囉</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">gem <span class="built_in">env</span></span></span><br><span class="line"></span><br><span class="line">RubyGems Environment:</span><br><span class="line">  - RUBYGEMS VERSION: 3.1.4</span><br><span class="line">  - RUBY VERSION: 2.7.2 (2020-10-01 patchlevel 137) [arm64-darwin20]</span><br><span class="line">  - INSTALLATION DIRECTORY: /Users/zhangjianing/.rvm/gems/ruby-2.7.2</span><br><span class="line">  - USER INSTALLATION DIRECTORY: /Users/zhangjianing/.gem/ruby/2.7.0</span><br><span class="line">  - RUBY EXECUTABLE: /Users/zhangjianing/.rvm/rubies/ruby-2.7.2/bin/ruby</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="step-6-框架設定-Rack"><a href="#step-6-框架設定-Rack" class="headerlink" title="step 6 框架設定 Rack"></a>step 6 框架設定 Rack</h3><p>應用程式的相關設定都要放在 rainbow.rb 這個檔案中，檔案才會一起打包</p>
+<p>然後在 Rainbow 設定 Rack (就不用每次做應用程式都要設定 Rack 了)</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rainbow/lib/rainbow.rb</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">&quot;rainbow/version&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Rainbow</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Application</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">call</span>(<span class="params">env</span>)</span><br><span class="line">    [</span><br><span class="line">      <span class="number">200</span>, </span><br><span class="line">      &#123;<span class="string">&#x27;Content-Type&#x27;</span> =&gt; <span class="string">&#x27;text/html&#x27;</span>&#125;,</span><br><span class="line">      [<span class="string">&quot;Hello from Ruby on Rulers!&quot;</span>]</span><br><span class="line">    ]</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"> <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="step7-刪除-rainbow-0-0-1-gem"><a href="#step7-刪除-rainbow-0-0-1-gem" class="headerlink" title="step7 刪除 rainbow-0.0.1.gem"></a>step7 刪除 rainbow-0.0.1.gem</h3><p>因為我們有做一些設定變更<br>如果不刪除、重新安裝就無法讀取最新的設定<br>所以記得刪除 + 重新安裝</p>
+<h3 id="step8-重新安裝套件"><a href="#step8-重新安裝套件" class="headerlink" title="step8 重新安裝套件"></a>step8 重新安裝套件</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; gem build rainbow.gemspec</span><br><span class="line"></span><br><span class="line">  Successfully built RubyGem</span><br><span class="line">  <span class="symbol">Name:</span> rainbow</span><br><span class="line">  <span class="symbol">Version:</span> <span class="number">0.0</span>.<span class="number">1</span></span><br><span class="line">  <span class="symbol">File:</span> rainbow-<span class="number">0.0</span>.<span class="number">1</span>.gem</span><br><span class="line"></span><br><span class="line">&gt; gem install rainbow-<span class="number">0.0</span>.<span class="number">1</span>.gem</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="step-9-設定-quotations-框架為-Rainbow"><a href="#step-9-設定-quotations-框架為-Rainbow" class="headerlink" title="step 9 設定 quotations 框架為 Rainbow"></a>step 9 設定 quotations 框架為 Rainbow</h3><p>現在我們要來使用 Rainbow::Application 做設定</p>
+<p>首先來到 config 檔案中並建立 application.rb</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">quotations/config</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash"><span class="built_in">touch</span> application.rb</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">&quot;rainbow&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># quotations 的 Application 繼承 Rainbow 的 Application</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Quotations</span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">Application</span> &lt; <span class="title class_ inherited__">Rainbow::Application</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>設定完，我們再來 Gemfile 中設定</p>
+<p>要記得加上 path，才知道要從哪裡抓 rainbow 套件</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># quotations/Gemfile</span></span><br><span class="line">gem <span class="string">&quot;rainbow&quot;</span>, <span class="symbol">:path</span> =&gt; <span class="string">&quot;../rainbow&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>設定完就可以存檔進行下一步</p>
+</br>
+
+<h3 id="step-10-今天的最後一步了！"><a href="#step-10-今天的最後一步了！" class="headerlink" title="step 10 今天的最後一步了！"></a>step 10 今天的最後一步了！</h3><p>在 Quotation 的 config.ru 中重新設定，把 Rack 拿掉</p>
+<p>引入剛剛 config&#x2F;application.rb 檔中的設定</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">&#x27;./config/application&#x27;</span></span><br><span class="line">run Quotations::Application.new</span><br></pre></td></tr></table></figure>
+
+
+<p>最後在 quotation 啟動 rackup -p 3001</p>
+<p>看到Hello from Ruby on Rulers！就是成功囉！</p>
+<p><img src="https://i.imgur.com/AEv5Qc0.png"></p>
+
+        </div>
+
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/08/17/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day-04-%E5%BB%BA%E7%AB%8B%E6%A1%86%E6%9E%B6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">從0開始刻 淺談 Rails 的運作魔法 - Day 04 建立框架</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Ning</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
