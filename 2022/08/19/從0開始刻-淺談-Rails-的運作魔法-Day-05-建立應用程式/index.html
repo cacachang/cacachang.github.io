@@ -237,7 +237,7 @@
 <p>設定完就可以存檔進行下一步</p>
 </br>
 
-<h3 id="step-10-今天的最後一步了！"><a href="#step-10-今天的最後一步了！" class="headerlink" title="step 10 今天的最後一步了！"></a>step 10 今天的最後一步了！</h3><p>在 Quotation 的 config.ru 中重新設定，把 Rack 拿掉</p>
+<h3 id="step-10-重新設定-quotation-config"><a href="#step-10-重新設定-quotation-config" class="headerlink" title="step 10 重新設定 quotation config"></a>step 10 重新設定 quotation config</h3><p>在 quotation 的 config.ru 中重新設定，把 Rack 拿掉</p>
 <p>引入剛剛 config&#x2F;application.rb 檔中的設定</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">&#x27;./config/application&#x27;</span></span><br><span class="line">run Quotations::Application.new</span><br></pre></td></tr></table></figure>
 
