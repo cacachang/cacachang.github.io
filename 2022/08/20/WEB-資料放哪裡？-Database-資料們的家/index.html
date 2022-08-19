@@ -177,7 +177,7 @@
 <p>就像ikea的庫存管理系統會針對倉庫進行<br>新增家具（C）、讀取家具數量（R）、更新庫存(U)、刪除已賣出的家具(D)</p>
 </br>
 
-<h2 id="Model-我們與資料庫之間的翻譯蒟蒻-MVC架構中"><a href="#Model-我們與資料庫之間的翻譯蒟蒻-MVC架構中" class="headerlink" title="Model 我們與資料庫之間的翻譯蒟蒻(MVC架構中)"></a>Model 我們與資料庫之間的翻譯蒟蒻(MVC架構中)</h2><p>資料庫的指令跟一般程式長得不太一樣<br>當我們沒特地去學習<br>就不會知道要怎麼請資料庫幫我們撈出資料、運用資料<br>這時候，Model 就會是你的最佳翻譯器<br>跟 Model 下達程式指令，<br>他就會幫我們去跟資料庫溝通，<br>並且取出資料</p>
+<h2 id="Model-我們與資料庫之間的翻譯蒟蒻-MVC-架構中"><a href="#Model-我們與資料庫之間的翻譯蒟蒻-MVC-架構中" class="headerlink" title="Model - 我們與資料庫之間的翻譯蒟蒻 ( MVC 架構中)"></a>Model - 我們與資料庫之間的翻譯蒟蒻 ( MVC 架構中)</h2><p>資料庫的指令跟一般程式長得不太一樣<br>當我們沒特地去學習<br>就不會知道要怎麼請資料庫幫我們撈出資料、運用資料<br>這時候，Model 就會是你的最佳翻譯器<br>跟 Model 下達程式指令，<br>他就會幫我們去跟資料庫溝通，<br>並且取出資料</p>
 </br>
 
 <h2 id="資料型態"><a href="#資料型態" class="headerlink" title="資料型態"></a>資料型態</h2><p>資料表中的 table 大多會支援下列格式：</p>
@@ -191,18 +191,18 @@
 </br>
 
 <h2 id="資料庫正規化-normalization"><a href="#資料庫正規化-normalization" class="headerlink" title="資料庫正規化 normalization"></a>資料庫正規化 normalization</h2><p>可以把資料庫正規化想像成把資料庫裡的資料做精簡<br>目的在於降低資料的重複性以及相依性<br>減少資料庫的浪費，以及運算中不必要的麻煩</p>
-<p>正規化分成好幾個階段，但通常做到第三個階段就可以了</p>
+<p>正規化分成好幾個階段，讓我們來看一下每個階段該做的事情</p>
 </br>
 
-<h3 id="第一正規化"><a href="#第一正規化" class="headerlink" title="第一正規化"></a>第一正規化</h3><p>排除重複的資料，讓我們來看一下例子</p>
-<p>price、quatity、store這幾個欄位就不符合第一正規化的標準</p>
+<h3 id="第一正規化"><a href="#第一正規化" class="headerlink" title="第一正規化"></a>第一正規化</h3><p>排除重複的資料</p>
+<p>讓我們來看一下例子<br>price、quantity、store 這幾個欄位不符合第一正規化的標準</p>
 <table>
 <thead>
 <tr>
 <th>id</th>
 <th>product</th>
 <th>price</th>
-<th>quatity</th>
+<th>quantity</th>
 <th>store</th>
 </tr>
 </thead>
@@ -300,8 +300,76 @@
 </br>
 
 <h3 id="第二正規化"><a href="#第二正規化" class="headerlink" title="第二正規化"></a>第二正規化</h3><p>經過第一正規化後，雖然資料變精簡，但表格還是有重複性的東西</p>
-<p>第二正規化劃就是在減少資料的相依性<br>可以把相依性想成是同一個資料，對應到他該有的值</p>
-<p>像是 name 與 price，一樣的產品，對應到相同的價格<br>表格把三個分店的相同產品寫出來，造成了資料表的資料重複</p>
+<p>第二正規化劃就是在減少資料的相依性<br>相依性是指同一個資料，會對應到他該有的值</p>
+<p>三個分店有相同的 product 及 price，造成了資料表的資料重複</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>product</th>
+<th>price</th>
+<th>best price</th>
+<th>quantity</th>
+<th>store</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>chair</td>
+<td>500</td>
+<td>450</td>
+<td>100</td>
+<td>taipei</td>
+</tr>
+<tr>
+<td>1</td>
+<td>chair</td>
+<td>500</td>
+<td>450</td>
+<td>90</td>
+<td>taichung</td>
+</tr>
+<tr>
+<td>1</td>
+<td>chair</td>
+<td>500</td>
+<td>450</td>
+<td>120</td>
+<td>kaohsiung</td>
+</tr>
+<tr>
+<td>2</td>
+<td>arm chair</td>
+<td>2,000</td>
+<td>1,800</td>
+<td>80</td>
+<td>taipei</td>
+</tr>
+<tr>
+<td>2</td>
+<td>arm chair</td>
+<td>2,000</td>
+<td>1,800</td>
+<td>200</td>
+<td>taichung</td>
+</tr>
+<tr>
+<td>3</td>
+<td>couch</td>
+<td>3,000</td>
+<td>2,700</td>
+<td>60</td>
+<td>taichung</td>
+</tr>
+<tr>
+<td>3</td>
+<td>couch</td>
+<td>3,000</td>
+<td>2,700</td>
+<td>150</td>
+<td>kaohsiung</td>
+</tr>
+</tbody></table>
 <p>現在就讓我們把這些值在抽出來另外做成一個表格</p>
 <p>product 一個表格</p>
 <table>
@@ -408,7 +476,7 @@
 </tbody></table>
 </br>
 
-<h3 id="第三正規化"><a href="#第三正規化" class="headerlink" title="第三正規化"></a>第三正規化</h3><p>第三正規劃須消除「遞移相依」<br>遞移相依指的是表格中其中一個欄位跟 Primary key 是間接關聯的</p>
+<h3 id="第三正規化"><a href="#第三正規化" class="headerlink" title="第三正規化"></a>第三正規化</h3><p>第三正規劃須消除「遞移相依」<br>遞移相依指的是表格中其中一個欄位跟 Primary key 是間接關聯的(跟其中一個 table 有關聯，再跟 Primary key 有關聯)</p>
 <p>換句話說，第三正規化的目的在於<br>除了 Primary key 以外，每個欄位與每個欄位應該都是獨立不相關的</p>
 <p>以下面這個表格來舉例，price 與 best price 存在關聯性，並且與 product 存在間接關聯</p>
 <table>
@@ -492,7 +560,7 @@
 <td>2,700</td>
 </tr>
 </tbody></table>
-<p>第三正規化雖然讓每個資料表更加精簡<br>不過在查詢的時候會變得很沒效率(因為要一直依照關聯性去撈下個資料表)</p>
+<p>第三正規化雖然讓每個資料表更加精簡<br>不過在查詢的時候會變得很沒效率，要一直依照關聯性去撈下個資料表</p>
 <p>所以在設計資料表的時候也要考量一下需求<br>不用每次都照著正規化走</p>
 <p>基本的資料庫介紹就到這邊<br>下次我們再來看看資料庫的語法吧</p>
 <p>參考文獻<br><a class="link"   target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/ACID" >https://zh.wikipedia.org/zh-tw/ACID<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://aws.amazon.com/tw/relational-database/" >https://aws.amazon.com/tw/relational-database/<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://medium.com/@eric248655665/rdbms-vs-nosql-%E9%97%9C%E8%81%AF%E5%BC%8F%E8%B3%87%E6%96%99%E5%BA%AB-vs-%E9%9D%9E%E9%97%9C%E8%81%AF%E5%BC%8F%E8%B3%87%E6%96%99%E5%BA%AB-1423c9fbb91a" >https://medium.com/@eric248655665/rdbms-vs-nosql-%E9%97%9C%E8%81%AF%E5%BC%8F%E8%B3%87%E6%96%99%E5%BA%AB-vs-%E9%9D%9E%E9%97%9C%E8%81%AF%E5%BC%8F%E8%B3%87%E6%96%99%E5%BA%AB-1423c9fbb91a<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10229472" >https://ithelp.ithome.com.tw/articles/10229472<i class="fas fa-external-link-alt"></i></a></p>
