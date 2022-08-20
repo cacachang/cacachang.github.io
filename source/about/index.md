@@ -1,10 +1,10 @@
 ---
 title: about
-date: 2020-03-19 14:59:53
-comment: false
+date: 2022-08-17 00:41:18
 ---
+## About Me
 
-About Me
+<img src="https://i.imgur.com/sPHhND7.jpg" height=300>
 
 「人生就該不斷嘗試、挑戰」
 
@@ -13,7 +13,7 @@ About Me
 於是工程師之路就此啟程！
 
 
-Experience
+### Experience
 
 * 行銷顧問公司 (2021 Oct ~ 2022 Apr)
 
@@ -22,10 +22,7 @@ Experience
 * 東稻股份有限公司 (2019 Jul ~ 2020 Jul)
 
 
-Skill
+### Skill
 
 Ruby / Rails / JavaScript / React / SQL / Git / HTML / CSS / Tailwind
 
-Contact
-
-[![](https://i.imgur.com/JAnsKgx.gif  =50x50)](https://www.facebook.com/ning.chang.14/) [![](https://i.imgur.com/gVbpVqZ.gif  =50x50)](https://twitter.com/BeATravelmaker) [![](https://i.imgur.com/ftqugQ1.gif  =50x50)](a24701770@gmail.com) [![](https://i.imgur.com/C99UDFA.gif  =50x50)](https://github.com/cacachang)
