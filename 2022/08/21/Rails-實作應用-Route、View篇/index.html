@@ -197,10 +197,7 @@
 <h4 id="簡化寫法："><a href="#簡化寫法：" class="headerlink" title="簡化寫法："></a>簡化寫法：</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不同資料夾</span></span><br><span class="line">&lt;%= render <span class="string">&quot;/articles/form&quot;</span>, <span class="symbol">article:</span> <span class="variable">@article</span>  %&gt;</span><br><span class="line"><span class="comment"># 同個資料夾下</span></span><br><span class="line">&lt;%= render <span class="string">&quot;form&quot;</span>, <span class="symbol">blog:</span> <span class="variable">@blog</span> %&gt;</span><br></pre></td></tr></table></figure>
 
 <h4 id="Rails風格寫法：-xxxx"><a href="#Rails風格寫法：-xxxx" class="headerlink" title="Rails風格寫法：@xxxx"></a>Rails風格寫法：@xxxx</h4><p>下列兩條件成立，就可以用 @xxx 來 render</p>
-<ol>
-<li>Partial View 是 comments 資料夾裡的 comment</li>
-<li>Partial view 裡的 comment 是單數</li>
-</ol>
+<p>▶  Partial View 是 comments 資料夾裡的 comment<br>▶  Partial view 裡的 comment 是單數</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;% render <span class="variable">@comments</span> %&gt;</span><br></pre></td></tr></table></figure>
 <p>Partial View裡的 comment 不叫 comment，就得用原本的寫法加上as</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;% render <span class="symbol">partial:</span> <span class="string">&quot;comments/comment&quot;</span>, <span class="symbol">collection:</span> <span class="variable">@comments</span>, <span class="symbol">as:</span> <span class="symbol">:comment</span> %&gt; </span><br></pre></td></tr></table></figure>
@@ -220,7 +217,7 @@
 <h4 id="form-with"><a href="#form-with" class="headerlink" title="form_with"></a>form_with</h4><p>用來取代 form_for 跟 form_tag<br>參數可以接 model 跟 url</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= form_with <span class="symbol">model:</span> <span class="variable">@comment</span>, <span class="symbol">url:</span> article_comments_path(<span class="variable">@article</span>) <span class="keyword">do</span> |<span class="params">comment</span>| %&gt;</span><br><span class="line">&lt;%= form_with <span class="symbol">model:</span> [<span class="variable">@article</span>, <span class="variable">@comment</span>], <span class="symbol">local:</span> <span class="literal">false</span> <span class="keyword">do</span> |<span class="params">comment</span>| %&gt;</span><br></pre></td></tr></table></figure>
 
-<h4 id="link-to"><a href="#link-to" class="headerlink" title="link_to"></a>link_to</h4><p>效能沒有比<code>&lt;a herf&gt;&lt;/a&gt;</code>好，但是路徑填錯馬上就可以會有錯誤訊息</p>
+<h4 id="link-to"><a href="#link-to" class="headerlink" title="link_to"></a>link_to</h4><p>效能沒有比<code>&lt;a herf&gt;&lt;/a&gt;</code>好，但是路徑填錯馬上就會有錯誤訊息</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= link_to <span class="string">&#x27;新增文章&#x27;</span>, new_blog_path %&gt;</span><br></pre></td></tr></table></figure>
         </div>
 
