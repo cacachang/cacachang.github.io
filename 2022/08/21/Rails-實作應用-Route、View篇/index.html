@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Rails 實作的功能拆分 - 負責傳遞引導及傳遞資料的角色">
+    <meta name="author" content="Ning">
+    
+    <title>
+        
+            Rails 實作應用 - Route、View篇 |
+        
+        Ning&#39;s Lab
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://i.imgur.com/sPHhND7.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Welcome to Ning's Lab"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Ning&#39;s Lab
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Rails 實作應用 - Route、View篇</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="https://i.imgur.com/sPHhND7.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Ning</span>
+                        
+                            <span class="author-label">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-08-21 02:21:52</span>
+        <span class="mobile">2022-08-21 02:21</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h2 id="Routes"><a href="#Routes" class="headerlink" title="Routes"></a>Routes</h2><ul>
+<li><p>做功能的第一件事：想路徑</p>
+</li>
+<li><p>路徑命名：</p>
+<ul>
+<li>好好分類，直接放在根目錄下不適當</li>
+<li>名稱需簡單易懂</li>
+<li>有些方法不適合用既有的 routes，這時候就要另外做<ul>
+<li>ex.登入 session、註冊sign_up</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>路徑生成方法：</p>
+<p>  <strong>resource</strong><br>  <img src="https://i.imgur.com/UanDl3X.jpg"></p>
+<p>  <strong>member、collection</strong><br>  <img src="https://i.imgur.com/GZWRGDZ.jpg"></p>
+<p>  <strong>namespace、scope</strong><br>  <img src="https://i.imgur.com/7hhHuZJ.jpg"></p>
+<p>  <strong>shallow &amp;&amp; 二段式</strong><br>  <img src="https://i.imgur.com/AzObJoS.jpg"></p>
+</li>
+</ul>
+<hr>
+<h2 id="View"><a href="#View" class="headerlink" title="View"></a>View</h2><p>將資料呈現在畫面中</p>
+<p>基本原則：不要讓 View 去撈資料，盡量從 Controller 餵，如果需要撈，把方法寫在 View Helper</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> UsersHelper</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">current_user</span></span><br><span class="line">    User.find_by(<span class="symbol">id:</span> session[<span class="symbol">:user_session</span>])</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>如果把方法搬到 Controller 需要寫 helper_method</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ApplicationController</span> &lt; <span class="title class_ inherited__">ActionController::Base</span></span><br><span class="line">    helper_method <span class="symbol">:current_user</span></span><br><span class="line">    </span><br><span class="line">    private</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">current_user</span></span><br><span class="line">      User.find_by(<span class="symbol">id:</span> session[<span class="symbol">:user_session</span>])</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 Controller 要引用 View Helper 的方法，要使用 include</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BlogsController</span> &lt; <span class="title class_ inherited__">ApplicationController</span></span><br><span class="line">  <span class="keyword">include</span> UsersHelper</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">create</span></span><br><span class="line">    <span class="variable">@blog</span> = current_user.build_blog(blog_params)</span><br><span class="line">      <span class="keyword">if</span> <span class="variable">@blog</span>.save</span><br><span class="line">        redirect_to <span class="string">&quot;/@<span class="subst">#&#123;<span class="variable">@blog</span>.handler&#125;</span>&quot;</span>, <span class="symbol">notice:</span> <span class="string">&quot;已成功建立&quot;</span></span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        render <span class="symbol">:new</span></span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="檔案"><a href="#檔案" class="headerlink" title="檔案"></a>檔案</h3><h4 id="layout資料夾"><a href="#layout資料夾" class="headerlink" title="layout資料夾"></a>layout資料夾</h4><p>這邊是放全站的排版，所以如果有全站會用到的資料或樣式<br>就可以放在這邊 layout 資料夾下的 application.html.erb</p>
+<h4 id="一般-View"><a href="#一般-View" class="headerlink" title="一般 View"></a>一般 View</h4><p>會對應到 Controller 裡的 action<br>所以檔名要跟 action 一樣</p>
+<h4 id="Partial-View"><a href="#Partial-View" class="headerlink" title="Partial View"></a>Partial View</h4><ol>
+<li>檔名前面要加_，讓 Rails 分辨(_form.html.erb)</li>
+<li>渲染格式 render + 路徑</li>
+</ol>
+<h4 id="完整寫法："><a href="#完整寫法：" class="headerlink" title="完整寫法："></a>完整寫法：</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;% render <span class="symbol">partial:</span> <span class="string">&quot;comments/comment&quot;</span>, <span class="symbol">collection:</span> <span class="variable">@comments</span> %&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="簡化寫法："><a href="#簡化寫法：" class="headerlink" title="簡化寫法："></a>簡化寫法：</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不同資料夾</span></span><br><span class="line">&lt;%= render <span class="string">&quot;/articles/form&quot;</span>, <span class="symbol">article:</span> <span class="variable">@article</span>  %&gt;</span><br><span class="line"><span class="comment"># 同個資料夾下</span></span><br><span class="line">&lt;%= render <span class="string">&quot;form&quot;</span>, <span class="symbol">blog:</span> <span class="variable">@blog</span> %&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Rails風格寫法：-xxxx"><a href="#Rails風格寫法：-xxxx" class="headerlink" title="Rails風格寫法：@xxxx"></a>Rails風格寫法：@xxxx</h4><p>下列兩條件成立，就可以用 @xxx 來 render</p>
+<ol>
+<li>Partial View 是 comments 資料夾裡的 comment</li>
+<li>Partial view 裡的 comment 是單數</li>
+</ol>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;% render <span class="variable">@comments</span> %&gt;</span><br></pre></td></tr></table></figure>
+<p>Partial View裡的 comment 不叫 comment，就得用原本的寫法加上as</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;% render <span class="symbol">partial:</span> <span class="string">&quot;comments/comment&quot;</span>, <span class="symbol">collection:</span> <span class="variable">@comments</span>, <span class="symbol">as:</span> <span class="symbol">:comment</span> %&gt; </span><br></pre></td></tr></table></figure>
+
+<h3 id="View-helper"><a href="#View-helper" class="headerlink" title="View helper"></a>View helper</h3><p>form 家族</p>
+<ul>
+<li>如果參數接 model，而這包資料有內容，會自動抓取裡面的內容填到表格中</li>
+<li>自動生成 token，token 的目的是要防止駭客知道路徑及 action 後，寫程式攻擊，這邊要設定 token 來篩選驗證</li>
+<li>會產生類似 hash 的物件，裡面包涵 table 的 key</li>
+</ul>
+<h4 id="form-tag"><a href="#form-tag" class="headerlink" title="form_tag"></a>form_tag</h4><p>參數接url，適合路徑導外部連結的表單</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= form_tag <span class="string">&quot;/books/new&quot;</span> <span class="keyword">do</span> |<span class="params">form</span>| %&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;%= form.label <span class="symbol">:title</span> %&gt;</span><br><span class="line">        &lt;%= form.text_field <span class="symbol">:title</span> %&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt; </span></span><br><span class="line"><span class="regexp">    &lt;div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;%= form.label :content %&gt;</span></span><br><span class="line"><span class="regexp">        &lt;%= form.text_area :content %&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/div</span>&gt;</span><br><span class="line">    &lt;%= form.submit %&gt;</span><br><span class="line">&lt;% <span class="keyword">end</span> %&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="form-for"><a href="#form-for" class="headerlink" title="form_for"></a>form_for</h4><p>參數接 model，適合需要撈資料的表單(ex.編輯)</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= form_for <span class="variable">@book</span> <span class="keyword">do</span> |<span class="params">form</span>| %&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;%= form.label <span class="symbol">:title</span> %&gt;</span><br><span class="line">        &lt;%= form.text_field <span class="symbol">:title</span> %&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt; </span></span><br><span class="line"><span class="regexp">    &lt;div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;%= form.label :content %&gt;</span></span><br><span class="line"><span class="regexp">        &lt;%= form.text_area :content %&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/div</span>&gt;</span><br><span class="line">    &lt;%= form.submit %&gt;</span><br><span class="line">&lt;% <span class="keyword">end</span> %&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="form-with"><a href="#form-with" class="headerlink" title="form_with"></a>form_with</h4><p>用來取代 form_for 跟 form_tag<br>參數可以接 model 跟 url</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= form_with <span class="symbol">model:</span> <span class="variable">@comment</span>, <span class="symbol">url:</span> article_comments_path(<span class="variable">@article</span>) <span class="keyword">do</span> |<span class="params">comment</span>| %&gt;</span><br><span class="line">&lt;%= form_with <span class="symbol">model:</span> [<span class="variable">@article</span>, <span class="variable">@comment</span>], <span class="symbol">local:</span> <span class="literal">false</span> <span class="keyword">do</span> |<span class="params">comment</span>| %&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="link-to"><a href="#link-to" class="headerlink" title="link_to"></a>link_to</h4><p>效能沒有比<code>&lt;a herf&gt;&lt;/a&gt;</code>好，但是路徑填錯馬上就可以會有錯誤訊息</p>
+<p>&#96;&#96;&#96;ruby<br>&lt;%&#x3D; link_to ‘新增文章’, new_blog_path %&gt;</p>
+
+        </div>
+
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/08/20/WEB-%E8%B3%87%E6%96%99%E6%94%BE%E5%93%AA%E8%A3%A1%EF%BC%9F-Database-%E8%B3%87%E6%96%99%E5%80%91%E7%9A%84%E5%AE%B6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">WEB 資料放哪裡？資料們的家 - Database資料庫</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Ning</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
