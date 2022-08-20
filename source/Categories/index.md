@@ -1,9 +1,7 @@
 ---
-title: Categories
-date: 2022-08-21 04:23:50
+title: categories
+date: 2022-08-21 04:42:22
 ---
-
-
 ## Rails
 
 [Rails 實作應用 - Model 篇](https://ninglab.com/2022/08/21/Rails-%E5%AF%A6%E4%BD%9C%E6%87%89%E7%94%A8-Model-%E7%AF%87/)
