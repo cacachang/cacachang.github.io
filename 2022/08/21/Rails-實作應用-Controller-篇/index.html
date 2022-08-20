@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="程式實習生日常，紀錄隱藏在字元裡的小細節及思維邏輯">
+    <meta name="description" content="Rails 實作的功能拆分 - 運算處理中心 Controller">
     <meta name="author" content="Ning">
     
     <title>
@@ -142,17 +142,6 @@
     </span>
     
     
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/Rails-%E5%AF%A6%E4%BD%9C%E7%9A%84%E5%8A%9F%E8%83%BD%E6%8B%86%E5%88%86-%E9%81%8B%E7%AE%97%E8%99%95%E7%90%86%E4%B8%AD%E5%BF%83-Controller/">Rails 實作的功能拆分 - 運算處理中心 Controller</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
 
     
     
@@ -177,7 +166,7 @@
 <h3 id="功能應用"><a href="#功能應用" class="headerlink" title="功能應用"></a>功能應用</h3><h4 id="callback"><a href="#callback" class="headerlink" title="callback"></a>callback</h4><p>多個方法都會做的動作，就會拉出來做callback<br>動作通常會被放在private中</p>
 <p>以下舉例</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># show、unlock方法，在執行前需要去找 article</span></span><br><span class="line">before_action <span class="symbol">:find_article</span>, <span class="symbol">only:</span> [<span class="symbol">:show</span>, <span class="symbol">:unlock</span>]</span><br><span class="line"></span><br><span class="line">private</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">find_article</span></span><br><span class="line">  <span class="variable">@article</span> = Article.find(params[<span class="symbol">:id</span>])</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h4 id="清洗資料"><a href="#清洗資料" class="headerlink" title="清洗資料"></a>清洗資料</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 針對要資料做清洗，避免存入髒資料</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">params_article</span></span><br><span class="line">  params.<span class="keyword">require</span>(<span class="symbol">:article</span>).permit(<span class="symbol">:title</span>, <span class="symbol">:content</span>, <span class="symbol">:pincode</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在一對多、多對多的關聯中，存入需要塞其他資料的話(像是 article 存入前要有 user_id )，可以使用merge</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">comment_params</span></span><br><span class="line">  params.<span class="keyword">require</span>(<span class="symbol">:comment</span>).permit(<span class="symbol">:content</span>).merge(<span class="symbol">user:</span> current_user)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h4 id="清洗資料"><a href="#清洗資料" class="headerlink" title="清洗資料"></a>清洗資料</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 針對要資料做清洗，避免存入髒資料</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">params_article</span></span><br><span class="line">  params.<span class="keyword">require</span>(<span class="symbol">:article</span>).permit(<span class="symbol">:title</span>, <span class="symbol">:content</span>, <span class="symbol">:pincode</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在一對多、多對多的關聯中，存入需要塞其他資料的話(像是 comment 存入前要有 user )，可以使用merge</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">comment_params</span></span><br><span class="line">  params.<span class="keyword">require</span>(<span class="symbol">:comment</span>).permit(<span class="symbol">:content</span>).merge(<span class="symbol">user:</span> current_user)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
 <h4 id="軟刪除"><a href="#軟刪除" class="headerlink" title="軟刪除"></a>軟刪除</h4><p>講白話一點，就是這個刪除是演出來的<br>這筆資料並不會被刪除</p>
 <p>那這筆資料到底發生了什麼事？<br>首先，我們會有 deleted_at 欄位<br>在刪除的時候把確切時間寫入<br>之後再將這筆資料隱藏起來</p>
@@ -205,17 +194,24 @@
         
 
         
-            <ul class="post-tags-box">
-                
-                    <li class="tag-item">
-                        <a href="/tags/Rails-%E5%AF%A6%E4%BD%9C%E7%9A%84%E5%8A%9F%E8%83%BD%E6%8B%86%E5%88%86-%E9%81%8B%E7%AE%97%E8%99%95%E7%90%86%E4%B8%AD%E5%BF%83-Controller/">#Rails 實作的功能拆分 - 運算處理中心 Controller</a>&nbsp;
-                    </li>
-                
-            </ul>
-        
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/08/21/Rails-%E5%AF%A6%E4%BD%9C%E6%87%89%E7%94%A8-Model-%E7%AF%87/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Rails 實作應用 - Model 篇</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">

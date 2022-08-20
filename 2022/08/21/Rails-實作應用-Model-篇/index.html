@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="程式實習生日常，紀錄隱藏在字元裡的小細節及思維邏輯">
+    <meta name="author" content="Ning">
+    
+    <title>
+        
+            Rails 實作應用 - Model 篇 |
+        
+        Ning&#39;s Lab
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://i.imgur.com/sPHhND7.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Welcome to Ning's Lab"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Ning&#39;s Lab
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Rails 實作應用 - Model 篇</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="https://i.imgur.com/sPHhND7.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Ning</span>
+                        
+                            <span class="author-label">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-08-21 03:28:43</span>
+        <span class="mobile">2022-08-21 03:28</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>我們會把這些東西放在Model</p>
+<ol>
+<li>商業邏輯方法</li>
+<li>資料驗證(寫入資料庫前)</li>
+<li>資料表關聯</li>
+</ol>
+<h3 id="商業邏輯方法"><a href="#商業邏輯方法" class="headerlink" title="商業邏輯方法"></a>商業邏輯方法</h3><p>簡短方法可用 scope 來寫<br>*小提醒：where 都放在 Model 寫，不要放 Controller</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scope <span class="symbol">:available</span>, -&gt; &#123; where(<span class="symbol">deleted_at:</span> <span class="literal">nil</span>) &#125;</span><br></pre></td></tr></table></figure>
+<p>預設方法：default_scope (設定就會套用在所有的搜尋中)</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default_scope &#123; where(<span class="symbol">deleted_at:</span> <span class="literal">nil</span>) &#125;</span><br></pre></td></tr></table></figure>
+<p>解除預設方法：unscope(:where)</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scope <span class="symbol">:available</span>, -&gt; &#123; unscope(<span class="symbol">:where</span>).where(<span class="symbol">deleted_at:</span> <span class="literal">nil</span>) &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="資料驗證"><a href="#資料驗證" class="headerlink" title="資料驗證"></a>資料驗證</h3><p>針對寫入的資料做驗證，不符合就無法存入資料庫中</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">validates <span class="symbol">:title</span>, <span class="symbol">presence:</span> <span class="literal">true</span>, </span><br><span class="line">                  <span class="symbol">length:</span> &#123; <span class="symbol">minimum:</span> <span class="number">2</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="資料表關聯"><a href="#資料表關聯" class="headerlink" title="資料表關聯"></a>資料表關聯</h3><p>讓 table 與 table 之間產生方法來互相存取，並非真的有關聯</p>
+<h4 id="一對一"><a href="#一對一" class="headerlink" title="一對一"></a>一對一</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># user.rb</span></span><br><span class="line"><span class="comment"># 一個 user 可以擁有一個 blog</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span> &lt; <span class="title class_ inherited__">ApplicationRecord</span></span><br><span class="line">  has_one <span class="symbol">:blog</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># blog.rb</span></span><br><span class="line"><span class="comment"># blog 屬於 user</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Blog</span> &lt; <span class="title class_ inherited__">ApplicationRecord</span></span><br><span class="line">  belongs_to <span class="symbol">:user</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="一對多"><a href="#一對多" class="headerlink" title="一對多"></a>一對多</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># user.rb</span></span><br><span class="line"><span class="comment"># 一個 user 可以擁有很多 article </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span> &lt; <span class="title class_ inherited__">ApplicationRecord</span></span><br><span class="line">  has_many <span class="symbol">:articles</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># article.rb</span></span><br><span class="line"><span class="comment"># article 屬於 user</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Article</span> &lt; <span class="title class_ inherited__">ApplicationRecord</span></span><br><span class="line">  belongs_to <span class="symbol">:user</span>  </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="多對多"><a href="#多對多" class="headerlink" title="多對多"></a>多對多</h4><ul>
+<li>如果 has_many 的 table 與 has_one 的 table 重複，要使用 source 來指定foreign key</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># user.rb</span></span><br><span class="line"><span class="comment"># user 可以喜歡很多篇 articles</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span> &lt; <span class="title class_ inherited__">ApplicationRecord</span></span><br><span class="line">  has_many <span class="symbol">:like_articles</span></span><br><span class="line">  has_many <span class="symbol">:liked_articles</span>, <span class="symbol">through:</span> <span class="symbol">:like_articles</span>, <span class="symbol">source:</span> <span class="symbol">:article</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># article.rb</span></span><br><span class="line"><span class="comment"># article 可以被很多個 user 喜歡</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Article</span> &lt; <span class="title class_ inherited__">ApplicationRecord</span></span><br><span class="line">  has_many <span class="symbol">:like_articles</span></span><br><span class="line">  has_many <span class="symbol">:users</span>, <span class="symbol">through:</span> <span class="symbol">:like_articles</span>          </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># like_article.rb</span></span><br><span class="line"><span class="comment"># 透過第三方 table 來存取兩個 table 的資料</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LikeArticle</span> &lt; <span class="title class_ inherited__">ApplicationRecord</span></span><br><span class="line">  belongs_to <span class="symbol">:user</span></span><br><span class="line">  belongs_to <span class="symbol">:article</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="一旦定義了關聯，就會產出相關方法"><a href="#一旦定義了關聯，就會產出相關方法" class="headerlink" title="一旦定義了關聯，就會產出相關方法"></a>一旦定義了關聯，就會產出相關方法</h4><p>以上述 user 來舉例</p>
+<p>設定 has_many，會得到四個方法</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">增加 article 跟 article= 方法</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">u1.articles</span></span><br><span class="line">  Article Load (0.5ms)  SELECT &quot;articles&quot;.* FROM &quot;articles&quot; WHERE &quot;articles&quot;.&quot;deleted_at&quot; IS NULL AND &quot;articles&quot;.&quot;user_id&quot; = ? /* loading for inspect */ LIMIT ?  [[&quot;user_id&quot;, 1], [&quot;LIMIT&quot;, 11]]</span><br><span class="line"><span class="meta prompt_">  </span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">u1.articles = [t1]</span></span><br><span class="line">  Article Load (0.3ms)  SELECT &quot;articles&quot;.* FROM &quot;articles&quot; WHERE &quot;articles&quot;.&quot;deleted_at&quot; IS NULL AND &quot;articles&quot;.&quot;user_id&quot; = ?  [[&quot;user_id&quot;, 1]]</span><br><span class="line">  TRANSACTION (0.1ms)  begin transaction</span><br><span class="line">  Article Update (0.7ms)  UPDATE &quot;articles&quot; SET &quot;updated_at&quot; = ?, &quot;user_id&quot; = ? WHERE &quot;articles&quot;.&quot;id&quot; = ?  [[&quot;updated_at&quot;, &quot;2022-08-20 17:05:13.955092&quot;], [&quot;user_id&quot;, 1], [&quot;id&quot;, 1]]</span><br><span class="line">  TRANSACTION (1.0ms)  commit transaction</span><br><span class="line"><span class="meta prompt_">  </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">增加 buile_article 跟 create_article 方法</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"></span></span><br></pre></td></tr></table></figure>
+<h4 id="table欄位-增加、修改、刪除"><a href="#table欄位-增加、修改、刪除" class="headerlink" title="table欄位 增加、修改、刪除"></a>table欄位 增加、修改、刪除</h4><p>專案做到後面一定會有欄位增減的問題<br>這時候 migration 就很好用</p>
+<p>相關設定可以參考<a class="link"   target="_blank" rel="noopener" href="https://guides.rubyonrails.org/active_record_migrations.html" >官方網站<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">終端機指令</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">rails g migration Add_Delted_At_To_Article</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># db/migrate/xxxxxxx_add_delted_at_to_article</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AddDeltedAtToArticle</span> &lt; <span class="title class_ inherited__">ActiveRecord::Migration</span>[<span class="number">6.1</span>]</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">change</span></span><br><span class="line">    <span class="comment"># 增加欄位</span></span><br><span class="line">    add_column <span class="symbol">:articles</span>, <span class="symbol">:deleted_at</span>, <span class="symbol">:datetime</span></span><br><span class="line">    add_index <span class="symbol">:articles</span>, <span class="symbol">:deleted_at</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="小補充：index"><a href="#小補充：index" class="headerlink" title="小補充：index"></a>小補充：index</h5><p>使用 index 可以增加效率，但因為多了檢索欄位，會多佔一些空間</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">建立 model 時可以這樣設定</span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">rails g model Article title content deleted_at:datetime:index</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="密碼加密"><a href="#密碼加密" class="headerlink" title="密碼加密"></a>密碼加密</h4><p>密碼相對其他資料機密且重要，所以我們會在對密碼做雙重加密的動作</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">private</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt_password</span></span><br><span class="line">  <span class="comment"># step1 導入 digest 模組</span></span><br><span class="line">  <span class="keyword">require</span> <span class="string">&#x27;digest&#x27;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># step2 加鹽 salting (讓密碼更複雜，難以被破解)</span></span><br><span class="line">  <span class="comment"># 加上 self 是指 user(class) 的 password</span></span><br><span class="line">  pw = <span class="string">&quot;xx-<span class="subst">#&#123;<span class="variable language_">self</span>.password&#125;</span>-yy&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># step3 加密</span></span><br><span class="line">  <span class="variable language_">self</span>.password = Digest::<span class="variable constant_">SHA1</span>.hexdigest(pw)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/08/21/Rails-%E5%AF%A6%E4%BD%9C%E6%87%89%E7%94%A8-Controller-%E7%AF%87/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Rails 實作應用 - Controller 篇</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Ning</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
