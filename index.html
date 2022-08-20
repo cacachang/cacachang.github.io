@@ -21,7 +21,7 @@
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
     KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en"};
-    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://i.imgur.com/sPHhND7.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Welcome to Ning's Lab"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://i.imgur.com/sPHhND7.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Welcome to Ning's Lab"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
 <meta name="generator" content="Hexo 6.2.0"></head>
@@ -38,82 +38,13 @@
 <main class="page-container">
 
     
-        $first-screen-font-size = 2rem;
-$first-screen-icon-size = 1.6rem;
-
-$temp-img = hexo-config('style.first_screen.background_img');
-$first-screen-img = $temp-img ? $temp-img:'/images/bg.svg';
-
-.first-screen-container {
-  position: relative;
-  box-sizing: border-box;
-  width: 100%;
-  overflow: hidden;
-  background: url($first-screen-img) center center / cover no-repeat;
-  background-position-y: $header-height;
-
-
-  +keep-tablet() {
-    background-position-y: $header-height * 0.9;
-  }
-
-  +keep-mobile() {
-    background-position-y: $header-height * 0.8;
-  }
-
-  .content {
-    position: relative;
-    box-sizing: border-box;
-    width: 80%;
-    height: 90%;
-
-    .description {
-      font-weight: bold;
-      font-size: $first-screen-font-size;
-      line-height: 1.8;
-      text-align: center;
-      color: var(--default-text-color);
-
-
-      +keep-tablet() {
-        font-size: $first-screen-font-size * 0.9;
-      }
-    }
-
-
-    .s-icon-list {
-      position: absolute;
-      bottom: 0;
-      font-size: $first-screen-icon-size;
-      text-align: center;
-
-      +keep-tablet() {
-        font-size: $first-screen-icon-size * 0.9;
-      }
-
-      .s-icon-item {
-        margin-right: 20px;
-        cursor: pointer;
-        line-height: 2;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-      }
-
-    }
-  }
-}
-
-    
 
     <div class="page-main-content">
 
         <div class="page-main-content-top">
             <header class="header-wrapper">
 
-    <div class="header-content has-first-screen">
+    <div class="header-content">
         <div class="left">
             
             <a class="logo-title" href="/">
