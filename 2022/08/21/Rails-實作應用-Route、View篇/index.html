@@ -221,8 +221,7 @@
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= form_with <span class="symbol">model:</span> <span class="variable">@comment</span>, <span class="symbol">url:</span> article_comments_path(<span class="variable">@article</span>) <span class="keyword">do</span> |<span class="params">comment</span>| %&gt;</span><br><span class="line">&lt;%= form_with <span class="symbol">model:</span> [<span class="variable">@article</span>, <span class="variable">@comment</span>], <span class="symbol">local:</span> <span class="literal">false</span> <span class="keyword">do</span> |<span class="params">comment</span>| %&gt;</span><br></pre></td></tr></table></figure>
 
 <h4 id="link-to"><a href="#link-to" class="headerlink" title="link_to"></a>link_to</h4><p>效能沒有比<code>&lt;a herf&gt;&lt;/a&gt;</code>好，但是路徑填錯馬上就可以會有錯誤訊息</p>
-<p>&#96;&#96;&#96;ruby<br>&lt;%&#x3D; link_to ‘新增文章’, new_blog_path %&gt;</p>
-
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= link_to <span class="string">&#x27;新增文章&#x27;</span>, new_blog_path %&gt;</span><br></pre></td></tr></table></figure>
         </div>
 
         
