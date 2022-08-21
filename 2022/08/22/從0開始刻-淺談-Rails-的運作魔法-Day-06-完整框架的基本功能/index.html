@@ -199,7 +199,7 @@
 
 <h4 id="step-5-重新安裝套件"><a href="#step-5-重新安裝套件" class="headerlink" title="step 5 重新安裝套件"></a>step 5 重新安裝套件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">gem build rainbow.gemspec</span></span><br><span class="line"></span><br><span class="line">  Successfully built RubyGem</span><br><span class="line">  Name: rainbow</span><br><span class="line">  Version: 0.0.1</span><br><span class="line">  File: rainbow-0.0.1.gem</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">gem install rainbow-0.0.1.gem</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="step-4-測試-array"><a href="#step-4-測試-array" class="headerlink" title="step 4 測試 array"></a>step 4 測試 array</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /quotations/array.rb</span></span><br><span class="line">a = [<span class="number">1</span>, <span class="number">3</span>]</span><br><span class="line">p a.sum /<span class="regexp">/ 4</span></span><br></pre></td></tr></table></figure>
+<h4 id="step-4-測試-array"><a href="#step-4-測試-array" class="headerlink" title="step 4 測試 array"></a>step 4 測試 array</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /quotations/array.rb</span></span><br><span class="line">a = [<span class="number">1</span>, <span class="number">3</span>]</span><br><span class="line">p a.sum <span class="comment"># 4</span></span><br></pre></td></tr></table></figure>
 
 </br>
 
@@ -216,7 +216,7 @@
 
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /rainbow/test</span></span><br><span class="line">&gt; test_helper.rb</span><br></pre></td></tr></table></figure>
 
-<p>如果要做測試，會需要用到測試工具<br>接下來我們就把 rack&#x2F;test 跟 minitest 這兩個測試工具載入</p>
+<p>做測試會需要用到測試工具<br>接下來我們就把 rack&#x2F;test 跟 minitest 這兩個測試工具載入</p>
 <p>語法解釋：</p>
 <p>▶ LOAD_PATH 是 Ruby 用來存放檔案路徑的模組<br>當接收到 request 請求時<br>Ruby 就會去搜尋同樣名字的檔案並載入</p>
 <p>▶ expand_path 會把相對路徑轉換成絕對路徑，當檔案有任何變動時，比較不會找錯檔案</p>
@@ -229,9 +229,9 @@
 
 </br>
 
-<h2 id="使用其他-server"><a href="#使用其他-server" class="headerlink" title="使用其他 server"></a>使用其他 server</h2><p>我們目前使用的是 Ruby 內建的 server(WEBRick)<br>但預設的 WEBRick 並不會隨著檔案變更跟著改變<br>所以每次變更都要重啟 server</p>
-<p>所以我們可以用其他 Application Server 代替</p>
-<p>Unicorn會自動去尋找 config.ru 檔並建立起 server<br>我們這次就用 Unicorn 吧</p>
+<h2 id="使用其他-server"><a href="#使用其他-server" class="headerlink" title="使用其他 server"></a>使用其他 server</h2><p>我們目前使用的是 Ruby 內建的 server(WEBRick)<br>但預設的 WEBRick 並不會同步改變顯示畫面<br>所以每次變更都要重啟 server</p>
+<p>我們可以用其他 Application Server 代替</p>
+<p>Unicorn 會自動去尋找 config.ru 檔並建立起 server<br>我們就來用 Unicorn 吧</p>
 <h4 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h4><p>安裝 Unicorn</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; gem install unicorn</span><br><span class="line"></span><br><span class="line">Fetching unicorn-<span class="number">6.1</span>.<span class="number">0</span>.gem</span><br><span class="line">Fetching kgio-<span class="number">2.11</span>.<span class="number">4</span>.gem</span><br><span class="line">Fetching raindrops-<span class="number">0.20</span>.<span class="number">0</span>.gem</span><br><span class="line">Building native extensions. This could take a <span class="keyword">while</span>...</span><br><span class="line">Successfully installed kgio-<span class="number">2.11</span>.<span class="number">4</span></span><br><span class="line">....</span><br><span class="line"><span class="number">3</span> gems installed</span><br></pre></td></tr></table></figure>
 
@@ -245,8 +245,8 @@
 <p><img src="https://i.imgur.com/ciCvdM6.jpg"></p>
 </br>
 
-<h2 id="排除版控"><a href="#排除版控" class="headerlink" title="排除版控"></a>排除版控</h2><p>一開始安裝 rainbow 時<br>會送給我們一個 .gitignore檔</p>
-<p>.gitignore檔 主要是收錄不想進版控的檔案<br>舉凡金鑰、套件的檔案(rainbow-0.0.1.gem)</p>
+<h2 id="排除版控"><a href="#排除版控" class="headerlink" title="排除版控"></a>排除版控</h2><p>一開始安裝 rainbow 時<br>會送給我們一個 .gitignore 檔</p>
+<p>.gitignore 檔 主要是收錄不想進版控的檔案<br>舉凡金鑰、套件的檔案(rainbow-0.0.1.gem)</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rainbow-*.gem</span><br></pre></td></tr></table></figure>
 
 </br>
