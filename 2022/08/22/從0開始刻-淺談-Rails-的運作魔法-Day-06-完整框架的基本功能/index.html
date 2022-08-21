@@ -186,7 +186,7 @@
 
 <p>📃 web小辭典：</p>
 <p>▶ ActiveSupport：Rails 中的工具函式庫，像是 Ruby 的擴充工具<br>常見的 present?、blank?、presence 都是方法之一</p>
-<p>▶ 繼承練：<br>Obj 為 classA new 出來的實體物件，會繼承 classA 的所有方法<br>而 Object 為 classA 的 superclass<br>所以 classA 會繼承 Object 的所有方法</p>
+<p>▶ 繼承鏈：<br>Obj 為 classA new 出來的實體物件，會繼承 classA 的所有方法<br>而 Object 為 classA 的 superclass<br>所以 classA 會繼承 Object 的所有方法</p>
 <p>可以把繼承鏈想像成種族<br>最上層的 Object 是 classA、Module、Obj 的遠古祖先<br>這些後輩都會有他留下來的基因(方法)<br>classA 是其中一種種族，obj 屬於 classA 種族<br>因此 obj 帶有 classA 的基因(方法)<br>依此類推</p>
 <p><img src="https://i.imgur.com/uiUj7sQ.jpg"></p>
 <h4 id="step-2-讓所有應用程式都可以使用陣列方法"><a href="#step-2-讓所有應用程式都可以使用陣列方法" class="headerlink" title="step 2 讓所有應用程式都可以使用陣列方法"></a>step 2 讓所有應用程式都可以使用陣列方法</h4><p>把 Array.rb require 到 rainbow.rb 中<br>到時候 gem 安裝的時候就會一起載入囉</p>
