@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="程式實習生日常，紀錄隱藏在字元裡的小細節及思維邏輯">
+    <meta name="author" content="Ning">
+    
+    <title>
+        
+            從0開始刻 淺談 Rails 的運作魔法 - Day 07 建立 Controller |
+        
+        Ning&#39;s Lab
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://i.imgur.com/sPHhND7.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Welcome to Ning's Lab"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Ning&#39;s Lab
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">從0開始刻 淺談 Rails 的運作魔法 - Day 07 建立 Controller</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="https://i.imgur.com/sPHhND7.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Ning</span>
+                        
+                            <span class="author-label">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-08-23 04:42:05</span>
+        <span class="mobile">2022-08-23 04:42</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <p>框架終於有一點雛形了<br>相關的gem也都安裝完成了<br>接下來就是做 Controller 啦！</p>
+<p>首先，我們先將 version 升成 0.0.2</p>
+<h2 id="變更-version"><a href="#變更-version" class="headerlink" title="變更 version"></a>變更 version</h2><h4 id="step-1-刪除-rainbow-0-0-1-gem"><a href="#step-1-刪除-rainbow-0-0-1-gem" class="headerlink" title="step 1 刪除 rainbow-0.0.1.gem"></a>step 1 刪除 rainbow-0.0.1.gem</h4><h4 id="step-2-git-add"><a href="#step-2-git-add" class="headerlink" title="step 2 git add ."></a>step 2 git add .</h4><h4 id="step-3-更改-version-為-0-0-2"><a href="#step-3-更改-version-為-0-0-2" class="headerlink" title="step 3 更改 version 為 0.0.2"></a>step 3 更改 version 為 0.0.2</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> Rainbow</span><br><span class="line">  <span class="variable constant_">VERSION</span> = <span class="string">&quot;0.0.2&quot;</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="step-4-重新安裝套件"><a href="#step-4-重新安裝套件" class="headerlink" title="step 4 重新安裝套件"></a>step 4 重新安裝套件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">gem build rainbow.gemspec</span></span><br><span class="line"></span><br><span class="line">  Successfully built RubyGem</span><br><span class="line">  Name: rainbow</span><br><span class="line">  Version: 0.0.2</span><br><span class="line">  File: rainbow-0.0.2.gem</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">gem install rainbow-0.0.2.gem</span></span><br><span class="line"></span><br><span class="line">  Successfully installed rainbow-0.0.2</span><br><span class="line">  Parsing documentation for rainbow-0.0.2</span><br><span class="line">  Installing ri documentation for rainbow-0.0.2</span><br><span class="line">  Done installing documentation for rainbow after 0 seconds</span><br><span class="line">  1 gem installed</span><br></pre></td></tr></table></figure>
+
+<h4 id="step-5-quotation-也要記得更新"><a href="#step-5-quotation-也要記得更新" class="headerlink" title="step 5 quotation 也要記得更新"></a>step 5 quotation 也要記得更新</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">bundle update rainbow</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Rainbow-設定-Controller"><a href="#Rainbow-設定-Controller" class="headerlink" title="Rainbow 設定 Controller"></a>Rainbow 設定 Controller</h3><p>當請求抵達 web server 及 application server 時</p>
+<p>Rack 會把程式碼傳過去，這時候需要知道哪個 Controller 及 action 要處理這個請求</p>
+<p><a href="https://ninglab.com/2022/08/16/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day02-Rack/">點我複習 Rack</a></p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /rainbow/lib/rainbow.rb</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">&quot;rainbow/routing&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Rainbow</span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">Application</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">call</span>(<span class="params">env</span>)</span><br><span class="line">      <span class="comment"># Controller 是 class，而 class 為保留字，所以這邊用 klass 代替</span></span><br><span class="line">      klass, act = get_controller_and_action(env)</span><br><span class="line">      controller = klass.new(env)</span><br><span class="line">      text = controller.send(act)</span><br><span class="line">      [</span><br><span class="line">        <span class="number">200</span>, </span><br><span class="line">        &#123;<span class="string">&#x27;Content-Type&#x27;</span> =&gt; <span class="string">&#x27;text/html&#x27;</span>&#125;,</span><br><span class="line">        <span class="comment"># 記得這裡要換成 text</span></span><br><span class="line">        [text]</span><br><span class="line">      ]</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Controller</span></span><br><span class="line">      <span class="comment"># 初始化載入環境變數</span></span><br><span class="line">      <span class="keyword">def</span> <span class="title function_">initialize</span>(<span class="params">env</span>)</span><br><span class="line">        <span class="variable">@env</span> = env </span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">def</span> <span class="title function_">env</span></span><br><span class="line">        <span class="variable">@env</span></span><br><span class="line">      <span class="keyword">end</span> </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">      </span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>📃 web小辭典： </p>
+<p>▶ Rack Env: 一個 hash 物件，裡面含有 HTTP request、rack資訊、其他資訊(ex. WEBRick增加的資料)</p>
+<p><img src="https://i.imgur.com/D35BmW3.jpg"></p>
+<p>▶ PATH_INFO: 以偽靜態頁面方式運作，不包含 query 參數(放置於?後面)的 URL，會告訴 Rails 要用哪個 Controller 跟 action<br><img src="https://i.imgur.com/9zfgqw4.jpg"></p>
+<h3 id="Rainbow-設定-routing"><a href="#Rainbow-設定-routing" class="headerlink" title="Rainbow 設定 routing"></a>Rainbow 設定 routing</h3><p>在 rainbow&#x2F;lib&#x2F;rainbow 新增 routing.rb<br>設置路徑，把路徑拆開拿到 Controller 及 action</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /rainbow/lib/rainbow/routing.rb</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> Rainbow</span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">Application</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_controller_and_action</span>(<span class="params">env</span>)</span><br><span class="line">        </span><br><span class="line">      <span class="comment"># 把路徑分成四份，分為 Controller前 / Controller / action /剩下的</span></span><br><span class="line">      _, cont, action, after = env[<span class="string">&quot;PATH_INFO&quot;</span>].split(<span class="string">&#x27;/&#x27;</span>, <span class="number">4</span>)</span><br><span class="line">        </span><br><span class="line">      <span class="comment"># 首字轉大寫，剩下轉小寫 ex.&quot;Quotes&quot;</span></span><br><span class="line">      cont = cont.capitalize</span><br><span class="line">        </span><br><span class="line">      <span class="comment"># 加上 Controller ex. &quot;QuotesController&quot;</span></span><br><span class="line">      cont += <span class="string">&quot;Controller&quot;</span></span><br><span class="line">        </span><br><span class="line">      <span class="comment"># const_get 會去尋找大寫開頭的 Controller class</span></span><br><span class="line">      [Object.const_get(cont), action]</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="在-Quotation-中建立-controller"><a href="#在-Quotation-中建立-controller" class="headerlink" title="在 Quotation 中建立 controller"></a>在 Quotation 中建立 controller</h3><p>是不是很像在 Rails 中的 Controller 呢<br>現在我們要在這個 Controller 中加入 action</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /quotation/app/controller/quotes_controller.rb</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">QuotesController</span> &lt; <span class="title class_ inherited__">Rainbow::Controller</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">a_quote</span></span><br><span class="line">    <span class="string">&quot;You Only Live Once, &quot;</span> + <span class="string">&quot;hang on to your dreams.&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>我們還沒在 Controller 加入 Rails autoloading<br>所以在 config&#x2F;application.rb 中設定 LOAD_PATH 並把 Controller 載入</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># quotations/config/application.rb</span></span><br><span class="line"><span class="comment"># 檔案路徑加入 app/controllers 讓 routes 知道要找哪個 Controller 跟 action</span></span><br><span class="line"><span class="variable">$LOAD_PATH</span> &lt;&lt; File.join(File.dirname(<span class="variable constant_">__FILE__</span>),</span><br><span class="line"><span class="string">&quot;..&quot;</span>, <span class="string">&quot;app&quot;</span>, <span class="string">&quot;controllers&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span> <span class="string">&quot;quotes_controller&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>📃 web小辭典</p>
+<p>▶ Rails autoloading: 使用 require 載入文件時，Ruby 會去找 $LOAD_PATH 並把對應的檔名找出來，後面會更詳細的介紹 </p>
+<h4 id="刪除-rainbow-0-0-2-gem"><a href="#刪除-rainbow-0-0-2-gem" class="headerlink" title="刪除 rainbow-0.0.2.gem"></a>刪除 rainbow-0.0.2.gem</h4><h4 id="git-add"><a href="#git-add" class="headerlink" title="git add ."></a>git add .</h4><h4 id="重新安裝套件"><a href="#重新安裝套件" class="headerlink" title="重新安裝套件"></a>重新安裝套件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">gem build rainbow.gemspec</span></span><br><span class="line"></span><br><span class="line">  Successfully built RubyGem</span><br><span class="line">  Name: rainbow</span><br><span class="line">  Version: 0.0.2</span><br><span class="line">  File: rainbow-0.0.2.gem</span><br><span class="line"><span class="meta prompt_">  </span></span><br><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">gem install rainbow-0.0.2.gem</span></span><br><span class="line"></span><br><span class="line">  Successfully installed rainbow-0.0.2</span><br><span class="line">  Parsing documentation for rainbow-0.0.2</span><br><span class="line">  Done installing documentation for rainbow after 0 seconds</span><br><span class="line">  1 gem installed</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Quotation-終端機啟用-rackup"><a href="#Quotation-終端機啟用-rackup" class="headerlink" title="Quotation 終端機啟用 rackup"></a>Quotation 終端機啟用 rackup</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rackup -p 3001</span><br></pre></td></tr></table></figure>
+
+<p><a class="link"   target="_blank" rel="noopener" href="http://localhost:3001/quotes/a_quote" >http://localhost:3001/quotes/a_quote<i class="fas fa-external-link-alt"></i></a></p>
+<p>就會看到quote在畫面上囉</p>
+<p><img src="https://i.imgur.com/aeiiy0M.png"></p>
+<h3 id="錯誤訊息"><a href="#錯誤訊息" class="headerlink" title="錯誤訊息"></a>錯誤訊息</h3><p>回來看終端機，會發現出現了一行錯誤訊息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NameError: wrong constant name Favicon.icoController</span><br></pre></td></tr></table></figure>
+<p>瀏覽器會自動讀取favicon.ico<br>但暫時先用避開的方法處理</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rulers/lib/rulers.rb /module Rainbow</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Application</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">call</span>(<span class="params">env</span>)</span><br><span class="line">    <span class="keyword">if</span> env[<span class="string">&#x27;PATH_INFO&#x27;</span>] == <span class="string">&#x27;/favicon.ico&#x27;</span></span><br><span class="line">      <span class="keyword">return</span> </span><br><span class="line">        [</span><br><span class="line">          <span class="number">404</span>,</span><br><span class="line">          &#123;<span class="string">&#x27;Content-Type&#x27;</span> =&gt; <span class="string">&#x27;text/html&#x27;</span>&#125;, </span><br><span class="line">          []</span><br><span class="line">        ]</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">        </span><br><span class="line">    klass, act = get_controller_and_action(env)</span><br><span class="line">    controller = klass.new(env)</span><br><span class="line">    text = controller.send(act)</span><br><span class="line">    [</span><br><span class="line">      <span class="number">200</span>, </span><br><span class="line">      &#123;<span class="string">&#x27;Content-Type&#x27;</span> =&gt; <span class="string">&#x27;text/html&#x27;</span>&#125;,</span><br><span class="line">      [text]</span><br><span class="line">    ] </span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>基本的 routing、Controller、action 建立好囉<br>我們明天來建立 debug 功能！</p>
+<p>參考文獻</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/4299289/what-is-the-difference-between-class-and-klass-in-ruby" >https://stackoverflow.com/questions/4299289/what-is-the-difference-between-class-and-klass-in-ruby<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://webapps-for-beginners.rubymonstas.org/rack/rack_env.html" >https://webapps-for-beginners.rubymonstas.org/rack/rack_env.html<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39221436/article/details/116272231" >https://blog.csdn.net/qq_39221436/article/details/116272231<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://httpd.apache.org/docs/2.4/mod/core.html#acceptpathinfo" >https://httpd.apache.org/docs/2.4/mod/core.html#acceptpathinfo<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/08/22/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day-06-%E5%AE%8C%E6%95%B4%E6%A1%86%E6%9E%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">從0開始刻 淺談 Rails 的運作魔法 - Day 06 完整框架的基本功能</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Ning</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
