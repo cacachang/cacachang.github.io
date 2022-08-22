@@ -2,6 +2,7 @@
 title: 幫網頁施點魔法 - JavaScript 變數提升解密
 date: 2022-08-12 23:20:40
 tags:
+categories: JavaScript
 ---
 ### 不可不知的小把戲 - hoisting
 

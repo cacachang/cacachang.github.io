@@ -3,6 +3,7 @@ title: Rails 實作應用 - Controller 篇
 date: 2022-08-21 03:24:42
 tags: 
 description: Rails 實作的功能拆分 - 運算處理中心 Controller
+categories: Rails 實作
 ---
 ### Controller
 
@@ -139,7 +140,7 @@ end
 
 ```ruby
 def current_user
-  # 有 @_user 再繼續，沒有就不要再做
+  # 有 @user 就回傳，沒有就繼續執行後面的條件
   @user ||= User.find_by(id: session[:user_session])
 end
 ```

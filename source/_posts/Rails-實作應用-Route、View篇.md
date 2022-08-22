@@ -2,7 +2,8 @@
 title: Rails 實作應用 - Route、View篇
 date: 2022-08-21 02:21:52
 tags:
-description: Rails 實作的功能拆分 - 負責傳遞引導及傳遞資料的角色 
+description: Rails 實作的功能拆分 - 負責傳遞引導及傳遞資料的角色
+categories: Rails 實作 
 ---
 ## Routes
 

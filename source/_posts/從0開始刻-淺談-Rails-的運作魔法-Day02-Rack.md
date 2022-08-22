@@ -2,6 +2,8 @@
 title: 從0開始刻 淺談 Rails 的運作魔法 Day02 - Rack
 date: 2022-08-16 02:21:25
 tags:
+categories: Rebuild Rails
+
 ---
 ## Rack是什麼？
 
