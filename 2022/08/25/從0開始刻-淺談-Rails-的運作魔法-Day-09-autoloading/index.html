@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="程式實習生日常，紀錄隱藏在字元裡的小細節及思維邏輯">
+    <meta name="author" content="Ning">
+    
+    <title>
+        
+            從0開始刻 淺談 Rails 的運作魔法 - Day 09 autoloading |
+        
+        Ning&#39;s Lab
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://i.imgur.com/sPHhND7.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":false,"background_img":"/images/bg.svg","description":"Welcome to Ning's Lab"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                Ning&#39;s Lab
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">從0開始刻 淺談 Rails 的運作魔法 - Day 09 autoloading</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="https://i.imgur.com/sPHhND7.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Ning</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-08-25 03:10:39</span>
+        <span class="mobile">2022-08-25 03:10</span>
+    </span>
+    
+    
+
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <h1 id="從0開始刻-淺談-Rails-的運作魔法-Day-09-autoloading"><a href="#從0開始刻-淺談-Rails-的運作魔法-Day-09-autoloading" class="headerlink" title="從0開始刻 淺談 Rails 的運作魔法 - Day 09 autoloading"></a>從0開始刻 淺談 Rails 的運作魔法 - Day 09 autoloading</h1><p>在 Rails 中，如果沒有自動載入<br>我們就需要使用 require 來載入相關檔案</p>
+<p>有了 autoloading<br>Rail 會自動載入 lib 、標準函式庫、gem等</p>
+<p>Controller 本身是個 class<br>假如今天找不到 Controller 會跑出一串錯誤訊息</p>
+<p>const_missing 可以幫我們傳遞不一樣的訊息<br>現在我們就來設定 const_missing 吧！</p>
+<h2 id="設定-const-missing"><a href="#設定-const-missing" class="headerlink" title="設定 const_missing"></a>設定 const_missing</h2><h5 id="在-Object-中設定"><a href="#在-Object-中設定" class="headerlink" title="在 Object 中設定"></a>在 Object 中設定</h5><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rainbow/lib/rainbow/const_missing.rb</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Object</span></span><br><span class="line">  <span class="comment"># 將 const_missing 定義為類別方法</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">self</span>.const_missing(e)</span><br><span class="line">    <span class="comment"># 如果找不到方法就印出</span></span><br><span class="line">    <span class="variable constant_">STDERR</span>.puts <span class="string">&quot;Missing constant: <span class="subst">#&#123;e.inspect&#125;</span>!&quot;</span></span><br><span class="line">  <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Bobo 有被偵測到但沒有被定義，所以會錯誤</span></span><br><span class="line">Bobo <span class="comment"># Missing constant: Bobo</span></span><br></pre></td></tr></table></figure>
+
+<p>既然沒被定義，那就來幫他定義<br>新增 bobo.rb 並在裡面定義 Bobo</p>
+<h5 id="定義-class"><a href="#定義-class" class="headerlink" title="定義 class"></a>定義 class</h5><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rainbow/lib/rainbow/bobo.rb</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bobo</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">print_bobo</span></span><br><span class="line">    puts <span class="string">&quot;Bobo!&quot;</span></span><br><span class="line">  <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>回到 const_missing.rb<br>把 self.const_missing 方法修改一下</p>
+<h5 id="載入-class，做出實體並使用方法"><a href="#載入-class，做出實體並使用方法" class="headerlink" title="載入 class，做出實體並使用方法"></a>載入 class，做出實體並使用方法</h5><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rainbow/lib/rainbow/const_missing.rb</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Object</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">self</span>.const_missing(e)</span><br><span class="line">    <span class="comment"># 載入 bobo.rb</span></span><br><span class="line">    <span class="keyword">require</span> <span class="string">&quot;./bobo&quot;</span></span><br><span class="line">    <span class="comment"># 執行 Bobo</span></span><br><span class="line">    Bobo</span><br><span class="line">  <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># new 一個實體，然後使用 print_bobo 方法</span></span><br><span class="line">Bobo.new.print_bobo <span class="comment"># Bobo!</span></span><br></pre></td></tr></table></figure>
+
+<p>📃 web小辭典</p>
+<p>▶ STDOUT、STDERR:<br>當我們要將資訊傳遞出去時，會有 STDOUT 及 STDERR 這兩種格式</p>
+<p><img src="https://i.imgur.com/xej6XP5.jpg"></p>
+<p>▶ inspect:將字串完整印出(包含跳脫字元等)</p>
+<p>▶ const_missing: 類似 Object 的 method_missing，當找不到 constant 時，會呼叫 const_set 根據運算結果去定義值</p>
+<h2 id="Controller-名稱與檔名"><a href="#Controller-名稱與檔名" class="headerlink" title="Controller 名稱與檔名"></a>Controller 名稱與檔名</h2><p>還記得嗎？<br>Rails 的 Controller 為 CamelCase<br>而檔名為 snake_case</p>
+<p>我們要把 Controller 名字轉換為檔名<br>讓 Controller 知道要去找哪個檔名並執行</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rainbow/lib/rainbow/util.rb</span></span><br><span class="line"><span class="keyword">module</span> Rulers</span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">self</span>.to_underscore(string)</span><br><span class="line">    <span class="comment"># 字串中的::替換為/ ex.Namespace::Controller</span></span><br><span class="line">    string.gsub(<span class="regexp">/::/</span>, <span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">          <span class="comment"># 首字大寫為區隔，出現第二個首字大寫時，前面加_</span></span><br><span class="line">          .gsub(<span class="regexp">/([A-Z]+)([A-Z][a-z])/</span>,<span class="string">&#x27;\1_\2&#x27;</span>)</span><br><span class="line">          <span class="comment"># 首字小寫為區隔，出現第二個首字大寫時，前面加_</span></span><br><span class="line">          .gsub(<span class="regexp">/([a-z\d])([A-Z])/</span>,<span class="string">&#x27;\1_\2&#x27;</span>)</span><br><span class="line">          <span class="comment"># 把 - 換成 _</span></span><br><span class="line">          .tr(<span class="string">&quot;-&quot;</span>, <span class="string">&quot;_&quot;</span>)</span><br><span class="line">          <span class="comment"># 轉換成小寫</span></span><br><span class="line">          .downcase </span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="自動載入設定"><a href="#自動載入設定" class="headerlink" title="自動載入設定"></a>自動載入設定</h2><h5 id="設定-path-讓框架自動加載"><a href="#設定-path-讓框架自動加載" class="headerlink" title="設定 :path 讓框架自動加載"></a>設定 :path 讓框架自動加載</h5><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment"># quotation/Gemfile</span></span><br><span class="line">source <span class="string">&#x27;https://rubygems.org&#x27;</span></span><br><span class="line">gem <span class="string">&quot;rainbow&quot;</span>, <span class="symbol">:path</span> =&gt; <span class="string">&quot;../rainbow&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="bundle-install"><a href="#bundle-install" class="headerlink" title="bundle install"></a>bundle install</h5><p>改了 Gemfile 記得做 bundle install<br>bundle exec 會依照 Gemfile 內容去自動載入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">bundle install</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="uninstall-rainbow"><a href="#uninstall-rainbow" class="headerlink" title="uninstall rainbow"></a>uninstall rainbow</h5><p>有了 bundle exec 小幫手<br>我們就不用一直刪除 gem、重新安裝<br>rainbow 就先可以拿掉了</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; gem uninstall rainbow</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="結合！"><a href="#結合！" class="headerlink" title="結合！"></a>結合！</h2><p>把我們剛剛做的<br>const_missing、CamelCase 轉 snake_case 包在 Object class 中</p>
+<h5 id="在-Object-中設定方法"><a href="#在-Object-中設定方法" class="headerlink" title="在 Object 中設定方法"></a>在 Object 中設定方法</h5><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rainbow/lib/rainbow/dependencies.rb</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Object</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">self</span>.const_missing(e)</span><br><span class="line">    <span class="comment"># 載入 Rainbow 並轉成 snake_case</span></span><br><span class="line">    <span class="keyword">require</span> Rainbow.to_underscore(e.to_s)</span><br><span class="line">    <span class="comment"># const_get 會去尋找 snake_case 的檔案</span></span><br><span class="line">    Object.const_get(e)</span><br><span class="line">  <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="把方法們載入框架中"><a href="#把方法們載入框架中" class="headerlink" title="把方法們載入框架中"></a>把方法們載入框架中</h5><p>當 Qutotation 載入並執行時<br>運作流程如下</p>
+<p><img src="https://i.imgur.com/lnlUmnK.jpg"></p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rainbow/lib/rainbow.rb </span></span><br><span class="line">    <span class="keyword">require</span> <span class="string">&quot;rainbow/version&quot;</span></span><br><span class="line">    <span class="keyword">require</span> <span class="string">&quot;rainbow/routing&quot;</span></span><br><span class="line">    <span class="keyword">require</span> <span class="string">&quot;rainbow/util&quot;</span></span><br><span class="line">    <span class="keyword">require</span> <span class="string">&quot;rainbow/dependencies&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="啟動-rackup"><a href="#啟動-rackup" class="headerlink" title="啟動 rackup"></a>啟動 rackup</h5><p>因為我們用 bundle exec 來載入 rainbow<br>所以啟用 rackup 前要加 bundle exec</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle exec rackup -p 3001</span><br></pre></td></tr></table></figure>
+
+<p><a class="link"   target="_blank" rel="noopener" href="http://localhost:3001/quotes/a_quote" >http://localhost:3001/quotes/a_quote<i class="fas fa-external-link-alt"></i></a></p>
+<p>看到畫面就成功囉！</p>
+<p><img src="https://i.imgur.com/No2YmLI.png"></p>
+<p>參考文獻</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://rderik.com/blog/basics-of-stderr-and-stdout-on-ruby-scripts/" >https://rderik.com/blog/basics-of-stderr-and-stdout-on-ruby-scripts/<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/3385201/confused-about-stdin-stdout-and-stderr" >https://stackoverflow.com/questions/3385201/confused-about-stdin-stdout-and-stderr<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/ruby-string-inspect-method/" >https://www.geeksforgeeks.org/ruby-string-inspect-method/<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://riptutorial.com/ruby-on-rails/example/5875/filenames-and-autoloading" >https://riptutorial.com/ruby-on-rails/example/5875/filenames-and-autoloading<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://guides.rubyonrails.org/autoloading_and_reloading_constants.html" >https://guides.rubyonrails.org/autoloading_and_reloading_constants.html<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://bundler.io/v2.3/man/bundle-exec.1.html" >https://bundler.io/v2.3/man/bundle-exec.1.html<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/the-ruby-programming/9780596516178/ch08s09.html" >https://www.oreilly.com/library/view/the-ruby-programming/9780596516178/ch08s09.html<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://www.rubyguides.com/2017/07/ruby-constants/" >https://www.rubyguides.com/2017/07/ruby-constants/<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/08/24/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day-08-Controller-Debug/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">從0開始刻 淺談 Rails 的運作魔法 - Day 08 Controller Debug</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Ning</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
