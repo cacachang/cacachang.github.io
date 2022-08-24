@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="程式實習生日常，紀錄隱藏在字元裡的小細節及思維邏輯">
+    <meta name="description" content="自動載入好方便！還原 Automatic Loading 運作">
     <meta name="author" content="Ning">
     
     <title>
         
-            從0開始刻 淺談 Rails 的運作魔法 - Day 09 autoloading |
+            從0開始刻 淺談 Rails 的運作魔法 - Day 09 Automatic Loading |
         
         Ning&#39;s Lab
     </title>
@@ -118,7 +118,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">從0開始刻 淺談 Rails 的運作魔法 - Day 09 autoloading</span>
+            <span class="title-hover-animation">從0開始刻 淺談 Rails 的運作魔法 - Day 09 Automatic Loading</span>
         </div>
 
         
@@ -155,8 +155,8 @@
         
 
         <div class="article-content markdown-body">
-            <h1 id="從0開始刻-淺談-Rails-的運作魔法-Day-09-autoloading"><a href="#從0開始刻-淺談-Rails-的運作魔法-Day-09-autoloading" class="headerlink" title="從0開始刻 淺談 Rails 的運作魔法 - Day 09 autoloading"></a>從0開始刻 淺談 Rails 的運作魔法 - Day 09 autoloading</h1><p>在 Rails 中，如果沒有自動載入<br>我們就需要使用 require 來載入相關檔案</p>
-<p>有了 autoloading<br>Rail 會自動載入 lib 、標準函式庫、gem等</p>
+            <p>在 Rails 中，如果沒有自動載入<br>我們就需要使用 require 來載入相關檔案</p>
+<p>有了 automatic loading<br>Rail 會自動載入 lib 、標準函式庫、gem等</p>
 <p>Controller 本身是個 class<br>假如今天找不到 Controller 會跑出一串錯誤訊息</p>
 <p>const_missing 可以幫我們傳遞不一樣的訊息<br>現在我們就來設定 const_missing 吧！</p>
 <h2 id="設定-const-missing"><a href="#設定-const-missing" class="headerlink" title="設定 const_missing"></a>設定 const_missing</h2><h5 id="step-1-在-Object-中設定"><a href="#step-1-在-Object-中設定" class="headerlink" title="step 1 在 Object 中設定"></a>step 1 在 Object 中設定</h5><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rainbow/lib/rainbow/const_missing.rb</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Object</span></span><br><span class="line">  <span class="comment"># 將 const_missing 定義為類別方法</span></span><br><span class="line">  <span class="keyword">def</span> <span class="title function_">self</span>.const_missing(e)</span><br><span class="line">    <span class="comment"># 如果找不到方法就印出</span></span><br><span class="line">    <span class="variable constant_">STDERR</span>.puts <span class="string">&quot;Missing constant: <span class="subst">#&#123;e.inspect&#125;</span>!&quot;</span></span><br><span class="line">  <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Bobo 有被偵測到但沒有被定義，所以會錯誤</span></span><br><span class="line">Bobo <span class="comment"># Missing constant: Bobo</span></span><br></pre></td></tr></table></figure>
@@ -203,7 +203,7 @@
 <p>看到畫面就成功囉！</p>
 <p><img src="https://i.imgur.com/No2YmLI.png"></p>
 <p>參考文獻</p>
-<p><a class="link"   target="_blank" rel="noopener" href="https://rderik.com/blog/basics-of-stderr-and-stdout-on-ruby-scripts/" >https://rderik.com/blog/basics-of-stderr-and-stdout-on-ruby-scripts/<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/3385201/confused-about-stdin-stdout-and-stderr" >https://stackoverflow.com/questions/3385201/confused-about-stdin-stdout-and-stderr<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/ruby-string-inspect-method/" >https://www.geeksforgeeks.org/ruby-string-inspect-method/<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://riptutorial.com/ruby-on-rails/example/5875/filenames-and-autoloading" >https://riptutorial.com/ruby-on-rails/example/5875/filenames-and-autoloading<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://guides.rubyonrails.org/autoloading_and_reloading_constants.html" >https://guides.rubyonrails.org/autoloading_and_reloading_constants.html<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://bundler.io/v2.3/man/bundle-exec.1.html" >https://bundler.io/v2.3/man/bundle-exec.1.html<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/the-ruby-programming/9780596516178/ch08s09.html" >https://www.oreilly.com/library/view/the-ruby-programming/9780596516178/ch08s09.html<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://www.rubyguides.com/2017/07/ruby-constants/" >https://www.rubyguides.com/2017/07/ruby-constants/<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://rderik.com/blog/basics-of-stderr-and-stdout-on-ruby-scripts/" >https://rderik.com/blog/basics-of-stderr-and-stdout-on-ruby-scripts/<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://stackoverflow.com/questions/3385201/confused-about-stdin-stdout-and-stderr" >https://stackoverflow.com/questions/3385201/confused-about-stdin-stdout-and-stderr<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/ruby-string-inspect-method/" >https://www.geeksforgeeks.org/ruby-string-inspect-method/<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://riptutorial.com/ruby-on-rails/example/5875/filenames-and-matic" >https://riptutorial.com/ruby-on-rails/example/5875/filenames-and-matic<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://guides.rubyonrails.org/autoloading_and_reloading_constants.html" >https://guides.rubyonrails.org/autoloading_and_reloading_constants.html<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://bundler.io/v2.3/man/bundle-exec.1.html" >https://bundler.io/v2.3/man/bundle-exec.1.html<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://www.oreilly.com/library/view/the-ruby-programming/9780596516178/ch08s09.html" >https://www.oreilly.com/library/view/the-ruby-programming/9780596516178/ch08s09.html<i class="fas fa-external-link-alt"></i></a><br><a class="link"   target="_blank" rel="noopener" href="https://www.rubyguides.com/2017/07/ruby-constants/" >https://www.rubyguides.com/2017/07/ruby-constants/<i class="fas fa-external-link-alt"></i></a></p>
 
         </div>
 
