@@ -1,6 +1,6 @@
 ---
 title: categories
-date: 2022-08-21 04:42:22
+date: 2022-10-23 22:44:00
 ---
 ## Rails
 
@@ -35,3 +35,4 @@ date: 2022-08-21 04:42:22
 ## WEB 資料放哪裡？資料們的家 
 
 [Database資料庫 - 基本介紹](https://ninglab.com/2022/08/20/WEB-%E8%B3%87%E6%96%99%E6%94%BE%E5%93%AA%E8%A3%A1%EF%BC%9F-Database-%E8%B3%87%E6%96%99%E5%80%91%E7%9A%84%E5%AE%B6/)
+
