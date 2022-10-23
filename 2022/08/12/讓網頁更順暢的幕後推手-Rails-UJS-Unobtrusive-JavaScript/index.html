@@ -22,8 +22,8 @@
 
     <script id="hexo-configurations">
     let KEEP = window.KEEP || {};
-    KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en"};
-    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://i.imgur.com/sPHhND7.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Welcome to Ning's Lab"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.hexo_config = {"hostname":"ninglab.com","root":"/","language":"en","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"https://i.imgur.com/sPHhND7.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"Welcome to Ning's Lab"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"code_copy":{"enable":true,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
     KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
   </script>
     <!-- Google tag (gtag.js) -->
@@ -92,9 +92,15 @@
                         </li>
                     
                     
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
                 </ul>
             </div>
             <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
                 
                 <div class="icon-item menu-bar">
                     <div class="menu-bar-middle"></div>
@@ -179,6 +185,10 @@
     
     
     
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
     
 </div>
 
@@ -313,6 +323,20 @@
             2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Ning</a>
         </div>
         
+            <script async  src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        Visitor Count&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        Totalview&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
         <div class="theme-info info-item">
             Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
         </div>
@@ -329,6 +353,10 @@
             <div class="post-tools-container">
     <ul class="tools-list">
         <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
         
 
         <!-- go comment -->
@@ -383,11 +411,48 @@
     </div>
 
     
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E6%A9%9F%E5%88%B6%E5%A4%A7%E6%95%88%E7%94%A8-%E4%B8%80%E7%94%A8%E5%B0%B1%E5%9B%9E%E4%B8%8D%E5%8E%BB%E7%9A%84-Rails-UJS-Unobtrusive-JavaScript"><span class="nav-number">1.</span> <span class="nav-text">小機制大效用 一用就回不去的 Rails UJS - Unobtrusive JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JQuery-UJS"><span class="nav-number">1.0.1.</span> <span class="nav-text">JQuery UJS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E6%AC%A1%E4%B8%BB%E8%A7%92-Rails-UJS"><span class="nav-number">1.0.2.</span> <span class="nav-text">本次主角 - Rails UJS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9C%A8%E8%A1%A8%E5%96%AE%E3%80%81%E9%80%A3%E7%B5%90%E7%89%A9%E4%BB%B6%E4%B8%8A%EF%BC%8C%E5%8A%A0%E5%85%A5data-%E5%B1%AC%E6%80%A7"><span class="nav-number">1.0.3.</span> <span class="nav-text">1. 在表單、連結物件上，加入data-*屬性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#form-helper"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">form helper</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#link-to"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">link_to</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#button-to"><span class="nav-number">1.0.4.</span> <span class="nav-text">button_to</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-data-%E6%96%B9%E6%B3%95"><span class="nav-number">1.0.5.</span> <span class="nav-text">2. data-方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%94%A8%E7%A2%BA%E8%AA%8D%E4%BE%86%E5%81%9A%E8%AD%A6%E5%91%8A%E3%80%81%E6%8F%90%E7%A4%BA%EF%BC%8C%E4%B8%A6%E5%9F%B7%E8%A1%8C%E5%88%AA%E9%99%A4%E6%96%B9%E6%B3%95"><span class="nav-number">1.0.6.</span> <span class="nav-text">3. 用確認來做警告、提示，並執行刪除方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%98%B2%E6%AD%A2%E9%9B%99%E9%BB%9E%E6%93%8A"><span class="nav-number">1.0.7.</span> <span class="nav-text">4. 防止雙點擊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AA%AA%E4%BA%86%E9%80%99%E9%BA%BC%E5%A4%9A%EF%BC%8CRails-UJS%E7%9A%84%E9%81%8B%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%98%AF%E6%80%8E%E9%BA%BC%E6%A8%A3%E5%91%A2%EF%BC%9F"><span class="nav-number">1.0.8.</span> <span class="nav-text">說了這麼多，Rails UJS的運作流程是怎麼樣呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%8D%E5%A4%96%E8%A3%9C%E5%85%85%EF%BC%9AAJAX"><span class="nav-number">1.0.9.</span> <span class="nav-text">額外補充：AJAX</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
 
     <div class="image-viewer-container">
     <img src="">
 </div>
 
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
 
     
 
@@ -408,12 +473,28 @@
 
 
 
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+    
+<script src="/js/code-copy.js"></script>
 
 
 
 
 
 <div class="post-scripts">
+    
+        
+<script src="/js/left-side-toggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/toc.js"></script>
+
     
 </div>
 
