@@ -1,15 +1,14 @@
 ---
-title: 從0開始刻 淺談 Rails 的運作魔法 - Day 09 autoloading
+title: 從0開始刻 淺談 Rails 的運作魔法 - Day 09 Automatic Loading
 date: 2022-08-25 03:10:39
 tags:
+description: 自動載入好方便！還原 Automatic Loading 運作
 ---
-# 從0開始刻 淺談 Rails 的運作魔法 - Day 09 autoloading
-
 
 在 Rails 中，如果沒有自動載入
 我們就需要使用 require 來載入相關檔案
 
-有了 autoloading 
+有了 automatic loading 
 Rail 會自動載入 lib 、標準函式庫、gem等
 
 Controller 本身是個 class
@@ -20,7 +19,7 @@ const_missing 可以幫我們傳遞不一樣的訊息
 
 ## 設定 const_missing
 
-##### 在 Object 中設定
+##### step 1 在 Object 中設定
 
 ```ruby=
 # rainbow/lib/rainbow/const_missing.rb
@@ -39,7 +38,7 @@ Bobo # Missing constant: Bobo
 既然沒被定義，那就來幫他定義
 新增 bobo.rb 並在裡面定義 Bobo
 
-##### 定義 class
+##### step 2 定義 class
 
 ```ruby=
 # rainbow/lib/rainbow/bobo.rb
@@ -50,10 +49,10 @@ class Bobo
 end
 ```
 
+##### step 3 載入 class，做出實體並使用方法
+
 回到 const_missing.rb 
 把 self.const_missing 方法修改一下
-
-##### 載入 class，做出實體並使用方法
 
 ```ruby=
 # rainbow/lib/rainbow/const_missing.rb
@@ -81,6 +80,7 @@ Bobo.new.print_bobo # Bobo!
 
 ▶ const_missing: 類似 Object 的 method_missing，當找不到 constant 時，會呼叫 const_set 根據運算結果去定義值
 
+</br>
 
 ## Controller 名稱與檔名
 
@@ -109,10 +109,11 @@ module Rulers
 end
 ```
 
+</br>
 
 ## 自動載入設定
 
-##### 設定 :path 讓框架自動加載
+##### step 1 設定 :path 讓框架自動加載
 
 ```ruby=
  # quotation/Gemfile
@@ -120,7 +121,7 @@ source 'https://rubygems.org'
 gem "rainbow", :path => "../rainbow"
 ```
 
-##### bundle install
+##### step 2 bundle install
 
 改了 Gemfile 記得做 bundle install
 bundle exec 會依照 Gemfile 內容去自動載入
@@ -129,7 +130,7 @@ bundle exec 會依照 Gemfile 內容去自動載入
 > bundle install
 ```
 
-##### uninstall rainbow
+##### step 3 uninstall rainbow
 
 有了 bundle exec 小幫手
 我們就不用一直刪除 gem、重新安裝
@@ -145,7 +146,7 @@ rainbow 就先可以拿掉了
 把我們剛剛做的 
 const_missing、CamelCase 轉 snake_case 包在 Object class 中
 
-##### 在 Object 中設定方法
+##### step 1 在 Object 中設定方法
 
 ```ruby=
 # rainbow/lib/rainbow/dependencies.rb
@@ -159,7 +160,7 @@ class Object
 end
 ```
 
-##### 把方法們載入框架中
+##### step 2 把方法們載入框架中
 
 當 Qutotation 載入並執行時
 運作流程如下
@@ -174,7 +175,7 @@ end
     require "rainbow/dependencies"
 ```
 
-##### 啟動 rackup
+##### step 3 啟動 rackup
 
 因為我們用 bundle exec 來載入 rainbow
 所以啟用 rackup 前要加 bundle exec
@@ -195,7 +196,7 @@ http://localhost:3001/quotes/a_quote
 https://rderik.com/blog/basics-of-stderr-and-stdout-on-ruby-scripts/
 https://stackoverflow.com/questions/3385201/confused-about-stdin-stdout-and-stderr
 https://www.geeksforgeeks.org/ruby-string-inspect-method/
-https://riptutorial.com/ruby-on-rails/example/5875/filenames-and-autoloading
+https://riptutorial.com/ruby-on-rails/example/5875/filenames-and-matic 
 https://guides.rubyonrails.org/autoloading_and_reloading_constants.html
 https://bundler.io/v2.3/man/bundle-exec.1.html
 https://www.oreilly.com/library/view/the-ruby-programming/9780596516178/ch08s09.html
