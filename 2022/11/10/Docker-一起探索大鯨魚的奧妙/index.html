@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="程式實習生日常，紀錄隱藏在字元裡的小細節及思維邏輯">
+    <meta name="description" content="Docker 是什麼，為什麼大家這麼喜歡使用 Docker ？">
     <meta name="author" content="Ning">
     
     <title>
@@ -176,7 +176,7 @@
         <div class="article-content markdown-body">
             <h2 id="為什麼要用-Docker"><a href="#為什麼要用-Docker" class="headerlink" title="為什麼要用 Docker"></a>為什麼要用 Docker</h2><p>不曉得大家是不是常遇到要開啟一個專案，卻因為裝置不相容，在安裝的過程中要一直 debug 的狀況，有時候甚至架不起來？</p>
 <p>Docker 就是為了解決這個問題而出現的</p>
-<h2 id="什麼是-Docker"><a href="#什麼是-Docker" class="headerlink" title="什麼是 Docker"></a>什麼是 Docker</h2><p>Docker 是一種架設出虛擬環境的工具，我們可以透過 Docker 將應用程式單獨切分出來，並且用容器包裝成一個虛擬環境，並且載入你畚箕沒有但專案會需要的工具或版本，讓應用程式在虛擬環境中開發、執行</p>
+<h2 id="什麼是-Docker"><a href="#什麼是-Docker" class="headerlink" title="什麼是 Docker"></a>什麼是 Docker</h2><p>Docker 是一種架設出虛擬環境的工具，我們可以透過 Docker 將應用程式單獨切分出來，並且用容器包裝成一個虛擬環境，並且載入你本機沒有但專案會需要的工具或版本，讓應用程式在虛擬環境中開發、執行</p>
 <h2 id="學-Docker-必須要知道的幾個基本名詞"><a href="#學-Docker-必須要知道的幾個基本名詞" class="headerlink" title="學 Docker 必須要知道的幾個基本名詞"></a>學 Docker 必須要知道的幾個基本名詞</h2><ul>
 <li><p>container：容器<br>  映像檔的具體化，通常一個專案會用一個以上的 container<br>(可能 1 個專案開 1 個 container 或者<br>資料庫 1 個 container 專案 1 個 container)<br>  Docker 會去開啟主機並監聽訊息，並把這個訊息傳給 container</p>
 </li>
@@ -194,8 +194,8 @@
 </li>
 </ol>
 <p><img src="https://i.imgur.com/8Yk0nzw.jpg"></p>
-<h3 id="Docker-Hub"><a href="#Docker-Hub" class="headerlink" title="Docker Hub"></a>Docker Hub</h3><p>跟 Github 概念差不多，我們可以將我們寫的專案上傳上去，讓其他人下載</p>
-<h3 id="Docker-Registry"><a href="#Docker-Registry" class="headerlink" title="Docker Registry"></a>Docker Registry</h3><p>以 Rails 來說，就像是 RubyGem<br>以 JavaScript 來說，就像是 npm Registry<br>在 Docker Registry 有各種不同的 image<br>Docker 在本地找不到 image 的時候會往這邊找並且下載<br>另外可以設定成非公開，有權限的人才能下載</p>
+<h3 id="Docker-Hub"><a href="#Docker-Hub" class="headerlink" title="Docker Hub"></a>Docker Hub</h3><p>跟 GitHub 概念差不多，我們可以將我們寫的專案上傳上去，讓其他人下載</p>
+<h3 id="Docker-Registry"><a href="#Docker-Registry" class="headerlink" title="Docker Registry"></a>Docker Registry</h3><p>以 Ruby 來說，就像是 RubyGems<br>以 JavaScript 來說，就像是 npm Registry<br>在 Docker Registry 有各種不同的 image<br>Docker 在本地找不到 image 的時候會往這邊找並且下載<br>另外可以設定成非公開，有權限的人才能下載</p>
 
         </div>
 
