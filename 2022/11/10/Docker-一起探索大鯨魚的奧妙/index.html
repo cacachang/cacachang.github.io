@@ -174,7 +174,29 @@
         
 
         <div class="article-content markdown-body">
-            
+            <h2 id="為什麼要用-Docker"><a href="#為什麼要用-Docker" class="headerlink" title="為什麼要用 Docker"></a>為什麼要用 Docker</h2><p>不曉得大家是不是常遇到要開啟一個專案，卻因為裝置不相容，在安裝的過程中要一直 debug 的狀況，有時候甚至架不起來？</p>
+<p>Docker 就是為了解決這個問題而出現的</p>
+<h2 id="什麼是-Docker"><a href="#什麼是-Docker" class="headerlink" title="什麼是 Docker"></a>什麼是 Docker</h2><p>Docker 是一種架設出虛擬環境的工具，我們可以透過 Docker 將應用程式單獨切分出來，並且用容器包裝成一個虛擬環境，並且載入你畚箕沒有但專案會需要的工具或版本，讓應用程式在虛擬環境中開發、執行</p>
+<h2 id="學-Docker-必須要知道的幾個基本名詞"><a href="#學-Docker-必須要知道的幾個基本名詞" class="headerlink" title="學 Docker 必須要知道的幾個基本名詞"></a>學 Docker 必須要知道的幾個基本名詞</h2><ul>
+<li><p>container：容器<br>  映像檔的具體化，通常一個專案會用一個以上的 container<br>(可能 1 個專案開 1 個 container 或者<br>資料庫 1 個 container 專案 1 個 container)<br>  Docker 會去開啟主機並監聽訊息，並把這個訊息傳給 container</p>
+</li>
+<li><p>image：映像檔<br>  唯獨，由 layer 建構而成<br>  映像檔可能是一個資料庫、一個框架</p>
+</li>
+</ul>
+<h2 id="Docker-運作流程"><a href="#Docker-運作流程" class="headerlink" title="Docker 運作流程"></a>Docker 運作流程</h2><ol>
+<li><p>我們會把環境設定寫在 Dockerfile </p>
+</li>
+<li><p>Dockerfile 會去找本地有沒有 image<br>沒有的話會從 Docker hub 中下載下來<br>Docker hub 預設為 registry</p>
+</li>
+<li><p>用 build 的方式建立 image</p>
+</li>
+<li><p>將 image 實體化跑 container</p>
+</li>
+</ol>
+<p><img src="https://i.imgur.com/8Yk0nzw.jpg"></p>
+<h3 id="Docker-Hub"><a href="#Docker-Hub" class="headerlink" title="Docker Hub"></a>Docker Hub</h3><p>跟 Github 概念差不多，我們可以將我們寫的專案上傳上去，讓其他人下載</p>
+<h3 id="Docker-Registry"><a href="#Docker-Registry" class="headerlink" title="Docker Registry"></a>Docker Registry</h3><p>以 Rails 來說，就像是 RubyGem<br>以 JavaScript 來說，就像是 npm Registry<br>在 Docker Registry 有各種不同的 image<br>Docker 在本地找不到 image 的時候會往這邊找並且下載<br>另外可以設定成非公開，有權限的人才能下載</p>
+
         </div>
 
         
@@ -331,45 +353,119 @@
     
 
     <div class="right-bottom-side-tools">
-        <div class="side-tools-container">
-    <ul class="side-tools-list">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
-        </li>
+        $tools-item-width = 32px;
+$tools-item-font-size = 1.1rem;
+$tools-item-border-radius = 1px;
 
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
-        </li>
 
-        <li class="tools-item tool-expand-width flex-center">
-            <i class="fas fa-arrows-alt-h"></i>
-        </li>
+.side-tools-container {
+  position: relative;
 
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
+  .tools-item {
+    width: $tools-item-width;
+    height: $tools-item-width;
+    font-size: $tools-item-font-size;
+    margin-bottom: 3px;
+    cursor: pointer;
+    border-right: none;
+    border-radius: $tools-item-border-radius;
+    box-shadow: 1px 1px 3px var(--shadow-color);
+    color: var(--default-text-color);
+    background: var(--background-color);
 
-        <!-- rss -->
-        
+    i {
+      color: var(--default-text-color);
+    }
 
-        
-            <li class="tools-item tool-scroll-to-top flex-center">
-                <i class="fas fa-arrow-up"></i>
-            </li>
-        
+    &:hover {
+      color: var(--background-color);
+      background: var(--primary-color);
+      box-shadow: 2px 2px 6px var(--shadow-color);
 
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
+      i {
+        color: var(--background-color);
+      }
+    }
 
-    <ul class="exposed-tools-list">
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-        
-    </ul>
-</div>
+    +keep-tablet() {
+      width: $tools-item-width * 0.9;
+      height: $tools-item-width * 0.9;
+      font-size: $tools-item-font-size * 0.9;
+      margin-bottom: 2px;
+    }
+
+    &.rss {
+
+      a {
+        border-radius: $tools-item-border-radius;
+        width: 100%;
+        height: 100%;
+
+        &:hover {
+          color: var(--background-color);
+          background: var(--primary-color);
+          box-shadow: 2px 2px 6px var(--shadow-color);
+        }
+      }
+    }
+  }
+
+
+  .side-tools-list {
+    opacity: 0;
+    transform: translateX(100%);
+    transition-t("transform, opacity", "0, 0", "0.2, 0.2", "linear, linear");
+
+    .tool-expand-width {
+      +keep-tablet() {
+        display: none;
+      }
+    }
+
+
+    &.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+
+  .exposed-tools-list {
+
+    if (hexo-config('style.scroll.percent.enable') == true) {
+      .tool-scroll-to-top {
+        display: none;
+
+        &.show {
+          display: flex;
+        }
+
+        &:hover {
+
+          .percent {
+            display: none;
+          }
+
+          .arrow-up {
+            display: flex;
+          }
+
+        }
+
+        .arrow-up {
+          display: none;
+        }
+
+        .percent {
+          display: flex;
+          font-size: 1rem;
+        }
+
+      }
+
+    }
+  }
+}
 
     </div>
 
@@ -377,7 +473,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E8%A6%81%E7%94%A8-Docker"><span class="nav-number">1.</span> <span class="nav-text">為什麼要用 Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Docker"><span class="nav-number">2.</span> <span class="nav-text">什麼是 Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%B8-Docker-%E5%BF%85%E9%A0%88%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E5%B9%BE%E5%80%8B%E5%9F%BA%E6%9C%AC%E5%90%8D%E8%A9%9E"><span class="nav-number">3.</span> <span class="nav-text">學 Docker 必須要知道的幾個基本名詞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-%E9%81%8B%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">Docker 運作流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Hub"><span class="nav-number">4.1.</span> <span class="nav-text">Docker Hub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Registry"><span class="nav-number">4.2.</span> <span class="nav-text">Docker Registry</span></a></li></ol></li></ol>
     </div>
 </div>
         </aside>
