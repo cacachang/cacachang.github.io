@@ -175,24 +175,24 @@
 
         <div class="article-content markdown-body">
             <p>點選按鈕，常常給你一大片空白，或者是一動也不動</p>
-<p>這是所謂的 Turbolink 在作祟</p>
-<p>大家都避之唯恐不及的 Turbolink </p>
+<p>這是所謂的 Turbolinks 在作祟</p>
+<p>大家都避之唯恐不及的 Turbolinks </p>
 <p>Rails 團隊為什麼要把它放進來呢？</p>
 <p>甚至在 Rails 7 升級成 Turbo ？</p>
-<h3 id="加速器"><a href="#加速器" class="headerlink" title="加速器"></a>加速器</h3><p>Turbolink 監控網頁中的所有連結，將預設事件停止</p>
-<p>並且在按下連結那一刻，Turbolink 用 AJAX 來傳送 Request 給 HTTPS</p>
+<h3 id="加速器"><a href="#加速器" class="headerlink" title="加速器"></a>加速器</h3><p>Turbolinks 監控網頁中的所有連結，將預設事件停止</p>
+<p>並且在按下連結那一刻，Turbolinks 用 AJAX 來傳送 Request 給 HTTPS</p>
 <p>用 AJAX 來傳送的好處是，一開始就會把所需要的東西全部載入，讓瀏覽器快速回應給使用者</p>
-<p>而 Turbolink 會做三件事，這部分我們稍後會提到</p>
-<p>在 Rails 7 中，Turbolink 已經被 Turbo Drive 取代</p>
-<p>雖然 Turbolink 讓網頁載入的速度更快，但卻會干擾 JS 的程式碼運作</p>
-<p>如果想要讓 JS 跟 Turbolink 完美配合，可以採取 Stimulus JS 作為前端的框架</p>
+<p>而 Turbolinks 會做三件事，這部分我們稍後會提到</p>
+<p>在 Rails 7 中，Turbolinks 已經被 Turbo Drive 取代</p>
+<p>雖然 Turbolinks 讓網頁載入的速度更快，但卻會干擾 JS 的程式碼運作</p>
+<p>如果想要讓 JS 跟 Turbolinks 完美配合，可以採取 Stimulus JS 作為前端的框架</p>
 <p>說了這麼多，我們趕快進入本文章的重頭戲吧</p>
-<h2 id="Turbo"><a href="#Turbo" class="headerlink" title="Turbo"></a>Turbo</h2><p>Turbo 相較 Turbolink ，會使用到更少的 JavaScript</p>
+<h2 id="Turbo"><a href="#Turbo" class="headerlink" title="Turbo"></a>Turbo</h2><p>Turbo 相較 Turbolinks ，會使用到更少的 JavaScript</p>
 <p>事件監聽、動作可以使用 Turbo 來達成</p>
 <p>甚至可以搭配 Stimulus 做到更多的互動效果</p>
 <h3 id="Turbo-分成三個部分"><a href="#Turbo-分成三個部分" class="headerlink" title="Turbo 分成三個部分"></a>Turbo 分成三個部分</h3><p><img src="https://i.imgur.com/gl6gFNA.jpg"></p>
 <p>接下來就為大家一一介紹他們各自的功用</p>
-<h3 id="Turbo-Drive"><a href="#Turbo-Drive" class="headerlink" title="Turbo Drive"></a>Turbo Drive</h3><p>其實就是以前的 Turbolink，主要會做三件事情</p>
+<h3 id="Turbo-Drive"><a href="#Turbo-Drive" class="headerlink" title="Turbo Drive"></a>Turbo Drive</h3><p>其實就是以前的 Turbolinks，主要會做三件事情</p>
 <p>在點下連結或按鈕的時候</p>
 <ol>
 <li>會將頁面的 Header 融合 (是融合，不是取代哦)</li>
@@ -204,7 +204,7 @@
 <p>所以在換頁的時候會讓你完全無感(但其實他根本沒換頁)</p>
 <p>這個模式很像 SPA (Single Page Application)</p>
 <p><img src="https://i.imgur.com/iIg6XHj.jpg"></p>
-<p>AJAX 會將所有的內容載入在同一頁，只要在同一個頁面渲染就可以了<br>( 就是 Turbolink 做的那三件事 )</p>
+<p>AJAX 會將所有的內容載入在同一頁，只要在同一個頁面渲染就可以了<br>( 就是 Turbolinks 做的那三件事 )</p>
 <h3 id="Turbo-Frame"><a href="#Turbo-Frame" class="headerlink" title="Turbo Frame"></a>Turbo Frame</h3><p>一個頁面會區分成多個區塊，我們要做跨區的互動時，往往要寫很多個 JS 監聽事件、動作、方法等等</p>
 <p>但 Turbo Frame 只需要用 Frame 包起來，就可以在裡面做互動</p>
 <p>而且每個區塊可以同時傳送 request ，以往單執行緒的JS 發送 HTTP request 只能一個一個傳送，Turbo Frame 使用平行處理，時間相對少很多，且更有效率</p>
