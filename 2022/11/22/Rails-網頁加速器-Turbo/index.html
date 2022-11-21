@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="Hexo Theme Keep">
-    <meta name="description" content="Docker 是什麼，為什麼大家這麼喜歡使用 Docker ？">
+    <meta name="description" content="使用 Rails 7 ，Turbo 讓你的網頁比別人更快">
     <meta name="author" content="Ning">
     
     <title>
         
-            Docker - 一起探索大鯨魚的奧妙 |
+            Rails 網頁加速器 - Turbo |
         
         Ning&#39;s Lab
     </title>
@@ -133,7 +133,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">Docker - 一起探索大鯨魚的奧妙</span>
+            <span class="title-hover-animation">Rails 網頁加速器 - Turbo</span>
         </div>
 
         
@@ -152,8 +152,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-11-10 00:21:54</span>
-        <span class="mobile">2022-11-10 00:21</span>
+        <span class="pc">2022-11-22 00:42:46</span>
+        <span class="mobile">2022-11-22 00:42</span>
     </span>
     
     
@@ -174,28 +174,50 @@
         
 
         <div class="article-content markdown-body">
-            <h2 id="為什麼要用-Docker"><a href="#為什麼要用-Docker" class="headerlink" title="為什麼要用 Docker"></a>為什麼要用 Docker</h2><p>不曉得大家是不是常遇到要開啟一個專案，卻因為裝置不相容，在安裝的過程中要一直 debug 的狀況，有時候甚至架不起來？</p>
-<p>Docker 就是為了解決這個問題而出現的</p>
-<h2 id="什麼是-Docker"><a href="#什麼是-Docker" class="headerlink" title="什麼是 Docker"></a>什麼是 Docker</h2><p>Docker 是一種架設出虛擬環境的工具，我們可以透過 Docker 將應用程式單獨切分出來，並且用容器包裝成一個虛擬環境，並且載入你本機沒有但專案會需要的工具或版本，讓應用程式在虛擬環境中開發、執行</p>
-<h2 id="學-Docker-必須要知道的幾個基本名詞"><a href="#學-Docker-必須要知道的幾個基本名詞" class="headerlink" title="學 Docker 必須要知道的幾個基本名詞"></a>學 Docker 必須要知道的幾個基本名詞</h2><ul>
-<li><p>container：容器<br>  映像檔的具體化，通常一個專案會用一個以上的 container<br>(可能 1 個專案開 1 個 container 或者<br>資料庫 1 個 container 專案 1 個 container)<br>  Docker 會去開啟主機並監聽訊息，並把這個訊息傳給 container</p>
-</li>
-<li><p>image：映像檔<br>  唯獨，由 layer 建構而成<br>  映像檔可能是一個資料庫、一個框架</p>
-</li>
-</ul>
-<h2 id="Docker-運作流程"><a href="#Docker-運作流程" class="headerlink" title="Docker 運作流程"></a>Docker 運作流程</h2><ol>
-<li><p>我們會把環境設定寫在 Dockerfile </p>
-</li>
-<li><p>Dockerfile 會去找本地有沒有 image<br>沒有的話會從 Docker hub 中下載下來<br>Docker hub 預設為 registry</p>
-</li>
-<li><p>用 build 的方式建立 image</p>
-</li>
-<li><p>將 image 實體化跑 container</p>
-</li>
+            <p>點選按鈕，常常給你一大片空白，或者是一動也不動</p>
+<p>這是所謂的 Turbolink 在作祟</p>
+<p>大家都避之唯恐不及的 Turbolink </p>
+<p>Rails 團隊為什麼要把它放進來呢？</p>
+<p>甚至在 Rails 7 升級成 Turbo ？</p>
+<h3 id="加速器"><a href="#加速器" class="headerlink" title="加速器"></a>加速器</h3><p>Turbolink 監控網頁中的所有連結，將預設事件停止</p>
+<p>並且在按下連結那一刻，Turbolink 用 AJAX 來傳送 Request 給 HTTPS，而非一般的 JSON API</p>
+<p>用 AJAX 來傳送的好處是，一開始就會把所需要的東西全部載入，讓瀏覽器快速回應給使用者</p>
+<p>而 Turbolink 會做三件事，這部分我們稍後會提到</p>
+<p>在 Rails 7 中，Turbolink 已經被 Turbo Drive 取代</p>
+<p>雖然 Turbolink 讓網頁載入的速度更快，但卻會干擾 JS 的程式碼運作</p>
+<p>如果想要讓 JS 跟 Turbolink 完美配合，可以採取 Stimulus JS 作為前端的框架</p>
+<p>說了這麼多，我們趕快進入本文章的重頭戲吧</p>
+<h2 id="Turbo"><a href="#Turbo" class="headerlink" title="Turbo"></a>Turbo</h2><p>Turbo 相較 Turbolink ，會使用到更少的 JavaScript</p>
+<p>事件監聽、動作可以使用 Turbo 來達成</p>
+<p>甚至可以搭配 Stimulus 做到更多的互動效果</p>
+<h3 id="Turbo-分成三個部分"><a href="#Turbo-分成三個部分" class="headerlink" title="Turbo 分成三個部分"></a>Turbo 分成三個部分</h3><p><img src="https://i.imgur.com/gl6gFNA.jpg"></p>
+<p>接下來就為大家一一介紹他們各自的功用</p>
+<h3 id="Turbo-Drive"><a href="#Turbo-Drive" class="headerlink" title="Turbo Drive"></a>Turbo Drive</h3><p>其實就是以前的 Turbolink，主要會做三件事情</p>
+<p>在點下連結或按鈕的時候</p>
+<ol>
+<li>會將頁面的 Header 融合 (是融合，不是取代哦)</li>
+<li>將網頁的 Body 替換掉</li>
+<li>將網址路徑換掉</li>
 </ol>
-<p><img src="https://i.imgur.com/8Yk0nzw.jpg"></p>
-<h3 id="Docker-Hub"><a href="#Docker-Hub" class="headerlink" title="Docker Hub"></a>Docker Hub</h3><p>跟 GitHub 概念差不多，我們可以將我們寫的專案上傳上去，讓其他人下載</p>
-<h3 id="Docker-Registry"><a href="#Docker-Registry" class="headerlink" title="Docker Registry"></a>Docker Registry</h3><p>以 Ruby 來說，就像是 RubyGems<br>以 JavaScript 來說，就像是 npm Registry<br>在 Docker Registry 有各種不同的 image<br>Docker 在本地找不到 image 的時候會往這邊找並且下載<br>另外可以設定成非公開，有權限的人才能下載</p>
+<p><img src="https://i.imgur.com/qRkScdy.jpg"></p>
+<p>由於 AJAX 已經幫我們載入所需要的資料</p>
+<p>所以在換頁的時候會讓你完全無感(但其實他根本沒換頁)</p>
+<p>這個模式很像 SPA (Single Page Application)</p>
+<p><img src="https://i.imgur.com/iIg6XHj.jpg"></p>
+<p>AJAX 會將所有的內容載入在同一頁，只要在同一個頁面渲染就可以了<br>( 就是 Turbolink 做的那三件事 )</p>
+<h3 id="Turbo-Frame"><a href="#Turbo-Frame" class="headerlink" title="Turbo Frame"></a>Turbo Frame</h3><p>一個頁面會區分成多個區塊，我們要做跨區的互動時，往往要寫很多個 JS 監聽事件、動作、方法等等</p>
+<p>但 Turbo Frame 只需要用 Frame 包起來，就可以在裡面做互動</p>
+<p>而且每個區塊可以同時傳送 request ，以往單執行緒的JS 發送 HTTP request 只能一個一個傳送，Turbo Frame 使用平行處理，時間相對少很多，且更有效率</p>
+<p>不過需要注意的是，Turbo Frame 僅使用 GET 方法</p>
+<p>可以應用這幾個 action ：append, prepend, replace, remove </p>
+<p>Turbo Frame 其實是 HTML custom element 的一種，可以把它看成一種 DOM 元素</p>
+<p>屬性是 block ，也可以應用 CSS 及 部分 JS 語法</p>
+<p><img src="https://i.imgur.com/qmpxGPh.jpg"></p>
+<h3 id="Turbo-Stream"><a href="#Turbo-Stream" class="headerlink" title="Turbo Stream"></a>Turbo Stream</h3><p>Turbo Stream 是應用 Websocket 來傳遞、更新資料</p>
+<p>就像一個廣播器一樣，只要資料有更新，就會直接渲染到目標區塊中</p>
+<p>跟 Turbo Frame 一樣，會依照 DOM ID 去尋找目標區塊渲染</p>
+<p>Turbo Stream 使用 POST 發送 Request 所以可以應用的 action 很多種：append, prepend, replace, update, remove, before, and after</p>
+<p><img src="https://i.imgur.com/y3iqnRq.jpg"></p>
 
         </div>
 
@@ -206,29 +228,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2022/11/22/Rails-%E7%B6%B2%E9%A0%81%E5%8A%A0%E9%80%9F%E5%99%A8-Turbo/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">Rails 網頁加速器 - Turbo</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2022/08/25/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day-09-autoloading/"
+                           href="/2022/11/10/Docker-%E4%B8%80%E8%B5%B7%E6%8E%A2%E7%B4%A2%E5%A4%A7%E9%AF%A8%E9%AD%9A%E7%9A%84%E5%A5%A7%E5%A6%99/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">從0開始刻 淺談 Rails 的運作魔法 - Day 09 Automatic Loading</span>
+                                <span class="post-nav-title-item">Docker - 一起探索大鯨魚的奧妙</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -414,7 +421,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E8%A6%81%E7%94%A8-Docker"><span class="nav-number">1.</span> <span class="nav-text">為什麼要用 Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Docker"><span class="nav-number">2.</span> <span class="nav-text">什麼是 Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%B8-Docker-%E5%BF%85%E9%A0%88%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E5%B9%BE%E5%80%8B%E5%9F%BA%E6%9C%AC%E5%90%8D%E8%A9%9E"><span class="nav-number">3.</span> <span class="nav-text">學 Docker 必須要知道的幾個基本名詞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-%E9%81%8B%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">Docker 運作流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Hub"><span class="nav-number">4.1.</span> <span class="nav-text">Docker Hub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Registry"><span class="nav-number">4.2.</span> <span class="nav-text">Docker Registry</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E9%80%9F%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">加速器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Turbo"><span class="nav-number"></span> <span class="nav-text">Turbo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Turbo-%E5%88%86%E6%88%90%E4%B8%89%E5%80%8B%E9%83%A8%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">Turbo 分成三個部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Turbo-Drive"><span class="nav-number">2.</span> <span class="nav-text">Turbo Drive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Turbo-Frame"><span class="nav-number">3.</span> <span class="nav-text">Turbo Frame</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Turbo-Stream"><span class="nav-number">4.</span> <span class="nav-text">Turbo Stream</span></a></li></ol>
     </div>
 </div>
         </aside>
