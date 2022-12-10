@@ -180,7 +180,7 @@
 <li>以 POST 方法傳送 request 時，data 裡面的 query</li>
 </ol>
 <p>在這之前，我們先來看一下 Rails 是怎麼去存取 parameter 的</p>
-<p><img src="https://i.imgur.com/1b8Bf1Z.png"></p>
+<p><img src="https://i.imgur.com/1Be3JUl.jpg"></p>
 <p>是的，你沒看錯，params 其實是一個方法，把 @routing_params(已塞入 controller &#x2F; action) 塞進去 parameter 裡面</p>
 <p>釐清流程後，讓我們進入正題吧！</p>
 <h3 id="基本-params"><a href="#基本-params" class="headerlink" title="基本 params"></a>基本 params</h3><p>我們在做一般的 CRUD 時，常常需要存取 params 來獲得資料</p>
@@ -220,7 +220,7 @@
 
 <h3 id="params-也可以設定預設值？"><a href="#params-也可以設定預設值？" class="headerlink" title="params 也可以設定預設值？"></a>params 也可以設定預設值？</h3><p>在這之前，有件事情我們必須先知道</p>
 <p>ActionController 主要的工作是處理 HTTP</p>
-<p><img src="https://i.imgur.com/8sstVsE.png"></p>
+<p><img src="https://i.imgur.com/zcR4ZTl.jpg"></p>
 <p>當 request 給 controller 時，</p>
 <p>ActionController 會去呼叫 url_for 方法，</p>
 <p>依照 HTTP 的 request (在 Rack 規格裡面，包括 params) 來定義 URL</p>
