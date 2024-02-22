@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>NingLab</title><meta name="description" content="A Blog Powered By Hexo"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a target="_blank" rel="noopener" href="https://www.caicai.me"> CaiCai </a><span>&</span><a target="_blank" rel="noopener" href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a class="current" href="/">Home</a></li><li><a href="/archives">文章</a></li><li><a href="/category">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)" style="display:none;"> </a></li></div><div class="avatar"><img></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/15/SQL-%E4%B8%8D%E7%AE%A1%E6%98%AF%E4%BA%A4%E9%9B%86%E9%82%84%E6%98%AF%E8%81%AF%E9%9B%86%EF%BC%8CJOIN-%E9%83%BD%E8%83%BD%E6%89%BE%E5%88%B0/">SQL - 不管是交集還是聯集，JOIN 都能找到</a></h3></div><div class="post-content"><p>Joins上一篇我們介紹了 includes 跟 joins 的差異，今天想介紹一下 Joins 的各式用法及不同
+先來假設我們今天有兩個 TABLE1 跟 TABLE2
+TABLE1 存放了 學生的資料(table name &#x3D; Student)
+
+
+
+id
+name
+phone
+email
+cour...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-15</span><i class="fa fa-tag"></i></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/04/08/SQL-Joins%E3%80%81Includes-%E5%B7%AE%E5%88%A5%E5%9C%A8%E5%93%AA%E8%A3%A1%EF%BC%9F/">SQL - Joins、Includes 差別在哪裡？</a></h3></div><div class="post-content"><p>Join and Includes我們在開發的時候免不了關聯資料庫，在撈資料的時候也常常會需要用到 joins 跟 includes
+所以，我們什麼時候會用到 joins 跟 includes
+要尋找跟其他 model 有關聯的資料
+避免 N + 1 問題
+
+** N + 1 問題是什麼呢？當我們查詢多筆資料時，...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-04-08</span><i class="fa fa-tag"></i></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/03/21/Docker-Dockerfile-%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%B4%B9%E5%8F%8A%E6%8C%87%E4%BB%A4/">Docker - Dockerfile 基本介紹及指令</a></h3></div><div class="post-content"><p>我們在先前文章提過，Dockerfile 是我們用來建立 Image 的檔案
+我們可以把 Dockerfile 想像成是千層蛋糕每一層為一個 LayerImage 就是層層堆疊後的千層蛋糕
+
+讓我們來看一下 DockerHub 裡的 Ruby
+按到 Tags 頁籤，任意按一個版號進去，就會看到像是歷史紀錄的畫面，...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-03-21</span><i class="fa fa-tag"></i></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2023/01/15/%E5%B7%A5%E7%A8%8B%E5%B8%AB%E7%9A%84%E6%97%A5%E5%B8%B8-%E5%BE%9E%E6%B8%AC%E8%A9%A6%E9%96%8B%E5%A7%8B-PART-1/">工程師的日常 - 從測試開始 PART 1</a></h3></div><div class="post-content"><p>身為一個 Rails Developer寫測試是必備的基本功
+今天就來跟大家聊聊寫測試這件事
+
+什麼是測試？
+為什麼要寫測試？
+測試分成哪些類型
+有哪些工具可以幫我們完成測試？
+測試該從哪開始？
+3A 原則
+
+什麼是測試？我們來看看維基百科怎麼定義。
+
+測試  描述一種用來促進鑑定軟體的正確性、完整性、安全性和品...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-15</span><i class="fa fa-tag"></i></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/12/11/rails-%E7%9A%84-params-%E8%83%8C%E5%BE%8C%E7%9A%84%E9%81%8B%E4%BD%9C%E5%B7%A7%E6%80%9D/">rails 的 params 背後的運作巧思</a></h3></div><div class="post-content"><p>Parameter我們有時候會需要存取參數來作業，在 web application 中會有兩種參數的來源
+
+query string (放在?後面)
+以 POST 方法傳送 request 時，data 裡面的 query
+
+在這之前，我們先來看一下 Rails 是怎麼去存取 parameter 的
+
+是的，你...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-12-11</span><i class="fa fa-tag"></i></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/11/22/Rails-%E7%B6%B2%E9%A0%81%E5%8A%A0%E9%80%9F%E5%99%A8-Turbo/">Rails 網頁加速器 - Turbo</a></h3></div><div class="post-content"><p>點選按鈕，常常給你一大片空白，或者是一動也不動
+這是所謂的 Turbolinks 在作祟
+大家都避之唯恐不及的 Turbolinks 
+Rails 團隊為什麼要把它放進來呢？
+甚至在 Rails 7 升級成 Turbo ？
+加速器Turbolinks 監控網頁中的所有連結，將預設事件停止
+並且在按下連結那一刻，T...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-11-22</span><i class="fa fa-tag"></i></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/11/10/Docker-%E4%B8%80%E8%B5%B7%E6%8E%A2%E7%B4%A2%E5%A4%A7%E9%AF%A8%E9%AD%9A%E7%9A%84%E5%A5%A7%E5%A6%99/">Docker - 一起探索大鯨魚的奧妙</a></h3></div><div class="post-content"><p>為什麼要用 Docker不曉得大家是不是常遇到要開啟一個專案，卻因為裝置不相容，在安裝的過程中要一直 debug 的狀況，有時候甚至架不起來？
+Docker 就是為了解決這個問題而出現的
+什麼是 DockerDocker 是一種架設出虛擬環境的工具，我們可以透過 Docker 將應用程式單獨切分出來，並且用容器包...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-11-10</span><i class="fa fa-tag"></i></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/08/25/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day-09-autoloading/">從0開始刻 淺談 Rails 的運作魔法 - Day 09 Automatic Loading</a></h3></div><div class="post-content"><p>在 Rails 中，如果沒有自動載入我們就需要使用 require 來載入相關檔案
+有了 automatic loadingRail 會自動載入 lib 、標準函式庫、gem等
+Controller 本身是個 class假如今天找不到 Controller 會跑出一串錯誤訊息
+const_missing 可以幫我...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-08-25</span><i class="fa fa-tag"></i></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/08/24/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day-08-Controller-Debug/">從0開始刻 淺談 Rails 的運作魔法 - Day 08 Controller Debug</a></h3></div><div class="post-content"><p>今天我們來加點 debug 機制吧
+用 Rack Environment debug
+
+step 1 印出環境變數我們在 a_quote 中把 Rack env 這個東西印出來看看
+12345678# quotation/app/controllers/quotes_controller.rbclass Quot...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-08-24</span><i class="fa fa-tag"></i></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/2022/08/23/%E5%BE%9E0%E9%96%8B%E5%A7%8B%E5%88%BB-%E6%B7%BA%E8%AB%87-Rails-%E7%9A%84%E9%81%8B%E4%BD%9C%E9%AD%94%E6%B3%95-Day-07-%E5%BB%BA%E7%AB%8B-Controller/">從0開始刻 淺談 Rails 的運作魔法 - Day 07 建立 Controller</a></h3></div><div class="post-content"><p>框架終於有一點雛形了相關的 gem 也都安裝完成了接下來就是做 Controller 啦！
+首先，我們先將 version 升成 0.0.2
+變更 versionstep 1 刪除 rainbow-0.0.1.gemstep 2 git add .step 3 更改 version 為 0.0.2123modul...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-08-23</span><i class="fa fa-tag"></i></div></div></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/page/2/">Siguiente</a></li></ul></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
