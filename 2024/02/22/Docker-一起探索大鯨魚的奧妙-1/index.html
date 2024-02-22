@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>Docker - 一起探索大鯨魚的奧妙 · NingLab</title><meta name="description" content="為什麼要用 Docker不曉得大家是不是常遇到要開啟一個專案，卻因為裝置不相容，在安裝的過程中要一直 debug 的狀況，有時候甚至架不起來？
+Docker 就是為了解決這個問題而出現的
+什麼是 DockerDocker 是一種架設出虛擬環境的工具，我們可以透過 Docker 將應用程式單獨切分出來"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a target="_blank" rel="noopener" href="https://www.caicai.me"> CaiCai </a><span>&</span><a target="_blank" rel="noopener" href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">Home</a></li><li><a href="/archives">文章</a></li><li><a href="/category">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Docker - 一起探索大鯨魚的奧妙</a></h3></div><div class="post-content"><h2 id="為什麼要用-Docker"><a href="#為什麼要用-Docker" class="headerlink" title="為什麼要用 Docker"></a>為什麼要用 Docker</h2><p>不曉得大家是不是常遇到要開啟一個專案，卻因為裝置不相容，在安裝的過程中要一直 debug 的狀況，有時候甚至架不起來？</p>
+<p>Docker 就是為了解決這個問題而出現的</p>
+<h2 id="什麼是-Docker"><a href="#什麼是-Docker" class="headerlink" title="什麼是 Docker"></a>什麼是 Docker</h2><p>Docker 是一種架設出虛擬環境的工具，我們可以透過 Docker 將應用程式單獨切分出來，並且用容器包裝成一個虛擬環境，並且載入你本機沒有但專案會需要的工具或版本，讓應用程式在虛擬環境中開發、執行</p>
+<h2 id="學-Docker-必須要知道的幾個基本名詞"><a href="#學-Docker-必須要知道的幾個基本名詞" class="headerlink" title="學 Docker 必須要知道的幾個基本名詞"></a>學 Docker 必須要知道的幾個基本名詞</h2><ul>
+<li><p>container：容器<br>  映像檔的具體化，通常一個專案會用一個以上的 container<br>(可能 1 個專案開 1 個 container 或者<br>資料庫 1 個 container 專案 1 個 container)<br>  Docker 會去開啟主機並監聽訊息，並把這個訊息傳給 container</p>
+</li>
+<li><p>image：映像檔<br>  唯讀，由 layer 建構而成</p>
+</li>
+<li><p>volume：<br>  在容器外運行，可連接不同的 container</p>
+</li>
+<li><p>daemon：<br>  管理 Docker image、開啟跟關閉 container</p>
+</li>
+<li><p>Docker Hub：<br>  類似 GitHub 的概念，是 image 的倉庫，可從上面拉取所需要的 image (權限可以設定為私有，只限定有權限的人才可以拉取)</p>
+</li>
+</ul>
+<h2 id="更多-Docker-的專有名詞"><a href="#更多-Docker-的專有名詞" class="headerlink" title="更多 Docker 的專有名詞"></a>更多 Docker 的專有名詞</h2><p>在介紹 Docker 運作方式之前，我們需要了解更多專有名詞：</p>
+<ul>
+<li><p>Docker Engine：<br>  Docker 的核心，負責管理 image。<br>  包括 Docker Daemon、Docker API 和CLI。<br>  在建立 image 時，如果本地沒有相同 image，會從 Docker Hub 拉取。</p>
+</li>
+<li><p>Docker API：</p>
+<p>  使用 RESTful 標準向 Docker Daemon發送請求。</p>
+</li>
+<li><p>Docker CLI：</p>
+<p>  我們可以在這個介面下指令，並通過 Docker API 向 Docker Engine 發出指令。</p>
+</li>
+</ul>
+<h2 id="Docker-運作流程"><a href="#Docker-運作流程" class="headerlink" title="Docker 運作流程"></a>Docker 運作流程</h2><p>我們可以將 Docker 想像成電腦中的一個盒子，在這個盒子內部有一個容器化的環境。</p>
+<p>Docker 使用電腦的 CPU、記憶體和操作系統來運行。</p>
+<p>為了更清楚地理解這個概念，請參考下面的圖表：<br><img src="https://i.imgur.com/JMyuMf2.jpg"></p>
+<p>有這個基礎概念後，我們就來看一下當建立 image 時， Docker 是怎麼運作的</p>
+<p><img src="https://imgur.com/RxbBMNF.jpg"></p>
+<p>當我們下指令 <code>docker build -t xxxx .</code> 時，運作流程會是這樣：</p>
+<ol>
+<li>在 CLI 中輸入指令。</li>
+<li>CLI 發送給 Docker API。</li>
+<li>Docker API 以 RESTful 標準發送請求給 Docker daemon 去尋找 image。</li>
+<li>如果本地找不到 image，會從 Docker Hub 下載 image。</li>
+<li>建立 image。</li>
+</ol>
+<p>如果沒有錯誤或缺少套件，容器就可以成功建立。</p>
+<p>image 建立起來後，還需要下指令才能讓他建立及運作 container<br>這時候會使用電腦中的 CPU、記憶體以及作業系統</p>
+<ol start="6">
+<li>在 CLI 輸入 <code>docker container run xxxx .</code></li>
+<li>container 開始運作</li>
+</ol>
+<p>如果要停止 container</p>
+<ol start="8">
+<li>在 CLI 輸入 <code>docker container stop xxxx</code></li>
+</ol>
+<p>這時候 container 就會停止，而原本佔用電腦中的資源都會被釋放。</p>
+<p>現在我們對 Docker 的基本概念有深度理解，下一篇文章將會比較著重在實際練習！</p>
+<h2 id="English-Version"><a href="#English-Version" class="headerlink" title="English Version"></a>English Version</h2><h2 id="Why-use-Docker"><a href="#Why-use-Docker" class="headerlink" title="Why use Docker?"></a>Why use Docker?</h2><p>In certain situations, starting up a web server failed due to device incompatibility.</p>
+<p>There are multiple steps involved in resolving the issue, and it can be challenging for developers to overcome these obstacles.</p>
+<p>Integrating Docker into the project can avoid these awkward situations.</p>
+<p>Docker simplifies the development and maintenance process for developers.</p>
+<h2 id="What-is-Docker"><a href="#What-is-Docker" class="headerlink" title="What is Docker"></a>What is Docker</h2><p>Docker creates a virtual environment that contains services or applications.<br>This environment is separated from your computer and other containers built from the Docker images.</p>
+<p>Based on the above explanation, an application can be started up and developed within the virtual environment, which provides the necessary dependencies version and tool.</p>
+<h2 id="Basic-terminology-docker-beginners-have-to-learn"><a href="#Basic-terminology-docker-beginners-have-to-learn" class="headerlink" title="Basic terminology docker beginners have to learn"></a>Basic terminology docker beginners have to learn</h2><ul>
+<li><p>container:<br>  Created from an image, it represents an instance of that image.<br>  A project typically usually consists of multiple containers.<br>  (Probably one project only has one container, it’s depending on the number of Dockerfiles)</p>
+</li>
+<li><p>image<br>  Immutable and consists of layers</p>
+</li>
+<li><p>Volume<br>  Exists outside the container, and allows for connection between different containers.</p>
+</li>
+<li><p>daemon<br>  Manage Docker images, starts and stops containers.</p>
+</li>
+<li><p>Docker Hub<br>  Similar to GitHub, is a platform to used to store images that anyone can pull image here.</p>
+</li>
+</ul>
+<h3 id="Additional-Docker-terminology-you-should-know"><a href="#Additional-Docker-terminology-you-should-know" class="headerlink" title="Additional Docker terminology you should know"></a>Additional Docker terminology you should know</h3><p>Before we mention how docker works, it’s essential to understand a few more terms:</p>
+<ul>
+<li><p>Docker Engine:<br>  The Core of Docker management, it’s responsible for managing images.<br>  It includes Docker daemon, Docker API, and CLI.<br>  It will pull down images from Docker Hub if the same image is not found locally when we build an image.</p>
+</li>
+<li><p>Docker API<br>  Sends requests to Docker daemon using Restful standards.</p>
+</li>
+<li><p>Docker CLI<br>  An interface we can command to Docker Engine via Docker API.</p>
+</li>
+</ul>
+<h2 id="How-does-Docker-operate"><a href="#How-does-Docker-operate" class="headerlink" title="How does Docker operate?"></a>How does Docker operate?</h2><p>We can image docker as a box within computers, there is a containerized environment inside the box, which has its hostname, IP address, and disk for data storage.<br>Docker uses the CPU, memory, and operating system resources of the device to run containers.</p>
+<p>To clarify the concept, refer to the picture below.</p>
+<p><img src="https://imgur.com/JMyuMf2.jpg"></p>
+<p>So far, we have understood the fundamental concept of Docker, the important point of concept we will introduce in the chapter:</p>
+<p><img src="https://imgur.com/RxbBMNF.jpg"></p>
+<p>When we run <code>docker build -t xxxx .</code> in the beginning, Docker process follows these steps:</p>
+<ol>
+<li>We enter a command in the CLI.</li>
+<li>The CLI sends a message to Docker API.</li>
+<li>Docker API requests Docker Daemon to find the image by Restful standards.</li>
+<li>Pull the image from Docker Hub if the same image is not available locally.</li>
+<li>A image is built.</li>
+</ol>
+<p>Once these steps are completed without errors or missing dependencies, the container is successfully created.</p>
+<p>The steps mentioned above only build a image, but it’s not building and running container. To do these, follow these steps:</p>
+<ol start="6">
+<li>Enter <code>docker container run xxxx</code></li>
+<li>Container will run successfully without errors.</li>
+</ol>
+<p>Docker accesses CPU, memory, and operating system resources from the computer when a container is running.</p>
+<p>If we want to stop the container:</p>
+<ol start="8">
+<li>Enter <code>docker container stop xxxx</code></li>
+</ol>
+<p>The resources container used will be released when stopping the container.</p>
+<p>Now We have a solid understanding of the basic Docker concepts,  the next article will focus on practical exercises, see u soon.</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-02-22</span><i class="fa fa-tag"></i></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/2024/02/22/Docker-一起探索大鯨魚的奧妙-1/,NingLab,Docker - 一起探索大鯨魚的奧妙,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2024/02/22/Docker-Dockerfile-%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%B4%B9%E5%8F%8A%E6%8C%87%E4%BB%A4-1/" title="Docker - Dockerfile 基本介紹及指令">Post Anterior</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2024/02/22/Basic-%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8/" title="Basic - 環境變數">Próximo post</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
