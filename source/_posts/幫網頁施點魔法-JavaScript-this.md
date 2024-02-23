@@ -1,8 +1,7 @@
 ---
 title: 幫網頁施點魔法 - JavaScript this
 date: 2022-08-13 19:28:44
-tags:
-categories: JavaScript
+category: JavaScript
 ---
 ## this到底是哪個this？傻傻分不清楚
 

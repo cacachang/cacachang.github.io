@@ -1,9 +1,7 @@
 ---
 title: 從0開始刻 淺談 Rails 的運作魔法 - Day03 GEM
 date: 2022-08-16 23:27:08
-tags:
-categories: Rebuild Rails
-
+category: Rebuild Rails
 ---
 用過 Rails 應該對於 gem 不會太陌生
 好用一直用，但你知道 gem 是什麼嗎？

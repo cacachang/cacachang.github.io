@@ -1,7 +1,7 @@
 ---
 title: Docker - 什麼是 Compose
 date: 2024-02-22 23:04:11
-tags:
+category: Docker
 ---
 
 之前我們介紹了 Dockerfile 的基本指令，

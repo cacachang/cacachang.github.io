@@ -1,9 +1,8 @@
 ---
 title: Rails 實作應用 - Model 篇
 date: 2022-08-21 03:28:43
-tags:
+category: Rails
 description: Rails 實作的功能拆分 -  資料庫翻譯蒟蒻 Model
-categories: Rails 實作
 ---
 ## Model
 

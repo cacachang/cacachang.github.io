@@ -1,6 +1,7 @@
 ---
 title: SQL - 不管是交集還是聯集，JOIN 都能找到
 date: 2023-04-15 23:28:09
+category: 資料庫
 description: 學會 JOIN ，要找多難的集合資料都不是問題
 ---
 # Joins

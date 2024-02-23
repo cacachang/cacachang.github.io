@@ -1,8 +1,7 @@
 ---
 title: 從0開始刻 淺談 Rails 的運作魔法 - Day 06 完整框架的基本功能
 date: 2022-08-22 00:32:51
-tags:
-categories: Rebuild Rails
+category: Rebuild Rails
 description: 添加基本功能，讓架構更完整
 ---
 建立好基本的框架及應用程式後

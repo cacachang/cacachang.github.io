@@ -1,8 +1,7 @@
 ---
-layout: pages
 title: 工程師的日常 - 從測試開始 PART 1
 date: 2023-01-15 23:27:08
-tags:
+category: 測試
 description: 搞定測試，開啟你的快樂開發之路
 ---
 

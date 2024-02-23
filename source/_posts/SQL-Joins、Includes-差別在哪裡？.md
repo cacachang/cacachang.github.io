@@ -1,7 +1,7 @@
 ---
 title: SQL - Joins、Includes 差別在哪裡？
 date: 2023-04-08 23:19:24
-tags:
+category: 資料庫
 description: Joins 與 Includes 常常分不清楚，圖表化差別一次懂
 ---
 # Join and Includes

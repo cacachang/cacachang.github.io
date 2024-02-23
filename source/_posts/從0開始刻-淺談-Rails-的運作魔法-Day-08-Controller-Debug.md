@@ -1,7 +1,7 @@
 ---
 title: 從0開始刻 淺談 Rails 的運作魔法 - Day 08 Controller Debug
 date: 2022-08-24 03:09:06
-tags:
+category: Rebuild Rails
 description: 當 exception 出現該怎麼辦？begin rescue 是你的救星！
 ---
 

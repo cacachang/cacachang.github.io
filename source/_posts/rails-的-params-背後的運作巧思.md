@@ -1,7 +1,7 @@
 ---
-title: rails 的 params 背後的運作巧思
+title: Rails 的 params 背後的運作巧思
 date: 2022-12-11 00:34:30
-tags:
+category: Rails
 description: params 不僅可以存到資料庫中，也可以拿來判斷，不過他背後究竟是怎麼運作的呢？
 ---
 # Parameter

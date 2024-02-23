@@ -1,9 +1,8 @@
 ---
 title: Rails 實作應用 - Controller 篇
 date: 2022-08-21 03:24:42
-tags: 
+category: Rails
 description: Rails 實作的功能拆分 - 運算處理中心 Controller
-categories: Rails 實作
 ---
 ### Controller
 

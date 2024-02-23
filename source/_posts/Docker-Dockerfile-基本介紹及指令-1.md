@@ -1,7 +1,7 @@
 ---
 title: Docker - Dockerfile 基本介紹及指令
 date: 2024-02-22 23:02:14
-tags:
+category: Docker
 ---
 
 我們在先前文章提過，Dockerfile 是我們用來建立 Image 的檔案 

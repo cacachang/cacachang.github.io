@@ -1,8 +1,7 @@
 ---
 title: 從0開始刻 淺談 Rails 的運作魔法 - Day 05 建立應用程式
 date: 2022-08-19 01:22:41
-tags:
-categories: Rebuild Rails
+category: Rebuild Rails
 ---
 
 昨天把初步框架架起來

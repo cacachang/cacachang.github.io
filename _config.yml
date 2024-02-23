@@ -5,7 +5,7 @@
 # Site
 title: NingLab
 subtitle: ''
-description: ''
+description: '程式實習生日常，紀錄隱藏在字元裡的小細節及思維邏輯'
 keywords:
 author: Ning
 language: en
@@ -15,7 +15,7 @@ timezone: ''
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: http://ninglab.com
 root: /
-permalink: :year/:month/:day/:title/
+permalink: :title/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks

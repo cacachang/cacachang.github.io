@@ -1,8 +1,7 @@
 ---
 title: 從0開始刻 淺談 Rails 的運作魔法 - Day 04 建立框架
 date: 2022-08-17 23:41:48
-tags:
-categories: Rebuild Rails
+category: Rebuild Rails
 ---
 我們終於要開始來復刻 Rails 囉！
 

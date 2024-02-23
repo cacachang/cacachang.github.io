@@ -1,7 +1,7 @@
 ---
 title: Postgresql - JSONB 是什麼？跟 JSON 有什麼差別？
 date: 2024-02-22 22:52:07
-tags:
+category: 資料庫
 ---
 ## jsonb 是什麼 PostgreSQL 
 

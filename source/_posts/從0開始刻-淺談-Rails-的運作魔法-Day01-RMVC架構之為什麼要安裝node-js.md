@@ -1,8 +1,7 @@
 ---
 title: 從0開始刻 淺談 Rails 的運作魔法 Day01 RMVC架構之為什麼要安裝node.js
 date: 2022-08-15 02:25:55
-tags:
-categories: Rebuild Rails
+category: Rebuild Rails
 ---
 
 # 從0開始刻 淺談 Rails 的運作魔法 Day01 RMVC架構之為什麼要安裝node.js

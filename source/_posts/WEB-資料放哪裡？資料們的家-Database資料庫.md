@@ -1,9 +1,8 @@
 ---
 title: WEB 資料放哪裡？資料們的家 - Database資料庫 
 date: 2022-08-20 02:01:17
-tags:
+category: 資料庫
 description: 關聯式資料庫與非關聯式資料庫有什麼不一樣？規劃好資料庫，效率沒煩惱
-categories: 資料們的家 - 資料庫
 ---
 # Database 資料庫
 

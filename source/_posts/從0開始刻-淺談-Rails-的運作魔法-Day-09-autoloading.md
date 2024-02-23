@@ -1,7 +1,7 @@
 ---
 title: 從0開始刻 淺談 Rails 的運作魔法 - Day 09 Automatic Loading
 date: 2022-08-25 03:10:39
-tags:
+category: Rebuild Rails
 description: 自動載入好方便！還原 Automatic Loading 運作
 ---
 

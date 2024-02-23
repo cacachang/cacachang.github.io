@@ -1,7 +1,7 @@
 ---
 title: 叫我套件王 - 會員系統 Devise【1】
 date: 2024-02-22 23:02:40
-tags:
+category: Rails
 ---
 ### 為什麼要用 Devise
 

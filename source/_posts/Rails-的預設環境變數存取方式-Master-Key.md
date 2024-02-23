@@ -1,7 +1,7 @@
 ---
 title: Rails 的預設環境變數存取方式 - Master Key
 date: 2024-02-22 23:03:03
-tags:
+category: Rails
 ---
 
 在 Rails 5.2 版本後，

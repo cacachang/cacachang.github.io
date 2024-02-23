@@ -1,7 +1,7 @@
 ---
 title: Rails 網頁加速器 - Turbo
 date: 2022-11-22 00:42:46
-tags:
+category: Rails
 description: 使用 Rails 7 ，Turbo 讓你的網頁比別人更快
 ---
 點選按鈕，常常給你一大片空白，或者是一動也不動

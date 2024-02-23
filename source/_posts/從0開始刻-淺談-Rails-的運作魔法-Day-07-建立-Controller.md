@@ -1,7 +1,7 @@
 ---
 title: 從0開始刻 淺談 Rails 的運作魔法 - Day 07 建立 Controller
 date: 2022-08-23 04:42:05
-tags:
+category: Rebuild Rails
 description: 為框架打造運算中心 Controller
 ---
 框架終於有一點雛形了

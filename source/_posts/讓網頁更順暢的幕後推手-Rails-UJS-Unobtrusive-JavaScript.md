@@ -1,9 +1,7 @@
 ---
 title: 小機制大效用 一用就回不去的 Rails UJS - Unobtrusive JavaScript
 date: 2022-08-12 01:58:53
-tags:
-categories: Rails
-
+category: Rails
 ---
 
 # 小機制大效用 一用就回不去的 Rails UJS - Unobtrusive JavaScript
