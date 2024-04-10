@@ -72,7 +72,7 @@ An execution context is a specification device that is u"><meta name="keywords">
 </li>
 <li>印出 <code>I&#39;m $&#123;age&#125; years old</code> ，這時候 <code>myAge</code> 的 <code>Environment Record</code> 有 <code>age</code> 這個變數，因此印出  <code>I&#39;m 18 years old</code></li>
 </ol>
-<p><img src="https://imgur.com/PI2lvyO.jpg" alt="Ning-draw (6)"></p>
+<p><img src="https://imgur.com/k2mgVMy.jpg" alt="Ning-draw (6)"></p>
 <p>接著我們來看有使用到父層變數的程式碼</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function aboutMe() &#123;</span><br><span class="line">  var myName = &quot;Ning&quot;;</span><br><span class="line">  let age = 18;</span><br><span class="line">  console.log(`Hi, my name is $&#123;myName&#125;`);</span><br><span class="line"></span><br><span class="line">  function myAge() &#123;</span><br><span class="line">    console.log(`I&#x27;m $&#123;age&#125; years old`);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  myAge();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">aboutMe();</span><br></pre></td></tr></table></figure>
 
@@ -92,38 +92,9 @@ An execution context is a specification device that is u"><meta name="keywords">
 <li>印出 <code>I&#39;m $&#123;age&#125; years old</code> ，這時候 <code>myAge</code> 的 <code>Environment Record</code> 沒有 <code>age</code> 這個變數，因此往 <code>reference to outer environment</code> 找變數，在 <code>aboutMe</code> 找到了 age 是 18，因此印出 <code>I&#39;m 18 years old</code></li>
 </ol>
 <p>要注意的是， <code>reference to outer environment</code> 只會放上一層的，如果沒有的話，就會從上一層的 <code>reference to outer environment</code> 繼續往上找</p>
-<p><img src="https://imgur.com/xhj9KSY.jpg" alt="Ning-draw (7)"></p>
+<p><img src="https://imgur.com/7qkuMF5.jpg" alt="Ning-draw (7)"></p>
 <p>接著我們來看看 <code>Variable Environment</code></p>
 <h3 id="Variable-Environment"><a href="#Variable-Environment" class="headerlink" title="Variable Environment"></a>Variable Environment</h3><p>又稱作變數環境，主要放置 <code>var</code> 變數，</p>
-<p>讓我們來看看幾個例子</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function aboutMe() &#123;</span><br><span class="line">  var myName = &quot;Ning&quot;;</span><br><span class="line"></span><br><span class="line">  function myAge() &#123;</span><br><span class="line">    console.log(`I&#x27;m $&#123;age&#125; years old`);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  if (myName == &quot;Ning&quot;) &#123;</span><br><span class="line">    var age = 19;</span><br><span class="line">    myAge();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">aboutMe();</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>執行 <code>aboutMe()</code></li>
-<li>進入 <code>aboutMe</code> 的 <code>Function Execution Context</code> </li>
-<li>放置變數 <ul>
-<li>放置 var 變數 <code>myName</code> 到 <code>Variable Environment</code></li>
-<li>放置 Function <code>myAge</code> 到 <code>Lexical Environment</code> </li>
-<li>放置 var 變數 <code>age</code> 到 <code>Variable Environment</code></li>
-</ul>
-</li>
-<li>遇到 if 的 block ，條件符合，進入該 block 的 <code>Function Execution Context</code></li>
-<li>由於 var 變數作用範圍僅存於 Function ，因此這邊不會放置</li>
-<li>執行 <code>myAge()</code></li>
-<li>進入 <code>myAge</code> 的 <code>Function Execution Context</code></li>
-<li>沒有變數，不放置變數</li>
-<li>印出 <code>I&#39;m $&#123;age&#125; years old</code>，不過該 <code>Execution Context</code> 沒有任何變數，往 <code>reference to outer environment</code> 找</li>
-<li>在 <code>aboutMe()</code> 中找到了</li>
-<li>因此印出 <code>I&#39;m 19 years old</code></li>
-</ol>
-<p>為什麼不是往 <code>if (myName == &quot;Ning&quot;)</code><br>主要是因為 JavaScript 是採用 Lexical Scope 的方式，</p>
-<blockquote>
-<p>The word lexical refers to the fact that lexical scoping uses the location where a variable is declared within the source code to determine where that variable is available.</p>
-</blockquote>
-<p>根據 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#lexical_scoping">MDN</a> 的解釋，Lexical Scope 會取決於該程式碼的 <code>所在位置</code>，而非程式碼的 <code>執行位置</code></p>
-<p>也就是說，我們要看的是 <code>myAge</code> 位在於程式碼的哪裡，並且去找到他的父層，而他的父層就是 <code>aboutMe</code>，</p>
-<p>因此 <code>reference to outer environment</code> 這個倉庫也只會放 <code>aboutMe</code> 的變數 </p>
-<p><img src="https://imgur.com/8xioDlA.jpg" alt="Ning-draw (9)"></p>
 <p>接下來再看一個範例</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function aboutMe() &#123;</span><br><span class="line">  var myName = &quot;Ning&quot;;</span><br><span class="line"></span><br><span class="line">  function myAge() &#123;</span><br><span class="line">    console.log(`I&#x27;m $&#123;age&#125; years old`);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  if (myName == &quot;Ning&quot;) &#123;</span><br><span class="line">    let age = 19;</span><br><span class="line">    myAge();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">aboutMe();</span><br></pre></td></tr></table></figure>
 
@@ -136,7 +107,7 @@ An execution context is a specification device that is u"><meta name="keywords">
 </ul>
 </li>
 <li>遇到 if 的 block ，進入該 block 的 <code>Function Execution Context</code></li>
-<li>放置變數 <code>age</code> 到 <code>Variable Environment</code></li>
+<li>放置變數 <code>age</code> 到 <code>Lexical Environment</code></li>
 <li>執行 <code>myAge()</code></li>
 <li>進入 <code>myAge</code> 的 <code>Function Execution Context</code></li>
 <li>沒有變數，不放置變數</li>
@@ -144,7 +115,14 @@ An execution context is a specification device that is u"><meta name="keywords">
 <li>在 <code>aboutMe</code> 中找不到</li>
 <li>因此印出錯誤訊息 <code>Uncaught ReferenceError: age is not defined</code></li>
 </ol>
-<p><img src="https://imgur.com/DPGG7wM.jpg" alt="Ning-draw (8)"></p>
+<p><img src="https://imgur.com/W0ss9O1.jpg" alt="Ning-draw (8)"></p>
+<p>為什麼不是往 <code>if (myName == &quot;Ning&quot;)</code><br>主要是因為 JavaScript 是採用 Lexical Scope 的方式，</p>
+<blockquote>
+<p>The word lexical refers to the fact that lexical scoping uses the location where a variable is declared within the source code to determine where that variable is available.</p>
+</blockquote>
+<p>根據 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#lexical_scoping">MDN</a> 的解釋，Lexical Scope 會取決於該程式碼的 <code>所在位置</code>，而非程式碼的 <code>執行位置</code></p>
+<p>也就是說，我們要看的是 <code>myAge</code> 位在於程式碼的哪裡，並且去找到他的父層，而他的父層就是 <code>aboutMe</code>，</p>
+<p>因此 <code>reference to outer environment</code> 這個倉庫也只會放 <code>aboutMe</code> 的變數</p>
 <p>看到這邊應該有個疑惑，為什麼 <code>if (myName == &quot;Ning&quot;)</code> 的 var 會被放在 <code>aboutMe</code> 的 <code>Variable Environment</code> ？</p>
 <p>依照 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/var">MDN</a> 的說明， var 只能被包在 <code>Function</code> 中，一旦出了 <code>Function</code> 這個作用域，就會變成 <code>Global</code> 作用域</p>
 <p>關於 <code>Variable Environment</code> 的詳細介紹，將在下篇文章提出</p>
@@ -153,4 +131,4 @@ An execution context is a specification device that is u"><meta name="keywords">
 <p><a target="_blank" rel="noopener" href="https://www.frontendmag.com/tutorials/lexical-environment-in-javascript/">https://www.frontendmag.com/tutorials/lexical-environment-in-javascript/</a></p>
 <p><a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-execution-contexts">https://262.ecma-international.org/6.0/#sec-execution-contexts</a></p>
 <p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#lexical_scoping">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#lexical_scoping</a></p>
-</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-03-31</span><i class="fa fa-tag"></i><a class="tag" href="/categories/JavaScript/" title="JavaScript">JavaScript </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/JavaScript-運行背後的世界(1)/,NingLab,JavaScript - 運行背後的世界(1),;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/Rails-Turbo%20%E8%88%87%20Turbo%20Drive/" title="Rails - Turbo 與 Turbo Drive">Post siguiente</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-03-31</span><i class="fa fa-tag"></i><a class="tag" href="/categories/JavaScript/" title="JavaScript">JavaScript </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/JavaScript-運行背後的世界(1)/,NingLab,JavaScript - 運行背後的世界(1),;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/Rails-Turbo%20%E8%88%87%20Turbo%20Drive/" title="Rails - Turbo 與 Turbo Drive">Próximo post</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
