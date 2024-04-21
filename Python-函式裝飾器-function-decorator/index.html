@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>Python - 函式裝飾器 function decorator · NingLab</title><meta name="description" content="今天想來跟大家介紹 function decorator
+Higher-order function在這之前，先介紹一下什麼叫做 Higher-order function，就會比較好理解 function decortor
+根據維基百科的介紹，Higher-order function 必須至少滿"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.jpeg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/ning.jpg" style="width:200px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://twitter.com/ningchang_"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="https://github.com/cacachang"><i class="fa fa-github"></i></a></li><li><a href="mailto:a24701770@gmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.instagram.com/web543_/"><i class="fa fa-instagram"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%E7%8F%88%E5%AF%A7-%E5%BC%B5-140a86125/"><i class="fa fa-linkedin"></i></a></li></ul><div class="footer"><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">Home</a></li><li><a href="/archives">文章</a></li><li><a href="/categories">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.jpeg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Python - 函式裝飾器 function decorator</a></h3></div><div class="post-content"><p>今天想來跟大家介紹 function decorator</p>
+<h3 id="Higher-order-function"><a href="#Higher-order-function" class="headerlink" title="Higher-order function"></a>Higher-order function</h3><p>在這之前，先介紹一下什麼叫做 <code>Higher-order function</code>，就會比較好理解 function decortor</p>
+<p>根據維基百科的介紹，<code>Higher-order function</code> 必須至少滿足以下其中一個條件</p>
+<ol>
+<li>至少有一個或多個 functions 作為引數</li>
+<li>結果要返回一個 function</li>
+</ol>
+<blockquote>
+<p>In mathematics and computer science, a higher-order function (HOF) is a function that does at least one of the following:</p>
+<ol>
+<li>takes one or more functions as arguments (i.e. a procedural parameter, which is a parameter of a procedure that is itself a procedure),</li>
+<li>returns a function as its result.</li>
+</ol>
+</blockquote>
+<p>讓我們來看看例子吧</p>
+<p>當我們呼叫 <code>outer_fun</code> 時，傳了一個 function 做為引數，符合了 <code>Higher-order function</code> 的第一條規範，這時我們可以說 <code>outer_fun</code> 是個 <code>Higher-order function</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def outer_fun(inner):</span><br><span class="line">  print(inner_fun)</span><br><span class="line"></span><br><span class="line">def inner_fun():</span><br><span class="line">  print(&quot;I&#x27;m inner function&quot;)</span><br><span class="line"></span><br><span class="line">outer_fun(inner_fun) // &lt;function inner_fun at 0x1029eccc0&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不過如果我們在呼叫的時候，傳進去的引數不是 <code>function</code> ，然後也沒有 <code>return function</code> (第二個定義)，<br><code>outer_fun</code> 就不能被稱作是個 <code>Higher-order function</code></li>
+</ul>
+<p>接著我們再稍微加工一下，在 <code>outer_fun</code> 中定義一個 function 並且 return 此 function，也就是 <code>inner_fun</code> ，這時候符合了第二點的規範，<code>outer_fun</code> 就是個 <code>Higher-order function</code> 了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def outer_fun():</span><br><span class="line">  def inner_fun():</span><br><span class="line">    print(&quot;I&#x27;m inner function&quot;)</span><br><span class="line">  </span><br><span class="line">  return inner_fun</span><br><span class="line"></span><br><span class="line">outer_fun() // inner_fun 沒有執行，所以是空的</span><br></pre></td></tr></table></figure>
+
+<p>我們再來點進階的範例，我們來一步步看</p>
+<ol>
+<li>定義了一個 function <code>outer_fun</code></li>
+<li>foo 被指向 <code>outer_fun</code> ，帶入 3 為引數並且執行</li>
+<li>定義了一個 function <code>inner_fun</code></li>
+<li>回傳 <code>inner_fun</code> 這個物件，此時 foo 是指向 <code>inner_fun</code> 這個物件</li>
+</ol>
+<p>這時候的 <code>outer_fun</code> 符合 <code>Higher-Order function</code> 第二個定義，因此可稱為 <code>Higher-Order function</code></p>
+<p><code>outer_fun</code> 回傳的是 <code>inner_fun</code> 這個 function 物件，</p>
+<p>並非 <code>inner_fun</code> 的執行結果，因此在執行程式碼並不會印出任何東西</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def outer_fun(x):</span><br><span class="line">  def inner_fun(x):</span><br><span class="line">    calculator = x + x</span><br><span class="line">    print(calculator)</span><br><span class="line"></span><br><span class="line">  return inner_fun</span><br><span class="line"></span><br><span class="line">foo = outer_fun(3)</span><br></pre></td></tr></table></figure>
+
+<p>現在的 foo 指向了 <code>inner_fun</code> 這個 function 物件，</p>
+<p>如果我們想要 <code>inner_fun</code> 執行結果的話，只要執行 foo 並且帶入參數即可</p>
+<p>這時候的 <code>outer_fun</code> 回傳的仍然是 <code>inner_fun</code> 這個 function 物件，，因此仍為 <code>Higher-Order function</code></p>
+<ol>
+<li>定義了一個 function <code>outer_fun</code></li>
+<li>foo 被指向 <code>outer_fun</code> ，帶入 3 為引數並且執行</li>
+<li>定義了一個 function <code>inner_fun</code></li>
+<li>回傳 <code>inner_fun</code> 這個物件，此時 foo 是指向 <code>inner_fun</code> 這個物件</li>
+<li>foo 執行，也就是 <code>inner_fun</code> 執行，帶入 3 作為引數並執行</li>
+<li>進入 <code>inner_fun</code></li>
+<li>計算 引數相加 <code>x + x</code> ，算出結果為 3 ，並將 calculator 指向該結果</li>
+<li>印出 calculator</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def outer_fun(x):</span><br><span class="line">  def inner_fun(x):</span><br><span class="line">    calculator = x + x</span><br><span class="line">    print(calculator)</span><br><span class="line"></span><br><span class="line">  return inner_fun</span><br><span class="line"></span><br><span class="line">foo = outer_fun(3)</span><br><span class="line"></span><br><span class="line">foo(3) // 6</span><br></pre></td></tr></table></figure>
+
+<p>到這邊大家應該對於 <code>Higher-Order function</code> 多少有個概念了</p>
+<p>再複習一下，<code>Higher-Order function</code> 需要符合以下其中一個定義</p>
+<ol>
+<li>至少有一個或多個 functions 作為引數</li>
+<li>結果要返回一個 function</li>
+</ol>
+<p>那我們就帶著這兩個觀念，來看 <code>function decorator</code></p>
+<h3 id="Decorator-pattern"><a href="#Decorator-pattern" class="headerlink" title="Decorator pattern"></a>Decorator pattern</h3><p><code>function decorator</code> 是一種設計模式，並不是只有存在於 Python ，其他程式語言，像是 JavaScript 或 Ruby 也會有，概念都是差不多的，只是差在於使用的頻率高不高</p>
+<p>這個設計模式被稱作為 <code>Decorator pattern</code> </p>
+<p>我們來看看維基百科的介紹</p>
+<p>在物件導向程式中， <code>Decorator pattern</code> 在不影響同個類別下的其他實體，可以讓獨立的物件添加其他行為</p>
+<blockquote>
+<p>In object-oriented programming, the decorator pattern is a design pattern that allows behavior to be added to an individual object, dynamically, without affecting the behavior of other instances of the same class.</p>
+</blockquote>
+<p>我們來就拿 <code>Higher-code function</code> 的第一個範例來看，為了方便了解，我會將 <code>outer_fun</code> 的程式碼改為 return inner</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def outer_fun(inner):</span><br><span class="line">  return inner</span><br><span class="line"></span><br><span class="line">def inner_fun():</span><br><span class="line">  print(&quot;I&#x27;m inner function&quot;)</span><br><span class="line"></span><br><span class="line">outer_fun(inner_fun) // return inner_fun 該物件</span><br></pre></td></tr></table></figure>
+
+<p>為了要拿到傳進去 outer_fun 的 function 引數的執行結果，我們將程式碼這樣改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def outer_fun(inner):</span><br><span class="line">  return inner()</span><br><span class="line"></span><br><span class="line">def inner_fun():</span><br><span class="line">  print(&quot;I&#x27;m inner function&quot;)</span><br><span class="line"></span><br><span class="line">outer_fun(inner_fun) // I&#x27;m inner function</span><br></pre></td></tr></table></figure>
+
+<p>這樣看起來還算蠻單純的</p>
+<p>我們來看看 <code>nested function</code> ，其實也不算太難懂</p>
+<p>大家對於 function 被當作引數傳進去另一個 function 應該感到很熟悉，</p>
+<p>沒錯，這就是剛剛介紹到的 <code>Higher-Order function</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def outer_fun(inner):</span><br><span class="line">  def second_outer_fun():</span><br><span class="line">    print(&quot;I&#x27;m second floor of function&quot;)</span><br><span class="line">    inner()</span><br><span class="line">  return second_outer_fun()</span><br><span class="line"></span><br><span class="line">def inner_fun():</span><br><span class="line">  print(&quot;I&#x27;m inner function&quot;)</span><br><span class="line"></span><br><span class="line">outer_fun(inner_fun) </span><br><span class="line">// I&#x27;m second floor of function </span><br><span class="line">// I&#x27;m inner function</span><br></pre></td></tr></table></figure>
+
+<p>如果是比較複雜的狀況呢，讓我們來看看 BMI 計算機</p>
+<p>以我自己的做法，會先處理身高，處理完再將它丟到 BMI 計算的 function 中去做計算</p>
+<p>不過這樣在使用的時候就會傳一大堆參數，而且 <code>calculator(bmi_calculator, 50, 160) </code> 這樣寫起來並不直觀</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def calculator(func, weight, height):</span><br><span class="line">    height_in_meters = height / 100</span><br><span class="line">    return func(weight, height_in_meters)</span><br><span class="line"></span><br><span class="line">def bmi_calculator(weight, height):</span><br><span class="line">    bmi = weight / (height ** 2)</span><br><span class="line">    return bmi</span><br><span class="line"></span><br><span class="line">result = calculator(bmi_calculator, 50, 160)</span><br><span class="line">print(result) // 19.531249999999996</span><br></pre></td></tr></table></figure>
+
+<p>如果是使用 Decorator Pattern 的方式</p>
+<p>一開始我會將身高丟到 calculator 中，<br>並且在 calculate_height 中處理身高，<br>最後呼叫 bmi_calculator 來得到結果 </p>
+<p>我們可以把 calculator 想像成一間代工廠，將所有的生產線用一個工廠包裝起來</p>
+<p>而在這個工廠中，我會各別處理元件，處理完的元件會個別組裝起來，最後送出成品</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def calculator(func):</span><br><span class="line">  def calculate_height(weight, height):</span><br><span class="line">    height_in_meters = height / 100</span><br><span class="line">    </span><br><span class="line">    return func(weight, height_in_meters)</span><br><span class="line">  return calculate_height</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">def bmi_calculator(weight, height):</span><br><span class="line">    return weight / (height * height)</span><br><span class="line"></span><br><span class="line">decorated_bmi_calculator = calculator(bmi_calculator)</span><br><span class="line">result = decorated_bmi_calculator(50, 160)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+
+<p>上述的方式，我個人認為已經簡潔許多，不過在呼叫的時候還是很麻煩，而且易讀性不高</p>
+<p>Python 提供了我們 <code>@</code> 的語法糖衣，讓 Decorator Pattern 寫起來更易讀</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def calculator(func):</span><br><span class="line">  def calculate_height(weight, height):</span><br><span class="line">    def square_height(height):</span><br><span class="line">      height_in_meters = height / 100</span><br><span class="line"></span><br><span class="line">      return height_in_meters</span><br><span class="line">    return func(weight, square_height(height))</span><br><span class="line">    </span><br><span class="line">  return calculate_height</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">@calculator</span><br><span class="line">def bmi_calculator(weight, height):</span><br><span class="line">    return weight / height</span><br><span class="line"></span><br><span class="line">bmi_calculator(50, 160)</span><br></pre></td></tr></table></figure>
+
+<h3 id="所以到底什麼時候會需要用到？"><a href="#所以到底什麼時候會需要用到？" class="headerlink" title="所以到底什麼時候會需要用到？"></a>所以到底什麼時候會需要用到？</h3><p>Decorator 可以讓你動態的在物件上增加行為，並且當被包裝起來的那個 function (這邊稱 wrapper) 在調用的時候不會改變原本的行為</p>
+<blockquote>
+<p>Decorator Method is a Structural Design Pattern which allows you to dynamically attach new behaviors to objects without changing their implementation by placing these objects inside the wrapper objects that contains the behaviors. </p>
+</blockquote>
+<h4 id="不想改變原本的程式碼"><a href="#不想改變原本的程式碼" class="headerlink" title="不想改變原本的程式碼"></a>不想改變原本的程式碼</h4><p>讓我們來看剛剛的例子，這邊我們為了要得到 inner 的執行結果，加上了 <code>()</code> 來呼叫</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def outer_fun(inner):</span><br><span class="line">  return inner()</span><br><span class="line"></span><br><span class="line">def inner_fun():</span><br><span class="line">  print(&quot;I&#x27;m inner function&quot;)</span><br><span class="line"></span><br><span class="line">outer_fun(inner_fun) // I&#x27;m inner function</span><br></pre></td></tr></table></figure>
+
+<p>但如果今天專案中的許多地方都有用到 outer_fun ，改了 <code>outer_fun</code> 就可能會出錯，假設有個地方傳進去的是字串，他應該就會引發字串無法呼叫這個訊息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def outer_fun(inner):</span><br><span class="line">  return inner()</span><br><span class="line"></span><br><span class="line">def inner_fun():</span><br><span class="line">  print(&quot;I&#x27;m inner function&quot;)</span><br><span class="line"></span><br><span class="line">outer_fun(&quot;aa&quot;) // TypeError: &#x27;str&#x27; object is not callable</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>這時候我們使用 function decorator ，只要掛上這層外衣，就可以執行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def outer_fun(inner):</span><br><span class="line">    return inner</span><br><span class="line"></span><br><span class="line">@outer_fun</span><br><span class="line">def inner_fun():</span><br><span class="line">    print(&quot;I&#x27;m inner function&quot;)</span><br><span class="line"></span><br><span class="line">inner_fun() // I&#x27;m inner function</span><br></pre></td></tr></table></figure>
+
+<p>即便今天有其他地方不是傳 function 進去，也不會噴錯</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def outer_fun(inner):</span><br><span class="line">    return inner</span><br><span class="line"></span><br><span class="line">@outer_fun</span><br><span class="line">def inner_fun():</span><br><span class="line">    print(&quot;I&#x27;m inner function&quot;)</span><br><span class="line"></span><br><span class="line">inner_fun() // I&#x27;m inner function</span><br><span class="line">outer_fun(3) // 不會印出任何東西，會 return inner function</span><br></pre></td></tr></table></figure>
+
+<h4 id="有多種額外的行為需要做時"><a href="#有多種額外的行為需要做時" class="headerlink" title="有多種額外的行為需要做時"></a>有多種額外的行為需要做時</h4><p>以剛剛的 BMI 計算機來看，我們需要先處理身高，再進行計算，這時候就很適合用 function decorator</p>
+<p>不然用一般的方式需要傳入很多參數，且也不好閱讀，我們就可以用 function decorator 來優化</p>
+<h4 id="使用套件的方法時"><a href="#使用套件的方法時" class="headerlink" title="使用套件的方法時"></a>使用套件的方法時</h4><p>也許我們在做專案的時候用不太到 Decorator ，不過多少應該都會用到套件，</p>
+<p>像是在 Flask 的路徑會使用到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&#x27;/&#x27;)</span><br><span class="line">def index():</span><br><span class="line">    return &#x27;Hello, World!&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>Django 的方法多少也會用到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@login_required</span><br><span class="line">def my_view(request):</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-04-21</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Python/" title="Python">Python </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/Python-函式裝飾器-function-decorator/,NingLab,Python - 函式裝飾器 function decorator,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/Ruby-%E7%94%A8%20Rack%20%E5%81%9A%E5%87%BA%E8%87%AA%E5%B7%B1%E7%9A%84%20Router/" title="Ruby-用 Rack 做出自己的 Router">Post siguiente</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
