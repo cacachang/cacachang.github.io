@@ -136,7 +136,7 @@ aboutMe();
     * `age` 是 let 變數，因此放到 `Environment Record`
 8. 印出 `I'm ${age} years old` ，這時候 `myAge` 的 `Environment Record` 有 `age` 這個變數，因此印出  `I'm 18 years old`
 
-![Ning-draw (6)](https://imgur.com/PI2lvyO.jpg)
+![Ning-draw (6)](https://imgur.com/k2mgVMy.jpg)
 
 接著我們來看有使用到父層變數的程式碼
 
@@ -170,60 +170,13 @@ aboutMe();
 
 要注意的是， `reference to outer environment` 只會放上一層的，如果沒有的話，就會從上一層的 `reference to outer environment` 繼續往上找
 
-![Ning-draw (7)](https://imgur.com/xhj9KSY.jpg)
+![Ning-draw (7)](https://imgur.com/7qkuMF5.jpg)
 
 接著我們來看看 `Variable Environment`
 
 ### Variable Environment
 
 又稱作變數環境，主要放置 `var` 變數，
-
-讓我們來看看幾個例子
-
-```
-function aboutMe() {
-  var myName = "Ning";
-
-  function myAge() {
-    console.log(`I'm ${age} years old`);
-  }
-
-  if (myName == "Ning") {
-    var age = 19;
-    myAge();
-  }
-}
-
-aboutMe();
-```
-
-1. 執行 `aboutMe()`
-2. 進入 `aboutMe` 的 `Function Execution Context` 
-3. 放置變數 
-    * 放置 var 變數 `myName` 到 `Variable Environment`
-    * 放置 Function `myAge` 到 `Lexical Environment` 
-    * 放置 var 變數 `age` 到 `Variable Environment`
-6. 遇到 if 的 block ，條件符合，進入該 block 的 `Function Execution Context`
-7. 由於 var 變數作用範圍僅存於 Function ，因此這邊不會放置
-8. 執行 `myAge()`
-9. 進入 `myAge` 的 `Function Execution Context`
-10. 沒有變數，不放置變數
-11. 印出 `I'm ${age} years old`，不過該 `Execution Context` 沒有任何變數，往 `reference to outer environment` 找
-12. 在 `aboutMe()` 中找到了
-13. 因此印出 `I'm 19 years old`
-
-為什麼不是往 `if (myName == "Ning")` 
-主要是因為 JavaScript 是採用 Lexical Scope 的方式，
-
-> The word lexical refers to the fact that lexical scoping uses the location where a variable is declared within the source code to determine where that variable is available.
-
-根據 [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#lexical_scoping) 的解釋，Lexical Scope 會取決於該程式碼的 `所在位置`，而非程式碼的 `執行位置`
-
-也就是說，我們要看的是 `myAge` 位在於程式碼的哪裡，並且去找到他的父層，而他的父層就是 `aboutMe`，
-
-因此 `reference to outer environment` 這個倉庫也只會放 `aboutMe` 的變數 
-
-![Ning-draw (9)](https://imgur.com/8xioDlA.jpg)
 
 接下來再看一個範例
 
@@ -250,7 +203,7 @@ aboutMe();
     * 放置 var 變數 `myName` 到 `Variable Environment`
     * 放置 Function `myAge` 到 `Lexical Environment` 
 6. 遇到 if 的 block ，進入該 block 的 `Function Execution Context`
-7. 放置變數 `age` 到 `Variable Environment`
+7. 放置變數 `age` 到 `Lexical Environment`
 8. 執行 `myAge()`
 9. 進入 `myAge` 的 `Function Execution Context`
 10. 沒有變數，不放置變數
@@ -258,7 +211,20 @@ aboutMe();
 12. 在 `aboutMe` 中找不到
 13. 因此印出錯誤訊息 `Uncaught ReferenceError: age is not defined`
 
-![Ning-draw (8)](https://imgur.com/DPGG7wM.jpg)
+![Ning-draw (8)](https://imgur.com/W0ss9O1.jpg)
+
+
+為什麼不是往 `if (myName == "Ning")` 
+主要是因為 JavaScript 是採用 Lexical Scope 的方式，
+
+> The word lexical refers to the fact that lexical scoping uses the location where a variable is declared within the source code to determine where that variable is available.
+
+根據 [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#lexical_scoping) 的解釋，Lexical Scope 會取決於該程式碼的 `所在位置`，而非程式碼的 `執行位置`
+
+也就是說，我們要看的是 `myAge` 位在於程式碼的哪裡，並且去找到他的父層，而他的父層就是 `aboutMe`，
+
+因此 `reference to outer environment` 這個倉庫也只會放 `aboutMe` 的變數
+
 
 
 看到這邊應該有個疑惑，為什麼 `if (myName == "Ning")` 的 var 會被放在 `aboutMe` 的 `Variable Environment` ？

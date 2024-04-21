@@ -8,6 +8,10 @@ type: 'categories'
 
 [Rails](https://ninglab.com/categories/Rails/)
 
+[Ruby](https://ninglab.com/categories/Ruby/)
+
+[Python](https://ninglab.com/categories/Python/)
+
 [Rebuild Rails](https://ninglab.com/categories/Rebuild-Rails/)
 
 [測試](https://ninglab.com/categories/測試/)
