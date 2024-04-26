@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>Rails 的預設環境變數存取方式 - Master Key · NingLab</title><meta name="description" content="在 Rails 5.2 版本後，Master key 就成了 Rails 內建的環境變數套件，用於管理環境變數
+在 5.2 版本前， Rails 是使用 config/secrets.yml 或 config/secrets.yml.erb 來存取環境變數，且可以直接在任何環境中直接設定，無需針對特"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.jpeg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/ning.jpg" style="width:200px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://twitter.com/ningchang_"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="https://github.com/cacachang"><i class="fa fa-github"></i></a></li><li><a href="mailto:a24701770@gmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.instagram.com/web543_/"><i class="fa fa-instagram"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%E7%8F%88%E5%AF%A7-%E5%BC%B5-140a86125/"><i class="fa fa-linkedin"></i></a></li></ul><div class="footer"><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首頁</a></li><li><a href="/archives">文章</a></li><li><a href="/categories">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.jpeg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Rails 的預設環境變數存取方式 - Master Key</a></h3></div><div class="post-content"><p>在 Rails 5.2 版本後，<br>Master key 就成了 Rails 內建的環境變數套件，用於管理環境變數</p>
+<p>在 5.2 版本前， Rails 是使用 <code>config/secrets.yml</code> 或 <code>config/secrets.yml.erb</code> 來存取環境變數，且可以直接在任何環境中直接設定，無需針對特定環境做一個檔案，加上進版控後就會造成機密資料外洩的問題，因此後來拿掉了。</p>
+<p>相較於我們常用的 dotenv ， master key 相對嚴謹的多</p>
+<h3 id="運作原理"><a href="#運作原理" class="headerlink" title="運作原理"></a>運作原理</h3><p>我們可以將 <code>master.key</code> 想像成只有你擁有的鑰匙，鑰匙只能開啟你的保險箱 <code>credentials.yml.enc</code></p>
+<p><code>master.key</code> 可以用來解密 <code>credentials.yml.enc</code>，但應該避免分享 master.key 或放進版控中，就像你不會把你家鑰匙給陌生人一樣</p>
+<p><img src="https://hackmd.io/_uploads/HySD3SOF3.jpg"></p>
+<h3 id="如何使用？"><a href="#如何使用？" class="headerlink" title="如何使用？"></a>如何使用？</h3><p>建立一個新的 Rails 應用程式時，會自動生成一個 master.key</p>
+<p>在執行命令之前，需要設置編輯器 EDITOR，跟你的環境說該開哪個編輯器：</p>
+<p><code>export EDITOR=&quot;code&quot;</code></p>
+<p>我們來下指令編輯環境變數：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EDITOR=&quot;code --wait&quot; bin/rails credentials:edit</span><br></pre></td></tr></table></figure>
+
+<p>假設你對於 vim 比較熟悉，就用 vim 來開啟吧：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EDITOR=&quot;vim&quot; bin/rails credentials:edit</span><br></pre></td></tr></table></figure>
+
+<p>會打開一個 yaml 檔案：</p>
+<p><img src="https://hackmd.io/_uploads/rJoTcSdKh.png"></p>
+<ul>
+<li>secret_key_base: 用於加密和解密像是 cookie 這樣的機密數據</li>
+</ul>
+<p>在這個文件中，將你的環境變數加進去：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># credential.yml</span><br><span class="line"></span><br><span class="line">aws:</span><br><span class="line">  access_key_id: 123</span><br><span class="line">  secret_access_key: 345</span><br></pre></td></tr></table></figure>
+
+<p>設定完就可以儲存並關閉</p>
+<p>要驗證環境變數是否已正確存入，可以使用以下指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rails credentials:show</span><br></pre></td></tr></table></figure>
+
+<p>如果設置正確，Rails 會生成一個 credential.yml.enc 文件，並且你會得到以下結果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">aws:</span><br><span class="line">  access_key_id: 123</span><br><span class="line">  secret_access_key: 345</span><br><span class="line"></span><br><span class="line"># 用作 Rails 中所有 MessageVerifiers 的基本密鑰，包括保護 cookie 的密鑰。</span><br><span class="line">secret_key_base: dfcfa5ca64218b13d1dbf61745e420daea8ffeeef2a41eb8498c2378deb3bdbca91d5752ea97944f1a37b4458f7e7d535b91eef337010be67e664463e6e9457f</span><br></pre></td></tr></table></figure>
+
+<p>如果需要在 Rails 中存取環境變數，可以用這個方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Rails.application.credentials.aws.access_key_id</span><br></pre></td></tr></table></figure>
+
+<h2 id="English-Version"><a href="#English-Version" class="headerlink" title="English Version"></a>English Version</h2><p>Master Key is a tool used for managing environment variables in Rails applications.<br>It has been the default method for handling sensitive data since Rails 5.2.</p>
+<p>Before Master Key, Rails used the <code>config/secrets.yml</code> or <code>config/secrets.yml.erb</code> to store sensitive information, but this method had security problems.</p>
+<h2 id="How-is-Master-Key-working？"><a href="#How-is-Master-Key-working？" class="headerlink" title="How is Master Key working？"></a>How is Master Key working？</h2><p>We can image the <code>master.key</code> file as a key that only you have, and <code>credentials.yml.enc</code> as a security box that stores valuable assets.</p>
+<p>The <code>master.key</code> can open the encrypted <code>credentials.yml.enc</code> file, <code>master.key</code> file should not be shared or included in GitHub version control, just like you wouldn’t give your house key to a stranger for security reasons.</p>
+<p><img src="https://hackmd.io/_uploads/HySD3SOF3.jpg"></p>
+<h2 id="How-to-store-confidential-data-using-Master-Key？"><a href="#How-to-store-confidential-data-using-Master-Key？" class="headerlink" title="How to store confidential data using Master Key？"></a>How to store confidential data using Master Key？</h2><p>A <code>master.key</code> file is generated when creating a new rails application.</p>
+<p>You can edit it using the command below:</p>
+<ul>
+<li>you need to set EDITOR as a key and pair the value with the code before, <code>export EDITOR=&quot;code&quot;</code>.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EDITOR=&quot;code --wait&quot; bin/rails credentials:edit</span><br></pre></td></tr></table></figure>
+
+<p>If you prefer using Vim instead of Visual Studio Code, you can use this command:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EDITOR=&quot;vim&quot; bin/rails credentials:edit</span><br></pre></td></tr></table></figure>
+
+<p>This command opens the credential file, inside the file, you’ll see a YAML structure:</p>
+<p><img src="https://hackmd.io/_uploads/HJuRcSuY2.png"></p>
+<p>Let’s take a look at the <code>secret_key_base</code>, which is used to encrypt and decrypt confidential data like cookies.</p>
+<p>Put your key-value pairs for an environment variable in this file, for example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># credential.yml</span><br><span class="line"></span><br><span class="line">aws:</span><br><span class="line">  access_key_id: 123</span><br><span class="line">  secret_access_key: 345</span><br></pre></td></tr></table></figure>
+
+<p>Once you added environment variables, save and close the file.</p>
+<p>To verify the environment variables were saved correctly, you can use the following command:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rails credentials:show</span><br></pre></td></tr></table></figure>
+
+<p>if everything was set up correctly, Rails will generate a <code>credential.yml.enc</code> file, and you’ll get the result:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">aws:</span><br><span class="line">  access_key_id: 123</span><br><span class="line">  secret_access_key: 345</span><br><span class="line"></span><br><span class="line"># Used as the base secret for all MessageVerifiers in Rails, including the one protecting cookies.</span><br><span class="line">secret_key_base: dfcfa5ca64218b13d1dbf61745e420daea8ffeeef2a41eb8498c2378deb3bdbca91d5752ea97944f1a37b4458f7e7d535b91eef337010be67e664463e6e9457f</span><br></pre></td></tr></table></figure>
+
+<p>Now, if you need to access an environment variable within your Rails application, you can use the following code:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Rails.application.credentials.aws.access_key_id</span><br></pre></td></tr></table></figure>
+
+<p>Congratulations on successfully setting up the environment variable through Master Key!</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-02-22</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Rails/" title="Rails">Rails </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/Rails-Master-Key/,NingLab,Rails 的預設環境變數存取方式 - Master Key,;"></a></div></div><div><script src="https://utteranc.es/client.js" repo="cacachang/cacachang.github.io" issue-term="title" theme="github-light" crossorigin="anonymous" async></script></div><div><script type="text/javascript">document.write("<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/a24701770/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");</script></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/language/" title="工程師都該懂的程式通識 - 語言的分類">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/Rails-Devise-1/" title="叫我套件王 - 會員系統 Devise【1】">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

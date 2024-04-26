@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>工程師都該懂的程式通識 - Proxy · NingLab</title><meta name="description" content="相信大家從小到大應該都會碰到代理伺服器，代理伺服器就像是我們生活中的代理人一樣，會代表著 Client 端或者 Server 端
+我們就來進入正題吧
+什麼是代理伺服器在 10 年前，大家點開 ie 的頁面都是 Yahoo ，
+網路速度不比現在，都需要等個一兩分鐘，
+等個一兩次還好，不過等太多次難免會"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.jpeg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/ning.jpg" style="width:200px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://twitter.com/ningchang_"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="https://github.com/cacachang"><i class="fa fa-github"></i></a></li><li><a href="mailto:a24701770@gmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.instagram.com/web543_/"><i class="fa fa-instagram"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%E7%8F%88%E5%AF%A7-%E5%BC%B5-140a86125/"><i class="fa fa-linkedin"></i></a></li></ul><div class="footer"><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首頁</a></li><li><a href="/archives">文章</a></li><li><a href="/categories">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.jpeg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>工程師都該懂的程式通識 - Proxy</a></h3></div><div class="post-content"><p>相信大家從小到大應該都會碰到代理伺服器，代理伺服器就像是我們生活中的代理人一樣，會代表著 Client 端或者 Server 端</p>
+<p>我們就來進入正題吧</p>
+<h3 id="什麼是代理伺服器"><a href="#什麼是代理伺服器" class="headerlink" title="什麼是代理伺服器"></a>什麼是代理伺服器</h3><p>在 10 年前，大家點開 ie 的頁面都是 Yahoo ，</p>
+<p>網路速度不比現在，都需要等個一兩分鐘，</p>
+<p>等個一兩次還好，不過等太多次難免會覺得很煩，</p>
+<p>每次點開都需要重新發送請求，然後再等一次</p>
+<p><img src="https://hackmd.io/_uploads/HyojT_VPa.jpg" alt="Ning-draw (7)"></p>
+<p>這時候代理伺服器就出現了，代理伺服器就像是班代的角色，</p>
+<p>會代替使用者去跟 Server 端發送請求，</p>
+<p>並且將要來的資料在自己身上暫存一份，</p>
+<p>等到下個使用者再來請求的時候，就將這份暫存提供給他</p>
+<p><img src="https://hackmd.io/_uploads/BJW6Ad4Pa.jpg" alt="Ning-draw (8)"></p>
+<p>理解了什麼是代理伺服器的概念後，</p>
+<p>我們來看正向代理伺服器跟反向代理伺服器就會簡易許多</p>
+<h3 id="正向代理伺服器-Forward-Proxy"><a href="#正向代理伺服器-Forward-Proxy" class="headerlink" title="正向代理伺服器 Forward Proxy"></a>正向代理伺服器 Forward Proxy</h3><p>正向代理伺服器就跟我們上面提到的代理伺服器是一樣的概念，</p>
+<p>代表 Client 端跟網路發送請求，網路會再將請求傳送給 Server</p>
+<p><img src="https://hackmd.io/_uploads/HyfOiKEDa.jpg" alt="Ning-draw (9)"></p>
+<p>我們用個簡單的例子來說明：</p>
+<p>當考試成績出來後，學生都要一個一個去找老師拿成績單，</p>
+<p>不過一個一個去拿其實蠻麻煩而且沒有效率</p>
+<p>這時候我們就可以推派班代去代替整班的學生跟老師拿成績單</p>
+<h4 id="生活中的應用"><a href="#生活中的應用" class="headerlink" title="生活中的應用"></a>生活中的應用</h4><ol>
+<li>限制能連線的網站：</li>
+</ol>
+<p>以前我們在上電腦課的時候，會想要偷偷連到遊戲網站上玩遊戲，</p>
+<p>不過學校沒有那麼笨，在學校內的電腦，都會設定防火牆，</p>
+<p>當防火牆有設定限制存取的網站，甚至是限制代理伺服器時，</p>
+<p>我們就很難繞過這一層去遊戲網站了</p>
+<p><img src="https://hackmd.io/_uploads/rkaUPuEva.jpg" alt="Ning-draw (2)"></p>
+<ol start="2">
+<li>保護使用者的資料</li>
+</ol>
+<p>當使用者去瀏覽網站時，網站是可以存取到使用者的資訊的，</p>
+<p>有了代理伺服器這個角色，使用者會透過代理伺服器去發送請求、接受回應，</p>
+<p>所以網站只能知道代理伺服器的資料，並不會知道使用者的資料</p>
+<p><img src="https://hackmd.io/_uploads/ByPOu_Ev6.jpg" alt="Ning-draw (3)"></p>
+<h3 id="反向代理伺服器"><a href="#反向代理伺服器" class="headerlink" title="反向代理伺服器"></a>反向代理伺服器</h3><p>跟正向代理伺服器相反，反向代理伺服器代表的對象就會是 Server 端</p>
+<p><img src="https://hackmd.io/_uploads/HyJEdDVwT.jpg" alt="Ning-draw (1)"></p>
+<p>我們用簡單的例子來說：</p>
+<p>今天有一群人想跟政府陳情，這時候他們的請求會送給代表人，</p>
+<p>代表人會再將這些請求丟給政府的各個機關</p>
+<p>等各個政府機關決議好後，就會將結果傳送給代表人</p>
+<p>由代表人告訴民眾結果</p>
+<h4 id="生活中的應用-1"><a href="#生活中的應用-1" class="headerlink" title="生活中的應用"></a>生活中的應用</h4><ol>
+<li>保護 server</li>
+</ol>
+<p>當 Server 的資訊赤裸的公開時，難免會受到攻擊，</p>
+<p>而反向代理伺服器的角色就能當作 Server 端的擋箭牌，</p>
+<p>避免 Server 端被攻擊</p>
+<p><img src="https://hackmd.io/_uploads/SJ-7juNDT.jpg" alt="Ning-draw (5)"></p>
+<ol start="2">
+<li>平衡負載</li>
+</ol>
+<p>熱門網站像是 Google 、 Amazon ，一天可能會有上千萬名使用者進站</p>
+<p>只有一個 Server 是不可能負荷得了短時間內有上萬個使用者</p>
+<p>所以一次應該都會有多台 Server 在跑，</p>
+<p>而代理伺服器的角色就會像是交通指揮，指揮哪些請求要去哪個 Server 避免 Server 崩潰</p>
+<p><img src="https://hackmd.io/_uploads/ByUI9dNvp.jpg" alt="Ning-draw (4)"></p>
+<ol start="3">
+<li>代理 SSL</li>
+</ol>
+<p>當 Client 端發送請求出去後，需要經過 SSL 握手，確保雙方的身份是對的才可以進行下一步</p>
+<p>反向代理伺服器就會幫 Server 充當代理，將加密過的 SSL 訊息解密，之後就會放行請求給 Server</p>
+<p><img src="https://hackmd.io/_uploads/ry7aiu4Pp.jpg" alt="Ning-draw (6)"></p>
+<h3 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h3><p>當我們今天要瀏覽的網站是美國的網站，可能這網站的伺服器放在美國，</p>
+<p>地區遙遠的關係會讓我們在存取的時間上拉長，為了把時間花在同一件事上(每次發送請求都要美國的伺服器拿資料)，代理伺服器會將資料快取起來，</p>
+<p>不管是正向代理伺服器還是反向代理伺服器，這兩種類都會提供資料快取，</p>
+<p>會先將資料暫存在代理伺服器中，等到其他使用者需要存取相同的資料時，就會派上用場</p>
+<p>而資料只會暫存一段時間，過一段時間就會消除。</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-02-22</span><i class="fa fa-tag"></i><a class="tag" href="/categories/程式通識/" title="程式通識">程式通識 </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/proxy/,NingLab,工程師都該懂的程式通識 - Proxy,;"></a></div></div><div><script src="https://utteranc.es/client.js" repo="cacachang/cacachang.github.io" issue-term="title" theme="github-light" crossorigin="anonymous" async></script></div><div><script type="text/javascript">document.write("<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/a24701770/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");</script></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/Rails-Turbo-and-Turbo%20Drive/" title="Rails - Turbo 與 Turbo Drive">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/Docker-compose-yaml-file/" title="Docker - 什麼是 Compose">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>

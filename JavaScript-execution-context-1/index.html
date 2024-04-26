@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>JavaScript - 運行背後的世界(1) · NingLab</title><meta name="description" content="當 JavaScript 開始執行的時候，背後會做一連串複雜的事情，我們今天就來看看這背後複雜的流程吧
+
+JS 開始運行時，就會啟動執行環境
+Execution Context 執行環境
+An execution context is a specification device that is u"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.jpeg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/ning.jpg" style="width:200px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://twitter.com/ningchang_"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="https://github.com/cacachang"><i class="fa fa-github"></i></a></li><li><a href="mailto:a24701770@gmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.instagram.com/web543_/"><i class="fa fa-instagram"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%E7%8F%88%E5%AF%A7-%E5%BC%B5-140a86125/"><i class="fa fa-linkedin"></i></a></li></ul><div class="footer"><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首頁</a></li><li><a href="/archives">文章</a></li><li><a href="/categories">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.jpeg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>JavaScript - 運行背後的世界(1)</a></h3></div><div class="post-content"><p>當 JavaScript 開始執行的時候，背後會做一連串複雜的事情，我們今天就來看看這背後複雜的流程吧</p>
+<p><img src="https://imgur.com/nsX7yj6.jpg" alt="Ning-draw (4)"></p>
+<p>JS 開始運行時，就會啟動<code>執行環境</code></p>
+<h3 id="Execution-Context-執行環境"><a href="#Execution-Context-執行環境" class="headerlink" title="Execution Context 執行環境"></a>Execution Context 執行環境</h3><blockquote>
+<p>An execution context is a specification device that is used to track the runtime evaluation of code by an ECMAScript implementation.</p>
+</blockquote>
+<p>依照 ECMA 官方的解釋，執行環境是在程式碼執行的時候發生，並且用來追蹤程式碼的執行狀況</p>
+<p>而執行環境又分成兩種，分別是<br><code>Global Execution Context</code><br><code>Function Execution Context</code></p>
+<p>當程式碼開始執行時，<code>Global Execution Context</code> 就會開始，他的作用域在程式碼開始到結束</p>
+<h3 id="Global-Execution-Context-GEC"><a href="#Global-Execution-Context-GEC" class="headerlink" title="Global Execution Context (GEC)"></a>Global Execution Context (GEC)</h3><p>又稱作全域執行環境，這個時候，會將 window 做出來，並且將 this 綁定在 window 身上</p>
+<p>我們可以在檢查中輸入 <code>window</code> <code>this</code>，並且看他們兩個是否是一一樣</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; window </span><br><span class="line">&gt; this</span><br><span class="line"></span><br><span class="line">&gt; window === this // true</span><br></pre></td></tr></table></figure>
+<p>另外還會將變數存放到「倉庫」中，</p>
+<p>倉庫又分成兩種，</p>
+<ol>
+<li>LexicalEnvironment 存放 <code>let</code> &#x2F; <code>const</code> &#x2F; <code>function</code></li>
+<li>VariableEnvironment 存放 <code>var</code></li>
+</ol>
+<p>我們先知道有這兩個倉庫，待會再來仔細介紹這兩個倉庫</p>
+<p>全域執行環境會一路到程式碼結束，那另一個執行環境呢？</p>
+<h3 id="Function-Execution-Context-FEC"><a href="#Function-Execution-Context-FEC" class="headerlink" title="Function Execution Context (FEC)"></a>Function Execution Context (FEC)</h3><p>又稱為函式執行環境，當程式碼遇到 Function 或 block 時，就會產生 <code>Function Execution Context</code> ，</p>
+<p>跟全域執行環境一樣，會將 function 中的變數及 function 存到倉庫中</p>
+<p>到現在應該對於執行環境還有一點不了解，讓我們用 Stack 來看會更清楚</p>
+<p>來看看下面的程式碼</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function aboutMe() &#123;</span><br><span class="line">  console.log(&quot;Hi, my name is Ning&quot;);</span><br><span class="line"></span><br><span class="line">  function myAge() &#123;</span><br><span class="line">    console.log(&quot;I&#x27;m 18 years old&quot;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">aboutMe();</span><br></pre></td></tr></table></figure>
+
+<p>當程式碼開始執行時，就像是大隊接力開始，執行到哪行程式碼，就是將控制所有權交給該 <code>Execution Context</code></p>
+<ol>
+<li><p>開始執行時，第一棒會是 <code>Global Execution Context</code>，</p>
+</li>
+<li><p>接著執行 <code>aboutMe()</code> ，產生一個 <code>Function Execution Context</code> ，並將所有權交給 <code>aboutMe()</code></p>
+</li>
+<li><p>接著在 <code>aboutMe()</code> 中執行了 <code>myAge()</code> ，因此產生一個新的 <code>Function Execution Context</code> ，並將所有權交給 <code>myAge()</code></p>
+</li>
+<li><p>當 <code>myAge()</code> 執行完後，<code>Function Execution Context</code> 就會消失，並且將控制權轉還交給 <code>aboutMe()</code> </p>
+</li>
+<li><p><code>aboutMe()</code> 執行後，<code>Function Execution Context</code> 就會消失，並將控制權轉交給 <code>Global Execution Context</code></p>
+</li>
+</ol>
+<p><img src="https://imgur.com/uKucytz.jpg" alt="Ning-draw (10)"></p>
+<p>接著我們要來看每個 <code>Execution Context</code> 中做了哪些事</p>
+<p>剛剛有提到，不管是 <code>Global Execution Context</code> 還是 <code>Function Execution Context</code> 都會將他們的變數放到倉庫中</p>
+<p>倉庫還會分成兩種倉庫</p>
+<p>我們先來看第一種 <code>Lexical Environment</code></p>
+<h3 id="Lexical-Environment"><a href="#Lexical-Environment" class="headerlink" title="Lexical Environment"></a>Lexical Environment</h3><p>Lexical Environment 又稱作詞彙環境，</p>
+<p>會放置 <code>let</code> &#x2F; <code>const</code> &#x2F; <code>function</code> 不過還會有個地方放置父層的變數，</p>
+<p>當執行的時候需要這個作用域沒有定義的變數，就可以往父層的變數小房間去找</p>
+<p>因此 Lexical Environment 又分成兩個小盒子</p>
+<p>第一個盒子是 <code>Environment Record</code>，放置 <code>let</code> &#x2F; <code>const</code> &#x2F; <code>function</code> 等變數</p>
+<p>第二個盒子是 <code>reference to outer environment</code>，放置父層的變數</p>
+<p>讓我們來看看幾個例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function aboutMe() &#123;</span><br><span class="line">  var myName = &quot;Ning&quot;;</span><br><span class="line">  console.log(`Hi, my name is $&#123;myName&#125;`);</span><br><span class="line"></span><br><span class="line">  function myAge() &#123;</span><br><span class="line">    let age = 18;</span><br><span class="line">    console.log(`I&#x27;m $&#123;age&#125; years old`);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  myAge();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">aboutMe();</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>呼叫 <code>AboutMe()</code></li>
+<li>進入到 <code>AboutMe</code> 的 <code>Function Execution Context</code></li>
+<li>放置變數及 Function 到倉庫中， <code>myName</code> &#x2F; <code>myAge</code> <ul>
+<li><code>myName</code> 是 var 變數，因此會放到 <code>Variable Environment</code> (待會會提到)</li>
+<li><code>myAge</code> 是 Function ，會放到 <code>Environment Record</code></li>
+</ul>
+</li>
+<li>印出 <code>Hi, my name is $&#123;myName&#125;</code>，由於 <code>Variable Environment</code> 有 <code>myName</code> 變數，因此印出 <code>Hi, my name is Ning</code></li>
+<li>呼叫 <code>myAge()</code></li>
+<li>進入 <code>myAge</code> 的 <code>Function Execution Context</code></li>
+<li>放置變數<ul>
+<li><code>age</code> 是 let 變數，因此放到 <code>Environment Record</code></li>
+</ul>
+</li>
+<li>印出 <code>I&#39;m $&#123;age&#125; years old</code> ，這時候 <code>myAge</code> 的 <code>Environment Record</code> 有 <code>age</code> 這個變數，因此印出  <code>I&#39;m 18 years old</code></li>
+</ol>
+<p><img src="https://imgur.com/k2mgVMy.jpg" alt="Ning-draw (6)"></p>
+<p>接著我們來看有使用到父層變數的程式碼</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function aboutMe() &#123;</span><br><span class="line">  var myName = &quot;Ning&quot;;</span><br><span class="line">  let age = 18;</span><br><span class="line">  console.log(`Hi, my name is $&#123;myName&#125;`);</span><br><span class="line"></span><br><span class="line">  function myAge() &#123;</span><br><span class="line">    console.log(`I&#x27;m $&#123;age&#125; years old`);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  myAge();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">aboutMe();</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>呼叫 <code>AboutMe()</code></li>
+<li>進入到 <code>AboutMe</code> 的 <code>Function Execution Context</code></li>
+<li>放置變數及 Function 到倉庫中， <code>myName</code> &#x2F; <code>age</code> &#x2F; <code>myAge</code> <ul>
+<li><code>myName</code> 是 var 變數，因此會放到 <code>Variable Environment</code></li>
+<li><code>age</code> 是 let 變數，因此會放到 <code>Environment Record</code></li>
+<li><code>myAge</code> 是 Function ，會放到 <code>Environment Record</code></li>
+</ul>
+</li>
+<li>印出 <code>Hi, my name is $&#123;myName&#125;</code>，由於 <code>Variable Environment</code> 有 <code>myName</code> 變數，因此印出 <code>Hi, my name is Ning</code></li>
+<li>呼叫 <code>myAge()</code></li>
+<li>進入 <code>myAge</code> 的 <code>Function Execution Context</code></li>
+<li>沒有變數</li>
+<li>印出 <code>I&#39;m $&#123;age&#125; years old</code> ，這時候 <code>myAge</code> 的 <code>Environment Record</code> 沒有 <code>age</code> 這個變數，因此往 <code>reference to outer environment</code> 找變數，在 <code>aboutMe</code> 找到了 age 是 18，因此印出 <code>I&#39;m 18 years old</code></li>
+</ol>
+<p>要注意的是， <code>reference to outer environment</code> 只會放上一層的，如果沒有的話，就會從上一層的 <code>reference to outer environment</code> 繼續往上找</p>
+<p><img src="https://imgur.com/7qkuMF5.jpg" alt="Ning-draw (7)"></p>
+<p>接著我們來看看 <code>Variable Environment</code></p>
+<h3 id="Variable-Environment"><a href="#Variable-Environment" class="headerlink" title="Variable Environment"></a>Variable Environment</h3><p>又稱作變數環境，主要放置 <code>var</code> 變數，</p>
+<p>接下來再看一個範例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function aboutMe() &#123;</span><br><span class="line">  var myName = &quot;Ning&quot;;</span><br><span class="line"></span><br><span class="line">  function myAge() &#123;</span><br><span class="line">    console.log(`I&#x27;m $&#123;age&#125; years old`);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  if (myName == &quot;Ning&quot;) &#123;</span><br><span class="line">    let age = 19;</span><br><span class="line">    myAge();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">aboutMe();</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>執行 <code>aboutMe()</code></li>
+<li>進入 <code>aboutMe</code> 的 <code>Function Execution Context</code> </li>
+<li>放置變數 <ul>
+<li>放置 var 變數 <code>myName</code> 到 <code>Variable Environment</code></li>
+<li>放置 Function <code>myAge</code> 到 <code>Lexical Environment</code></li>
+</ul>
+</li>
+<li>遇到 if 的 block ，進入該 block 的 <code>Function Execution Context</code></li>
+<li>放置變數 <code>age</code> 到 <code>Lexical Environment</code></li>
+<li>執行 <code>myAge()</code></li>
+<li>進入 <code>myAge</code> 的 <code>Function Execution Context</code></li>
+<li>沒有變數，不放置變數</li>
+<li>印出 <code>I&#39;m $&#123;age&#125; years old</code>，不過該 <code>Execution Context</code> 沒有任何變數，往 <code>reference to outer environment</code> 找</li>
+<li>在 <code>aboutMe</code> 中找不到</li>
+<li>因此印出錯誤訊息 <code>Uncaught ReferenceError: age is not defined</code></li>
+</ol>
+<p><img src="https://imgur.com/W0ss9O1.jpg" alt="Ning-draw (8)"></p>
+<p>為什麼不是往 <code>if (myName == &quot;Ning&quot;)</code><br>主要是因為 JavaScript 是採用 Lexical Scope 的方式，</p>
+<blockquote>
+<p>The word lexical refers to the fact that lexical scoping uses the location where a variable is declared within the source code to determine where that variable is available.</p>
+</blockquote>
+<p>根據 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#lexical_scoping">MDN</a> 的解釋，Lexical Scope 會取決於該程式碼的 <code>所在位置</code>，而非程式碼的 <code>執行位置</code></p>
+<p>也就是說，我們要看的是 <code>myAge</code> 位在於程式碼的哪裡，並且去找到他的父層，而他的父層就是 <code>aboutMe</code>，</p>
+<p>因此 <code>reference to outer environment</code> 這個倉庫也只會放 <code>aboutMe</code> 的變數</p>
+<p>看到這邊應該有個疑惑，為什麼 <code>if (myName == &quot;Ning&quot;)</code> 的 var 會被放在 <code>aboutMe</code> 的 <code>Variable Environment</code> ？</p>
+<p>依照 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/var">MDN</a> 的說明， var 只能被包在 <code>Function</code> 中，一旦出了 <code>Function</code> 這個作用域，就會變成 <code>Global</code> 作用域</p>
+<p>關於 <code>Variable Environment</code> 的詳細介紹，將在下篇文章提出</p>
+<p>參考<br><a target="_blank" rel="noopener" href="https://www.borderlessengineer.com/p/how-js-works-understanding-the-execution">https://www.borderlessengineer.com/p/how-js-works-understanding-the-execution</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freecodecamp.org/news/javascript-execution-context-and-hoisting/">https://www.freecodecamp.org/news/javascript-execution-context-and-hoisting/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.frontendmag.com/tutorials/lexical-environment-in-javascript/">https://www.frontendmag.com/tutorials/lexical-environment-in-javascript/</a></p>
+<p><a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-execution-contexts">https://262.ecma-international.org/6.0/#sec-execution-contexts</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#lexical_scoping">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#lexical_scoping</a></p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-03-31</span><i class="fa fa-tag"></i><a class="tag" href="/categories/JavaScript/" title="JavaScript">JavaScript </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/JavaScript-execution-context-1/,NingLab,JavaScript - 運行背後的世界(1),;"></a></div></div><div><script src="https://utteranc.es/client.js" repo="cacachang/cacachang.github.io" issue-term="title" theme="github-light" crossorigin="anonymous" async></script></div><div><script type="text/javascript">document.write("<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/a24701770/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");</script></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/Ruby-build-your-own-router-by-rack/" title="Ruby-用 Rack 做出自己的 Router">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/Rails-Turbo-and-Turbo%20Drive/" title="Rails - Turbo 與 Turbo Drive">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
