@@ -105,3 +105,14 @@ deploy:
   type: git
   repo: https://github.com/cacachang/cacachang.github.io
   branch: main
+
+# RSS
+feed:
+  limit: 20
+  order_by: "-date"
+  tag_dir: "tag"
+  category_dir: "category"
+  rss:
+      enable: true
+      template: "themes/layout/template/rss.ejs"
+      output: "rss.xml"
