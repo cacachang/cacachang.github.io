@@ -47,7 +47,7 @@ gtag('config', 'G-4P2R013PGL')
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># project/member/urls.py</span><br><span class="line"></span><br><span class="line">from django.urls import path</span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;users/&#x27;, views.index),</span><br><span class="line">    path(&#x27;users/&lt;id&gt;/&#x27;, views.show),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <p>Path Converter 預設的型態是字串，不過還有支援 <code>integer</code> &#x2F; <code>slug</code> &#x2F; <code>uuid</code> 甚至是完整的路徑也可以</p>
-<p>當我們要讓參數傳進 views 中的方法，方法必需要加上 <code>position argument</code> (<code>id</code>)，也名字必須要一樣，否則就會跑出錯誤訊息</p>
+<p>當我們要讓參數傳進 views 中的方法，方法必需要加上 <code>positional argument</code> (<code>id</code>)，也名字必須要一樣，否則就會跑出錯誤訊息</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># project/memeber/views.py</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">def show(request, id):</span><br><span class="line">    ...</span><br><span class="line">    return render(request, &quot;show.html&quot;)</span><br></pre></td></tr></table></figure>
 
 <h4 id="integer"><a href="#integer" class="headerlink" title="integer"></a>integer</h4><p>如果型態不是字串必須要在前面加上 <code>int</code> 作為 <code>parameter</code></p>
@@ -61,7 +61,7 @@ gtag('config', 'G-4P2R013PGL')
 <h4 id="uuid"><a href="#uuid" class="headerlink" title="uuid"></a>uuid</h4><p>同上，只要在前面加上 <code>uuid</code> 即可</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># project/member/urls.py</span><br><span class="line"></span><br><span class="line">from django.urls import path</span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;users/&lt;uuid:uuid&gt;/&#x27;, views.show),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
-<h3 id="選填參數"><a href="#選填參數" class="headerlink" title="選填參數"></a>選填參數</h3><p>剛剛有提到，如果要傳參數進去，必須要在方法中也給他一個 <code>position argument</code> </p>
+<h3 id="選填參數"><a href="#選填參數" class="headerlink" title="選填參數"></a>選填參數</h3><p>剛剛有提到，如果要傳參數進去，必須要在方法中也給他一個 <code>positional argument</code> </p>
 <p>但如果有兩個路徑要同時去找同一個方法，一個路徑有傳遞參數，一個沒有傳遞參數呢？</p>
 <p>我們可以在方法中 <code>parameter</code> 給他預設值，就算路徑沒有傳參數進來，也不會壞掉了</p>
 <p>不過應該只會在 <code>有分頁的時候</code> <code>有搜尋的時候</code> 用到</p>
