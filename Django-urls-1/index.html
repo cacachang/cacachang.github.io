@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>Django - urls 的那些基礎用法 · NingLab</title><meta name="description" content="當使用者點選網址進入網站時，會發送 request 給伺服器，不過伺服器怎麼知道他要做什麼，並且需要什麼資料呢？
+今天要來介紹 Django 中的 urls 
+
+ROOT_URLCONF當使用者進入到網域中的其中一個頁面時，會發送 request 給 server
+Django 收到時，會先去 se"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><script async src="https://www.googletagmanager.com/gtag/js?id=G-4P2R013PGL"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-4P2R013PGL')
+</script><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.jpeg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/ning.jpg" style="width:200px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://twitter.com/ningchang_"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="https://github.com/cacachang"><i class="fa fa-github"></i></a></li><li><a href="mailto:a24701770@gmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.instagram.com/web543_/"><i class="fa fa-instagram"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%E7%8F%88%E5%AF%A7-%E5%BC%B5-140a86125/"><i class="fa fa-linkedin"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCwRiNPzYITZWaif23HTmHZQ"><i class="fa fa-youtube"></i></a></li></ul><div class="footer"><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首頁</a></li><li><a href="/archives">文章</a></li><li><a href="/categories">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.jpeg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Django - urls 的那些基礎用法</a></h3></div><div class="post-content"><p>當使用者點選網址進入網站時，會發送 <code>request</code> 給伺服器，<br>不過伺服器怎麼知道他要做什麼，並且需要什麼資料呢？</p>
+<p>今天要來介紹 Django 中的 urls </p>
+<p><img src="https://imgur.com/L01upJS.jpg" alt="Ning-draw (30)"></p>
+<h2 id="ROOT-URLCONF"><a href="#ROOT-URLCONF" class="headerlink" title="ROOT_URLCONF"></a>ROOT_URLCONF</h2><p>當使用者進入到網域中的其中一個頁面時，會發送 request 給 server</p>
+<p>Django 收到時，會先去 <code>settings.py</code> 找 <code>ROOT_URLCONF</code></p>
+<p>看看 URL 的設定放在哪個檔案中</p>
+<p>可以將 <code>ROOT_URLCONF</code> 想像成百貨公司的樓層介紹，</p>
+<p>當我們想要吃麥當勞的時候，該去哪層樓的哪個櫃位</p>
+<p>假設今天要做一個電商網站，那麼就可以將 <code>urls.py</code> 在最上層的 module 中整合</p>
+<p>以下方例子來說，我就會將 <code>ROOT_URLCONF</code> 設定為 <code>cake_shop.urls</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># project/cake_shop/settings.py</span><br><span class="line"></span><br><span class="line">ROOT_URLCONF = &#x27;cake_shop.urls&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>每個模組會有自己的 <code>urls</code> ，但個別模組的 urls.py 最後都會 include 到 <code>cake_shop.urls</code> 來彙整</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">project</span><br><span class="line">├── cake_shop</span><br><span class="line">│  ├── __init__.py</span><br><span class="line">│  ├── asgi.py</span><br><span class="line">│  ├── settings.py</span><br><span class="line">│  ├── urls.py</span><br><span class="line">│  └── wsgi.py</span><br><span class="line">├── member</span><br><span class="line">│  └── migration</span><br><span class="line">│  ├── __init__.py</span><br><span class="line">│  ├── app.py</span><br><span class="line">│  ├── admin.py</span><br><span class="line">│  ├── models.py</span><br><span class="line">│  ├── tests.py</span><br><span class="line">│  ├── urls.py</span><br><span class="line">│  └── views.py</span><br><span class="line">└── manage.py</span><br></pre></td></tr></table></figure>
+
+<p>Django 知道該去哪裡找 <code>urls</code> 後，就會進到該 <code>urls.py</code> 中</p>
+<h2 id="urlpatterns"><a href="#urlpatterns" class="headerlink" title="urlpatterns"></a>urlpatterns</h2><p><code>urls.py</code> 中會有個變數叫做 <code>urlpatterns</code> ，</p>
+<p>在這個變數中，會指定一系列的 <code>path</code> 給他，</p>
+<p>而這一系列的 <code>path</code> 會是 urls 模組底下的 <code>path 方法</code> 或者 <code>re_path 方法</code> 的實體</p>
+<blockquote>
+<p>This should be a sequence of django.urls.path() and&#x2F;or django.urls.re_path() instances</p>
+</blockquote>
+<p>Django 已經先幫我們做出一個管理員的路徑了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;admin/&#x27;, admin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>讓我們來看一下 <code>path</code> 該怎麼寫吧</p>
+<h3 id="path"><a href="#path" class="headerlink" title="path"></a>path</h3><p>Django 官方文件對於 path 方法規範如下：</p>
+<blockquote>
+<p>path(route, view, kwargs&#x3D;None, name&#x3D;None)</p>
+</blockquote>
+<p>讓我們來看一下參數：</p>
+<p><code>route</code> 表示要顯示在網址上的路徑，前面不需要加上 <code>/</code> 因為原本的 URL 就會有了<br><code>view</code> 表示這個路徑要去找 <code>views.py</code> 中的哪個方法<br><code>kwargs</code> 指的是 <code>keyword parameter</code> 也就是需要給他明確的 <code>keyword</code> 跟 <code>value</code><br><code>name</code> 方便我們用更簡潔且易讀的方式代表 URL</p>
+<p>假設我們今天有個頁面需要顯示所有使用者的，這時候我就先會設定他的路徑</p>
+<p>希望該頁面顯示的網址是 <code>https://網域/users</code><br>並且會去找 views 中的 index 方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># project/member/urls.py</span><br><span class="line"></span><br><span class="line">from django.urls import path</span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;users/&#x27;, views.index),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Path-Converter"><a href="#Path-Converter" class="headerlink" title="Path Converter"></a>Path Converter</h3><p>如果今天是要顯示該使用者的基本資料畫面呢？也就是俗稱的 <code>show</code> 頁面</p>
+<p><code>path</code> 使用 <code>&lt;&gt;</code> 來捕捉裡面的參數，並會當作 <code>keyword parameter</code> 傳入 views 中，所以我們就可以這樣寫：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># project/member/urls.py</span><br><span class="line"></span><br><span class="line">from django.urls import path</span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;users/&#x27;, views.index),</span><br><span class="line">    path(&#x27;users/&lt;id&gt;/&#x27;, views.show),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>Path Converter 預設的型態是字串，不過還有支援 <code>integer</code> &#x2F; <code>slug</code> &#x2F; <code>uuid</code> 甚至是完整的路徑也可以</p>
+<p>當我們要讓參數傳進 views 中的方法，方法必需要加上 <code>position argument</code> (<code>id</code>)，也名字必須要一樣，否則就會跑出錯誤訊息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># project/memeber/views.py</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">def show(request, id):</span><br><span class="line">    ...</span><br><span class="line">    return render(request, &quot;show.html&quot;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="integer"><a href="#integer" class="headerlink" title="integer"></a>integer</h4><p>如果型態不識字串必須要在前面加上 <code>int</code> 作為 <code>keyword parameter</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># project/member/urls.py</span><br><span class="line"></span><br><span class="line">from django.urls import path</span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;users/&lt;int:height&gt;/&#x27;, views.show),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>這時候的網址就會是 <code>https://網域/users/190/</code> </p>
+<h4 id="slug"><a href="#slug" class="headerlink" title="slug"></a>slug</h4><p>同上，只要在前面加上 <code>slug</code> 即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># project/member/urls.py</span><br><span class="line"></span><br><span class="line">from django.urls import path</span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;users/&lt;slug:jfowejro&gt;/&#x27;, views.show),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h4 id="uuid"><a href="#uuid" class="headerlink" title="uuid"></a>uuid</h4><p>同上，只要在前面加上 <code>uuid</code> 即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># project/member/urls.py</span><br><span class="line"></span><br><span class="line">from django.urls import path</span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;users/&lt;uuid:075194d3-6885-417e-a8a8-6c931e272f00&gt;/&#x27;, views.show),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="選填參數"><a href="#選填參數" class="headerlink" title="選填參數"></a>選填參數</h3><p>剛剛有提到，如果要傳參數進去，必須要在方法中也給他一個 <code>position argument</code> </p>
+<p>但如果有兩個路徑要同時去找同一個方法，一個路徑有傳遞參數，一個沒有傳遞參數呢？</p>
+<p>我們可以在方法中改成 <code>keyword argument</code> ，並且給他預設值，就算路徑沒有傳參數進來，也不會壞掉了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># project/memeber/views.py</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">def show(request, id = None):</span><br><span class="line">    ...</span><br><span class="line">    return render(request, &quot;show.html&quot;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="include"><a href="#include" class="headerlink" title="include"></a>include</h4><p>當我們要在最上層的 <code>cake_shop</code> urls 中引入 <code>member</code> 的路徑時，</p>
+<p>可以直接將 <code>member.urls</code> include 進來</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># project/cake_shop/urls.py</span><br><span class="line"></span><br><span class="line">from django.urls import path, include</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;&#x27;, include(&quot;member.urls&quot;)),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="name"><a href="#name" class="headerlink" title="name"></a>name</h3><p>如果未來想要在 form 表單中使用 url 這種方法，為了簡化路徑，我可以加上 <code>name</code> 關鍵字參數</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># project/member/urls.py</span><br><span class="line"></span><br><span class="line">from django.urls import path</span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;users/&#x27;, views.index, name=&quot;index&quot;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>還可以搭配 <code>reverse</code> 讓程式碼更簡潔且易讀！</p>
+<h4 id="path-reverse"><a href="#path-reverse" class="headerlink" title="path reverse"></a>path reverse</h4><p>當加入了 <code>name</code> 這個 <code>keyword parameter</code> 之後，就可以在方法中用 <code>reverse</code> 簡化路徑的寫法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># project/member/views.py</span><br><span class="line">from django.urls import reverse</span><br><span class="line">from django.http import HttpResponseRedirect</span><br><span class="line"></span><br><span class="line"># Create your views here.</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">def show(request, id=None):</span><br><span class="line">    return HttpResponseRedirect(reverse(&quot;index&quot;))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果搭配 <code>HttpResponseRedirect</code> 的話不要重新導向到自己本身的方法，不然就會造成無窮迴圈，以上述的例子來說，如果我在 index 方法導向到 index，就會無窮迴圈</li>
+</ul>
+<p>在 form 的話我們就可以在 url 的方法，用易讀又簡短的方式寫</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot;&#123;% url &#x27;index&#x27; %&#125;&quot; method=&quot;post&quot;&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="namespaces"><a href="#namespaces" class="headerlink" title="namespaces"></a>namespaces</h4><p>當專案複雜度增加，模組也可能會跟著增加，這時候可能會遇到相同路徑名稱的問題，</p>
+<p>name 命名可能因此越來越長，這時候我們可以使用 <code>namespace</code> 來做區隔 (前提是要給 name 參數唷！)</p>
+<p>namespace 有分成兩種</p>
+<ol>
+<li>application namespace</li>
+</ol>
+<p>每個 application 都可以有自己的 namespace ，且他們的實體前綴也會有 namespace 名稱</p>
+<p>我們可以用 <code>app_name</code> 來設定 application namespace</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># project/member/urls.py</span><br><span class="line"></span><br><span class="line">app_name = &quot;users&quot;</span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;users/&#x27;, views.index, name=&quot;index&quot;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>這時候 views 的 reverse 路徑就可以設定成 <code>users:index</code> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># project/member/views.py</span><br><span class="line"></span><br><span class="line">def show(request, id=None):</span><br><span class="line">    print(id)</span><br><span class="line">    return HttpResponseRedirect(reverse(&quot;users:index&quot;))</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>instance namespace</li>
+</ol>
+<p>實體的 namespace 在這專案中必須是要獨一無二的，如果沒有特別設定，預設就會是 application 的 namespace</p>
+<p>namespace 會用 <code>:</code> 來區隔</p>
+<p>如果我們在 include 的時候有指定 namespace ，這時候該路徑就會被套上 instance namespace</p>
+<p>我們可以在 cake_shop 底下的 urls.py 設定 <code>instance namespace</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># project/cake_shop/urls.py</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;&#x27;, include(&quot;member.urls&quot;, namespace=&quot;admin&quot;)),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>這時候 views 的 reverse 路徑就可以設定成 <code>admin:index</code> ，我們可以指定 current_app 告訴他要去找哪個 <code>application namespace</code> 底下的 <code>instance namespace</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># project/member/views.py</span><br><span class="line"></span><br><span class="line">def show(request, id=None):</span><br><span class="line">    print(id)</span><br><span class="line">    return HttpResponseRedirect(reverse(&quot;admin:index&quot;, current_app=&quot;users&quot;))</span><br></pre></td></tr></table></figure>
+
+
+<p><code>reverse</code> 若有指定 current_app 這個參數時，就會去找這個值的 namespace</p>
+<p>沒有的話，就會去找 application namespace </p>
+<p>再沒有的話，就會去找 instance namespace</p>
+<p><img src="https://imgur.com/PUBtSuT.jpg" alt="Ning-draw (30)"></p>
+<p>今天先介紹比較基礎的 URL 用法，下一篇我們會再介紹更深入的 URL 用法</p>
+<p>如果喜歡這篇文章歡迎幫我點選下方的 Like</p>
+<p>如果上述文章有任何疑慮或者指教，也歡迎留言</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-04-28</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Django/" title="Django">Django </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/Django-urls-1/,NingLab,Django - urls 的那些基礎用法,;"></a></div></div><div><script src="https://utteranc.es/client.js" repo="cacachang/cacachang.github.io" issue-term="title" theme="github-light" crossorigin="anonymous" async></script></div><div><script type="text/javascript">document.write("<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/a24701770/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");</script></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/Python-function-decorator/" title="Python - 函式裝飾器 function decorator">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
