@@ -12,6 +12,8 @@ type: 'categories'
 
 [Python](https://ninglab.com/categories/Python/)
 
+[Django](https://ninglab.com/categories/Django/)
+
 [Rebuild Rails](https://ninglab.com/categories/Rebuild-Rails/)
 
 [測試](https://ninglab.com/categories/測試/)
