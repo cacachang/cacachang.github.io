@@ -2,11 +2,11 @@
 Django 所採用的模式是 MTV 模式
 使用者瀏覽網頁時，伺服器的運作流程如下：
 
-Template 會將 request 傳送至 View
+urls.py 會將 request 傳送至 View
 
 View 收到 request，處理過程中需要資料庫的資料時，就會向 Model 要資料
 
-Mode"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><script async src="https://www.googletagmanager.com/gtag/js?id=G-4P2R013PGL"></script><script>window.dataLayer = window.dataLayer || [];
+Model"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><script async src="https://www.googletagmanager.com/gtag/js?id=G-4P2R013PGL"></script><script>window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-4P2R013PGL')
@@ -14,18 +14,17 @@ gtag('config', 'G-4P2R013PGL')
 <p>Django 所採用的模式是 MTV 模式</p>
 <p>使用者瀏覽網頁時，伺服器的運作流程如下：</p>
 <ol>
-<li><p>Template 會將 request 傳送至 View</p>
+<li><p>urls.py 會將 request 傳送至 View</p>
 </li>
 <li><p>View 收到 request，處理過程中需要資料庫的資料時，就會向 Model 要資料</p>
 </li>
 <li><p>Model 收到 View 來的指令，將處理好的資料給 View (* Model 不是代表資料庫，而是 <code>負責與資料庫溝通</code> 的一個 Layer )</p>
 </li>
-<li><p>View 收到資料後，將資料做最後的處理，並將 response 回給 Template</p>
+<li><p>View 收到資料後，將資料做最後的處理</p>
 </li>
-<li><p>View 將成果渲染到畫面上給使用者</p>
+<li><p>View 拿 Template 的東西來進行 render，最後由 View 回應給使用者</p>
 </li>
 </ol>
-<p><img src="https://imgur.com/pd8nbFr.jpg" alt="Django-MTV"></p>
 <p>對於 Django 的 MTV 架構有一點概念後，我們就來看看 <code>views</code> 吧！</p>
 <h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>我們需要做一個路徑來給 views ，好讓 Django 收到需求之後，知道該去哪裡</p>
 <p>來看看下方例子：</p>
@@ -71,7 +70,7 @@ gtag('config', 'G-4P2R013PGL')
 <p>就以 edit 頁面來看好了，當我們使用 <code>Function-based views</code> 的話會像這樣：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def edit(request, id=None):</span><br><span class="line">    user = get_object_or_404(User, id=id)</span><br><span class="line"></span><br><span class="line">    if request.method == &#x27;POST&#x27;:</span><br><span class="line">        form = UserForm(request.POST)</span><br><span class="line"></span><br><span class="line">        if form.is_valid():</span><br><span class="line">            user.name = form.cleaned_data[&quot;name&quot;]</span><br><span class="line">            user.age = form.cleaned_data[&quot;age&quot;]</span><br><span class="line">            user.email = form.cleaned_data[&quot;email&quot;]</span><br><span class="line">            user.address = form.cleaned_data[&quot;address&quot;]</span><br><span class="line">            user.phone = form.cleaned_data[&quot;phone&quot;]</span><br><span class="line"></span><br><span class="line">            user.save()</span><br><span class="line"></span><br><span class="line">            return redirect(&quot;show&quot;, id=id)</span><br><span class="line">    else:</span><br><span class="line">        form = UserForm(user.__dict__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    return render(request, &quot;edit.html&quot;, &#123;&quot;form&quot;: form, &quot;user&quot;: user&#125;)</span><br></pre></td></tr></table></figure>
 
-<p>但如果用 <code>Class-based views</code> 呢？</p>
+<p>但如果用 <code>CBV ( Class-based views )</code> 呢？</p>
 <p>views 就會變成這樣：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class UserUpdateView(UpdateView):</span><br><span class="line">    model = User</span><br><span class="line">    fields = [&#x27;name&#x27;, &#x27;age&#x27;, &#x27;email&#x27;, &#x27;address&#x27;, &#x27;phone&#x27;]</span><br><span class="line">    template_name = &#x27;edit.html&#x27;</span><br><span class="line"></span><br><span class="line">    def get_object(self, queryset=None):</span><br><span class="line">        id = self.kwargs.get(&#x27;id&#x27;)</span><br><span class="line">        return User.objects.get(id=id)</span><br></pre></td></tr></table></figure>
 
@@ -80,13 +79,13 @@ gtag('config', 'G-4P2R013PGL')
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line">from . import views</span><br><span class="line">from .views import (UserUpdateView)</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;users/&lt;int:id&gt;/edit/&#x27;, UserUpdateView.as_view(), name=&quot;edit&quot;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <p>程式碼變得非常乾淨簡潔，如果需要哪些設定就再加上去就好了</p>
-<h3 id="Django-中的-Class-based-views"><a href="#Django-中的-Class-based-views" class="headerlink" title="Django 中的 Class-based views"></a>Django 中的 Class-based views</h3><p>Django 有提供很多 Class-based views </p>
+<h3 id="Django-中的-CBV"><a href="#Django-中的-CBV" class="headerlink" title="Django 中的 CBV"></a>Django 中的 CBV</h3><p>Django 有提供很多 CBV</p>
 <p>以下就用 CRUD 來舉例</p>
 <h4 id="CreateView"><a href="#CreateView" class="headerlink" title="CreateView"></a>CreateView</h4><p>會產生一個新建資料的 Form 表單</p>
 <p>我們用一般的 <code>Function-based views</code> 會這樣寫</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def new(request):</span><br><span class="line">    form = UserForm()</span><br><span class="line">    return render(request, &quot;new.html&quot;, &#123;&quot;form&quot;: form&#125;)</span><br></pre></td></tr></table></figure>
 
-<p>但改成 <code>Class-based views</code> 就會變這樣</p>
+<p>但改成 <code>CBV</code> 就會變這樣</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class UserCreateView(CreateView):</span><br><span class="line">    model = User</span><br><span class="line">    fields = [&#x27;name&#x27;, &#x27;age&#x27;, &#x27;email&#x27;, &#x27;address&#x27;, &#x27;phone&#x27;]</span><br><span class="line">    template_name = &#x27;new.html&#x27;</span><br><span class="line">    success_url = &#x27;index&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>個人覺得原本的 <code>Function-based views</code> 已經蠻簡潔了，所以也不一定要改成 <code>Class based views</code> 的方式</p>
@@ -100,7 +99,7 @@ gtag('config', 'G-4P2R013PGL')
 <p>使用 <code>Function-based views</code> </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def edit(request, id=None):</span><br><span class="line">    user = get_object_or_404(User, id=id)</span><br><span class="line"></span><br><span class="line">    if request.method == &#x27;POST&#x27;:</span><br><span class="line">        form = UserForm(request.POST)</span><br><span class="line"></span><br><span class="line">        if form.is_valid():</span><br><span class="line">            user.name = form.cleaned_data[&quot;name&quot;]</span><br><span class="line">            user.age = form.cleaned_data[&quot;age&quot;]</span><br><span class="line">            user.email = form.cleaned_data[&quot;email&quot;]</span><br><span class="line">            user.address = form.cleaned_data[&quot;address&quot;]</span><br><span class="line">            user.phone = form.cleaned_data[&quot;phone&quot;]</span><br><span class="line"></span><br><span class="line">            user.save()</span><br><span class="line"></span><br><span class="line">            return redirect(&quot;show&quot;, id=id)</span><br><span class="line">    else:</span><br><span class="line">        form = UserForm(user.__dict__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    return render(request, &quot;edit.html&quot;, &#123;&quot;form&quot;: form, &quot;user&quot;: user&#125;)</span><br></pre></td></tr></table></figure>
 
-<p>使用 <code>Class-based views</code> </p>
+<p>使用 <code>CBV</code> </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class UserUpdateView(UpdateView):</span><br><span class="line">    model = User</span><br><span class="line">    fields = [&#x27;name&#x27;, &#x27;age&#x27;, &#x27;email&#x27;, &#x27;address&#x27;, &#x27;phone&#x27;]</span><br><span class="line">    template_name = &#x27;edit.html&#x27;</span><br><span class="line">    success_url = reverse_lazy(&#x27;index&#x27;)</span><br><span class="line"></span><br><span class="line">    def get_object(self):</span><br><span class="line">        id = self.kwargs.get(&#x27;id&#x27;)</span><br><span class="line">        return User.objects.get(id=id)</span><br></pre></td></tr></table></figure>
 
 <p>使用 UpdateView 是需要傳遞 <code>pk</code> &#x2F; <code>slug</code> 去讓他找出資料</p>
@@ -109,7 +108,7 @@ gtag('config', 'G-4P2R013PGL')
 <p>用 <code>Function-based views</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def delete(request, id=None):</span><br><span class="line">    if request.method == &quot;POST&quot;:</span><br><span class="line">        user = get_object_or_404(User, id=id)</span><br><span class="line"></span><br><span class="line">        user.delete()</span><br><span class="line">        return redirect(&quot;index&quot;)</span><br><span class="line">    else:</span><br><span class="line">        return HttpResponseNotAllowed([&quot;POST&quot;])</span><br></pre></td></tr></table></figure>
 
-<p>使用 <code>Class-based views</code></p>
+<p>使用 <code>CBV</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class UserDeleteView(DeleteView):</span><br><span class="line">    model = User</span><br><span class="line">    success_url = reverse_lazy(&quot;index&quot;)</span><br><span class="line"></span><br><span class="line">    def get_object(self):</span><br><span class="line">        id = self.kwargs.get(&#x27;id&#x27;)</span><br><span class="line">        return User.objects.get(id=id)</span><br></pre></td></tr></table></figure>
 
 <p>Django 的 <code>Function-based views</code> 以及 <code>Class-based views</code> 各有擁護者，</p>

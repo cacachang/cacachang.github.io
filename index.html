@@ -6,11 +6,11 @@ gtag('config', 'G-4P2R013PGL')
 Django 所採用的模式是 MTV 模式
 使用者瀏覽網頁時，伺服器的運作流程如下：
 
-Template 會將 request 傳送至 View
+urls.py 會將 request 傳送至 View
 
 View 收到 request，處理過程中需要資料庫的資料時，就會向 Model 要資料
 
-Model 收到 Vi...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-05-12</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Django/" title="Django">Django </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/Django-urls-1/">Django - urls 的那些基礎用法</a></h3></div><div class="post-content"><p>當使用者點選網址進入網站時，會發送 request 給伺服器，不過伺服器怎麼知道他要做什麼，並且需要什麼資料呢？
+Model 收到 Vie...</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-05-12</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Django/" title="Django">Django </a></div></div></div></div><div class="post animated fadeInDown"><div class="post-title"><h3><a href="/Django-urls-1/">Django - urls 的那些基礎用法</a></h3></div><div class="post-content"><p>當使用者點選網址進入網站時，會發送 request 給伺服器，不過伺服器怎麼知道他要做什麼，並且需要什麼資料呢？
 今天要來介紹 Django 中的 urls 
 
 ROOT_URLCONF當使用者進入到網域中的其中一個頁面時，會發送 request 給 server
