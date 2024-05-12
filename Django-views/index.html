@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>Django-views · NingLab</title><meta name="description" content="提到 Views 之前，我們先來認識 MVC 架構
+Python 所採用的模式是物件導向 MVC 模式
+使用者瀏覽網頁時，伺服器的運作流程如下：
+
+View 會將需求傳送至 Controller
+
+Controller 收到需求，處理過程中需要資料庫的資料時，就會向 Model 要資料
+
+Model"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><script async src="https://www.googletagmanager.com/gtag/js?id=G-4P2R013PGL"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-4P2R013PGL')
+</script><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.jpeg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/ning.jpg" style="width:200px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://twitter.com/ningchang_"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="https://github.com/cacachang"><i class="fa fa-github"></i></a></li><li><a href="mailto:a24701770@gmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.instagram.com/web543_/"><i class="fa fa-instagram"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%E7%8F%88%E5%AF%A7-%E5%BC%B5-140a86125/"><i class="fa fa-linkedin"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCwRiNPzYITZWaif23HTmHZQ"><i class="fa fa-youtube"></i></a></li></ul><div class="footer"><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首頁</a></li><li><a href="/archives">文章</a></li><li><a href="/categories">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.jpeg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Django-views</a></h3></div><div class="post-content"><p>提到 Views 之前，我們先來認識 MVC 架構</p>
+<p>Python 所採用的模式是物件導向 MVC 模式</p>
+<p>使用者瀏覽網頁時，伺服器的運作流程如下：</p>
+<ol>
+<li><p>View 會將需求傳送至 Controller</p>
+</li>
+<li><p>Controller 收到需求，處理過程中需要資料庫的資料時，就會向 Model 要資料</p>
+</li>
+<li><p>Model 收到 Controller 來的指令，將處理好的資料給 Controller</p>
+</li>
+<li><p>Controller 收到資料後，將資料做最後的處理，並完整的送給 View</p>
+</li>
+<li><p>View 將成果渲染到畫面上給使用者</p>
+</li>
+</ol>
+<p><img src="https://imgur.com/eap1s8X.jpg" alt="Ning-draw (32)"></p>
+<p>在 Python 中，</p>
+<ul>
+<li><p><code>templates</code> 扮演著 <code>View</code> 的角色，負責傳送需求給 Controller </p>
+</li>
+<li><p><code>views</code> 則是扮演著 <code>Controller</code> 的角色，負責處理資料，並且必要時與 Model 溝通<br>(要注意一下 <code>views</code> 不是畫面，而是 Controller)</p>
+</li>
+<li><p><code>models</code> 就是 <code>Model</code> 的角色了，他不是代表資料庫，而是 <code>負責與資料庫溝通</code> 的一個 Layer</p>
+</li>
+</ul>
+<p>對於 Python 的 MVC 架構有一點概念後，我們就來看看 <code>views</code> 吧！</p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>與其他語言的 MVC 架構一樣，我們也需要做一個路徑來給 views ，好讓 Django 收到需求之後，知道該去哪裡</p>
+<p>來看看下方例子：</p>
+<p>我們在 url 定義了一個路徑 <code>users/</code> </p>
+<p>這表示，當使用者進入到該路徑時，會去找 views 的 index 方法</p>
+<p>url 不熟的話歡迎參閱 <a href="https://ninglab.com/Django-urls-1/">Django - URLS 的那些基礎用法</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># user/url.py</span><br><span class="line"></span><br><span class="line">from django.urls import path</span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;users/&#x27;, views.index, name=&quot;index&quot;)</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>在這之前，我們要先去 views 中建立名為 <code>index</code> 的方法，讓 request 過來的時候可以提供需要的資料</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># user/views.py</span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    users = User.objects.all()    </span><br><span class="line">    return render(request, &quot;index.html&quot;, &#123;&quot;users&quot;: users&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>對於 <code>templates</code> 到 <code>views</code> 有概念後，我們就可以再深入來看看 <code>views</code></p>
+<h3 id="views-的職責-Request-and-Response"><a href="#views-的職責-Request-and-Response" class="headerlink" title="views 的職責 - Request and Response"></a>views 的職責 - Request and Response</h3><p>views 是一種 function ，負責接受 request ，並且回傳 response</p>
+<p>回傳的格式可以是 html &#x2F; xml 或者是 image </p>
+<p>頁面收到 request 時， Django 會將建立一個 <code>HttpRequest 物件</code>，會包含 request 中的 <code>metadata 資料</code></p>
+<p>HttpRequest 會作為<code>第一個參數</code>傳遞至對應的 views 中</p>
+<p>剛剛提到的 <code>index</code> 例子</p>
+<p>該引數的 request 就是 HttpRequest 物件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># user/views.py</span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    users = User.objects.all()    </span><br><span class="line">    return render(request, &quot;index.html&quot;, &#123;&quot;users&quot;: users&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>當 views 處理好資料後，<code>必須</code> 要傳遞一個 HttpResponse 物件回去</p>
+<p>以 <code>index</code> 例子來說，我們是回傳一個 render 方法回去</p>
+<p>讓我們來看一下 render 這個方法</p>
+<p>他會將參數變成一包 <code>HttpResponse 物件</code>，並且回傳</p>
+<blockquote>
+<p>Combines a given template with a given context dictionary and returns an HttpResponse object with that rendered text.</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># user/views.py</span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    users = User.objects.all()    </span><br><span class="line">    return render(request, &quot;index.html&quot;, &#123;&quot;users&quot;: users&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>了解 views 的職責後，我們就來看一下方式</p>
+<h2 id="views"><a href="#views" class="headerlink" title="views"></a>views</h2><p>在 Django 中， views 可以用兩種方式來做</p>
+<p>第一種是 <code>Function-based views</code> </p>
+<p>第二種是 <code>Class-based views</code> </p>
+<p>在專案中，你可以同時使用 Function-based views 或者是 Class-based views </p>
+<p>取決於程式碼以及需求</p>
+<h2 id="Function-based-views"><a href="#Function-based-views" class="headerlink" title="Function-based views"></a>Function-based views</h2><p>Django 預設的 views 方式，也就是<code>一般的 Function</code>，相較於 <code>Class-based views</code> 更簡單好寫且好閱讀</p>
+<p>也因為簡單，通常會應用在靜態頁面中</p>
+<p>以上方程式碼的例子來說，就是一種 <code>Function-based views</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># user/views.py</span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    users = User.objects.all()    </span><br><span class="line">    return render(request, &quot;index.html&quot;, &#123;&quot;users&quot;: users&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Class-based-views"><a href="#Class-based-views" class="headerlink" title="Class-based views"></a>Class-based views</h2><p>隨著專案日益龐大，如果這時候還是使用 <code>Function-based views</code> 會有不好擴充，以及重複程式碼的缺點</p>
+<p><code>Class-based views</code> 就是為了解決這個問題而產生的</p>
+<p>就以 edit 頁面來看好了，當我們使用 <code>Function-based views</code> 的話會像這樣：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def edit(request, id=None):</span><br><span class="line">    user = get_object_or_404(User, id=id)</span><br><span class="line"></span><br><span class="line">    if request.method == &#x27;POST&#x27;:</span><br><span class="line">        form = UserForm(request.POST)</span><br><span class="line"></span><br><span class="line">        if form.is_valid():</span><br><span class="line">            user.name = form.cleaned_data[&quot;name&quot;]</span><br><span class="line">            user.age = form.cleaned_data[&quot;age&quot;]</span><br><span class="line">            user.email = form.cleaned_data[&quot;email&quot;]</span><br><span class="line">            user.address = form.cleaned_data[&quot;address&quot;]</span><br><span class="line">            user.phone = form.cleaned_data[&quot;phone&quot;]</span><br><span class="line"></span><br><span class="line">            user.save()</span><br><span class="line"></span><br><span class="line">            return redirect(&quot;show&quot;, id=id)</span><br><span class="line">    else:</span><br><span class="line">        form = UserForm(user.__dict__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    return render(request, &quot;edit.html&quot;, &#123;&quot;form&quot;: form, &quot;user&quot;: user&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>但如果用 <code>Class-based views</code> 呢？</p>
+<p>views 就會變成這樣：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class UserUpdateView(UpdateView):</span><br><span class="line">    model = User</span><br><span class="line">    fields = [&#x27;name&#x27;, &#x27;age&#x27;, &#x27;email&#x27;, &#x27;address&#x27;, &#x27;phone&#x27;]</span><br><span class="line">    template_name = &#x27;edit.html&#x27;</span><br><span class="line"></span><br><span class="line">    def get_object(self, queryset=None):</span><br><span class="line">        id = self.kwargs.get(&#x27;id&#x27;)</span><br><span class="line">        return User.objects.get(id=id)</span><br></pre></td></tr></table></figure>
+
+<p>這時候我們需要去改變 <code>urls.py</code> 中的設定</p>
+<p>會用到 UserUpdateView 的 <code>as_view 類別方法</code> 來呼叫 UserUpdateView</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line">from . import views</span><br><span class="line">from .views import (UserUpdateView)</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(&#x27;users/&lt;int:id&gt;/edit/&#x27;, UserUpdateView.as_view(), name=&quot;edit&quot;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>程式碼變得非常乾淨簡潔，如果需要哪些設定就再加上去就好了</p>
+<h3 id="Django-中的-Class-based-views"><a href="#Django-中的-Class-based-views" class="headerlink" title="Django 中的 Class-based views"></a>Django 中的 Class-based views</h3><p>Django 有提供很多 Class-based views </p>
+<p>以下就用 CRUD 來舉例</p>
+<h4 id="CreateView"><a href="#CreateView" class="headerlink" title="CreateView"></a>CreateView</h4><p>會產生一個新建資料的 Form 表單</p>
+<p>我們用一般的 <code>Function-based views</code> 會這樣寫</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def new(request):</span><br><span class="line">    form = UserForm()</span><br><span class="line">    return render(request, &quot;new.html&quot;, &#123;&quot;form&quot;: form&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>但改成 <code>Class-based views</code> 就會變這樣</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class UserCreateView(CreateView):</span><br><span class="line">    model = User</span><br><span class="line">    fields = [&#x27;name&#x27;, &#x27;age&#x27;, &#x27;email&#x27;, &#x27;address&#x27;, &#x27;phone&#x27;]</span><br><span class="line">    template_name = &#x27;new.html&#x27;</span><br><span class="line">    success_url = &#x27;index&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>個人覺得原本的 <code>Function-based views</code> 已經蠻簡潔了，所以也不一定要改成 <code>Class based views</code> 的方式</p>
+<ul>
+<li><code>model</code> 是指要 create 哪個 model 的資料</li>
+<li><code>fields</code> 是只有哪些欄位需要填寫</li>
+<li><code>template_name</code> 是要渲染在哪個 template 中</li>
+<li><code>success_url</code> 是讓你可以設定成功會導去的路徑，但如果在 model 有設定 <code>get_absolute_url() </code> 就不需要再設定這個， Django 會直接去抓 <code>get_absolute_url() </code> 的設定</li>
+</ul>
+<h4 id="UpdateView"><a href="#UpdateView" class="headerlink" title="UpdateView"></a>UpdateView</h4><p>會渲染已有資料的表單，前提是要提供參數去找出資料</p>
+<p>使用 <code>Function-based views</code> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def edit(request, id=None):</span><br><span class="line">    user = get_object_or_404(User, id=id)</span><br><span class="line"></span><br><span class="line">    if request.method == &#x27;POST&#x27;:</span><br><span class="line">        form = UserForm(request.POST)</span><br><span class="line"></span><br><span class="line">        if form.is_valid():</span><br><span class="line">            user.name = form.cleaned_data[&quot;name&quot;]</span><br><span class="line">            user.age = form.cleaned_data[&quot;age&quot;]</span><br><span class="line">            user.email = form.cleaned_data[&quot;email&quot;]</span><br><span class="line">            user.address = form.cleaned_data[&quot;address&quot;]</span><br><span class="line">            user.phone = form.cleaned_data[&quot;phone&quot;]</span><br><span class="line"></span><br><span class="line">            user.save()</span><br><span class="line"></span><br><span class="line">            return redirect(&quot;show&quot;, id=id)</span><br><span class="line">    else:</span><br><span class="line">        form = UserForm(user.__dict__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    return render(request, &quot;edit.html&quot;, &#123;&quot;form&quot;: form, &quot;user&quot;: user&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>Class-based views</code> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class UserUpdateView(UpdateView):</span><br><span class="line">    model = User</span><br><span class="line">    fields = [&#x27;name&#x27;, &#x27;age&#x27;, &#x27;email&#x27;, &#x27;address&#x27;, &#x27;phone&#x27;]</span><br><span class="line">    template_name = &#x27;edit.html&#x27;</span><br><span class="line">    success_url = reverse_lazy(&#x27;index&#x27;)</span><br><span class="line"></span><br><span class="line">    def get_object(self):</span><br><span class="line">        id = self.kwargs.get(&#x27;id&#x27;)</span><br><span class="line">        return User.objects.get(id=id)</span><br></pre></td></tr></table></figure>
+
+<p>使用 UpdateView 是需要傳遞 <code>pk</code> &#x2F; <code>slug</code> 去讓他找出資料</p>
+<p>不過 User 剛好沒有這兩個欄位，所以就用了 <code>get_object</code> 來找資料</p>
+<h4 id="DeleteView"><a href="#DeleteView" class="headerlink" title="DeleteView"></a>DeleteView</h4><p>只要 request 是 POST ，且資料存在的話，就會刪除</p>
+<p>用 <code>Function-based views</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def delete(request, id=None):</span><br><span class="line">    if request.method == &quot;POST&quot;:</span><br><span class="line">        user = get_object_or_404(User, id=id)</span><br><span class="line"></span><br><span class="line">        user.delete()</span><br><span class="line">        return redirect(&quot;index&quot;)</span><br><span class="line">    else:</span><br><span class="line">        return HttpResponseNotAllowed([&quot;POST&quot;])</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>Class-based views</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class UserDeleteView(DeleteView):</span><br><span class="line">    model = User</span><br><span class="line">    success_url = reverse_lazy(&quot;index&quot;)</span><br><span class="line"></span><br><span class="line">    def get_object(self):</span><br><span class="line">        id = self.kwargs.get(&#x27;id&#x27;)</span><br><span class="line">        return User.objects.get(id=id)</span><br></pre></td></tr></table></figure>
+
+<p>Django 的 <code>Function-based views</code> 以及 <code>Class-based views</code> 各有擁護者，</p>
+<p>且 <code>Class-based views</code> 並不是用來取代 <code>Function-based views</code> 的，他們各有所長</p>
+<p>至於要使用哪個方式，我個人認為還是要照需求以及團隊的 coding style 來決定</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-05-12</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Django/" title="Django">Django </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/Django-views/,NingLab,Django-views,;"></a></div></div><div><script src="https://utteranc.es/client.js" repo="cacachang/cacachang.github.io" issue-term="title" theme="github-light" crossorigin="anonymous" async></script></div><div><script type="text/javascript">document.write("<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/a24701770/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");</script></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/Django-urls-1/" title="Django - urls 的那些基礎用法">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
