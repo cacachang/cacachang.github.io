@@ -1,42 +1,33 @@
-<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>Django - views 的職責與方式 · NingLab</title><meta name="description" content="提到 Views 之前，我們先來認識 MVC 架構
-Python 所採用的模式是物件導向 MVC 模式
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>Django - views 的職責與方式 · NingLab</title><meta name="description" content="提到 Views 之前，我們先來認識 MTV 架構
+Django 所採用的模式是 MTV 模式
 使用者瀏覽網頁時，伺服器的運作流程如下：
 
-View 會將需求傳送至 Controller
+Template 會將 request 傳送至 View
 
-Controller 收到需求，處理過程中需要資料庫的資料時，就會向 Model 要資料
+View 收到 request，處理過程中需要資料庫的資料時，就會向 Model 要資料
 
-Model"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><script async src="https://www.googletagmanager.com/gtag/js?id=G-4P2R013PGL"></script><script>window.dataLayer = window.dataLayer || [];
+Mode"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><script async src="https://www.googletagmanager.com/gtag/js?id=G-4P2R013PGL"></script><script>window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-4P2R013PGL')
-</script><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.jpeg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/ning.jpg" style="width:200px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://twitter.com/ningchang_"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="https://github.com/cacachang"><i class="fa fa-github"></i></a></li><li><a href="mailto:a24701770@gmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.instagram.com/web543_/"><i class="fa fa-instagram"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%E7%8F%88%E5%AF%A7-%E5%BC%B5-140a86125/"><i class="fa fa-linkedin"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCwRiNPzYITZWaif23HTmHZQ"><i class="fa fa-youtube"></i></a></li></ul><div class="footer"><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首頁</a></li><li><a href="/archives">文章</a></li><li><a href="/categories">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.jpeg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Django - views 的職責與方式</a></h3></div><div class="post-content"><p>提到 Views 之前，我們先來認識 MVC 架構</p>
-<p>Python 所採用的模式是物件導向 MVC 模式</p>
+</script><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.jpeg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/ning.jpg" style="width:200px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://twitter.com/ningchang_"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="https://github.com/cacachang"><i class="fa fa-github"></i></a></li><li><a href="mailto:a24701770@gmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.instagram.com/web543_/"><i class="fa fa-instagram"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%E7%8F%88%E5%AF%A7-%E5%BC%B5-140a86125/"><i class="fa fa-linkedin"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCwRiNPzYITZWaif23HTmHZQ"><i class="fa fa-youtube"></i></a></li></ul><div class="footer"><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首頁</a></li><li><a href="/archives">文章</a></li><li><a href="/categories">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.jpeg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Django - views 的職責與方式</a></h3></div><div class="post-content"><p>提到 Views 之前，我們先來認識 MTV 架構</p>
+<p>Django 所採用的模式是 MTV 模式</p>
 <p>使用者瀏覽網頁時，伺服器的運作流程如下：</p>
 <ol>
-<li><p>View 會將需求傳送至 Controller</p>
+<li><p>Template 會將 request 傳送至 View</p>
 </li>
-<li><p>Controller 收到需求，處理過程中需要資料庫的資料時，就會向 Model 要資料</p>
+<li><p>View 收到 request，處理過程中需要資料庫的資料時，就會向 Model 要資料</p>
 </li>
-<li><p>Model 收到 Controller 來的指令，將處理好的資料給 Controller</p>
+<li><p>Model 收到 View 來的指令，將處理好的資料給 View (* Model 不是代表資料庫，而是 <code>負責與資料庫溝通</code> 的一個 Layer )</p>
 </li>
-<li><p>Controller 收到資料後，將資料做最後的處理，並完整的送給 View</p>
+<li><p>View 收到資料後，將資料做最後的處理，並將 response 回給 Template</p>
 </li>
 <li><p>View 將成果渲染到畫面上給使用者</p>
 </li>
 </ol>
-<p><img src="https://imgur.com/eap1s8X.jpg" alt="Ning-draw (32)"></p>
-<p>在 Python 中，</p>
-<ul>
-<li><p><code>templates</code> 扮演著 <code>View</code> 的角色，負責傳送需求給 Controller </p>
-</li>
-<li><p><code>views</code> 則是扮演著 <code>Controller</code> 的角色，負責處理資料，並且必要時與 Model 溝通<br>(要注意一下 <code>views</code> 不是畫面，而是 Controller)</p>
-</li>
-<li><p><code>models</code> 就是 <code>Model</code> 的角色了，他不是代表資料庫，而是 <code>負責與資料庫溝通</code> 的一個 Layer</p>
-</li>
-</ul>
-<p>對於 Python 的 MVC 架構有一點概念後，我們就來看看 <code>views</code> 吧！</p>
-<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>與其他語言的 MVC 架構一樣，我們也需要做一個路徑來給 views ，好讓 Django 收到需求之後，知道該去哪裡</p>
+<p><img src="https://imgur.com/pd8nbFr.jpg" alt="Django-MTV"></p>
+<p>對於 Django 的 MTV 架構有一點概念後，我們就來看看 <code>views</code> 吧！</p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>我們需要做一個路徑來給 views ，好讓 Django 收到需求之後，知道該去哪裡</p>
 <p>來看看下方例子：</p>
 <p>我們在 url 定義了一個路徑 <code>users/</code> </p>
 <p>這表示，當使用者進入到該路徑時，會去找 views 的 index 方法</p>
@@ -47,7 +38,7 @@ gtag('config', 'G-4P2R013PGL')
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># user/views.py</span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    users = User.objects.all()    </span><br><span class="line">    return render(request, &quot;index.html&quot;, &#123;&quot;users&quot;: users&#125;)</span><br></pre></td></tr></table></figure>
 
 <p>對於 <code>templates</code> 到 <code>views</code> 有概念後，我們就可以再深入來看看 <code>views</code></p>
-<h3 id="views-的職責-Request-and-Response"><a href="#views-的職責-Request-and-Response" class="headerlink" title="views 的職責 - Request and Response"></a>views 的職責 - Request and Response</h3><p>views 是一種 function ，負責接受 request ，並且回傳 response</p>
+<h3 id="views-的職責-Request-and-Response"><a href="#views-的職責-Request-and-Response" class="headerlink" title="views 的職責 - Request and Response"></a>views 的職責 - Request and Response</h3><p>views 是一種 Function ，負責接受 request ，並且回傳 response</p>
 <p>回傳的格式可以是 html &#x2F; xml 或者是 image </p>
 <p>頁面收到 request 時， Django 會將建立一個 <code>HttpRequest 物件</code>，會包含 request 中的 <code>metadata 資料</code></p>
 <p>HttpRequest 會作為<code>第一個參數</code>傳遞至對應的 views 中</p>
@@ -70,7 +61,7 @@ gtag('config', 'G-4P2R013PGL')
 <p>第二種是 <code>Class-based views</code> </p>
 <p>在專案中，你可以同時使用 Function-based views 或者是 Class-based views </p>
 <p>取決於程式碼以及需求</p>
-<h2 id="Function-based-views"><a href="#Function-based-views" class="headerlink" title="Function-based views"></a>Function-based views</h2><p>Django 預設的 views 方式，也就是<code>一般的 Function</code>，相較於 <code>Class-based views</code> 更簡單好寫且好閱讀</p>
+<h2 id="Function-based-views"><a href="#Function-based-views" class="headerlink" title="Function-based views"></a>Function-based views</h2><p>Django 預設的 views 方式，也就是 <code>一般的 Function</code>，相較於 <code>Class-based views</code> 更簡單好寫且好閱讀</p>
 <p>也因為簡單，通常會應用在靜態頁面中</p>
 <p>以上方程式碼的例子來說，就是一種 <code>Function-based views</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># user/views.py</span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    users = User.objects.all()    </span><br><span class="line">    return render(request, &quot;index.html&quot;, &#123;&quot;users&quot;: users&#125;)</span><br></pre></td></tr></table></figure>
