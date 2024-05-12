@@ -89,7 +89,7 @@ Django 官方文件對於 path 方法規範如下：
 
 `route` 表示要顯示在網址上的路徑，前面不需要加上 `/` 因為原本的 URL 就會有了
 `view` 表示這個路徑要去找 `views.py` 中的哪個方法
-`kwargs` 指的是 `keyword parameter` 也就是需要給他明確的 `keyword` 跟 `value`
+`kwargs` 指的是 `keyword argument` 也就是需要給他明確的 `keyword` 跟 `value`
 `name` 方便我們用更簡潔且易讀的方式代表 URL
 
 假設我們今天有個頁面需要顯示所有使用者的，這時候我就先會設定他的路徑
@@ -112,7 +112,7 @@ urlpatterns = [
 
 如果今天是要顯示該使用者的基本資料畫面呢？也就是俗稱的 `show` 頁面
 
-`path` 使用 `<>` 來捕捉裡面的參數，並會當作 `keyword parameter` 傳入 views 中，所以我們就可以這樣寫：
+`path` 使用 `<>` 來捕捉裡面的參數，並會當作 `keyword argument` 傳入 views 中，所以我們就可以這樣寫：
 
 ```
 # project/member/urls.py
@@ -128,7 +128,7 @@ urlpatterns = [
 
 Path Converter 預設的型態是字串，不過還有支援 `integer` / `slug` / `uuid` 甚至是完整的路徑也可以
 
-當我們要讓參數傳進 views 中的方法，方法必需要加上 `position argument` (`id`)，也名字必須要一樣，否則就會跑出錯誤訊息
+當我們要讓參數傳進 views 中的方法，方法必需要加上 `positional argument` (`id`)，也名字必須要一樣，否則就會跑出錯誤訊息
 
 ```
 # project/memeber/views.py
@@ -142,7 +142,9 @@ def show(request, id):
 
 #### integer
 
-如果型態不識字串必須要在前面加上 `int` 作為 `keyword parameter`
+如果型態不是字串必須要在前面加上 `int` 作為 `parameter`
+
+而傳進去的都需要叫這個名稱，以下方例子來說，參數都必須要叫 `height`
 
 ```
 # project/member/urls.py
@@ -168,7 +170,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('users/<slug:jfowejro>/', views.show),
+    path('users/<slug:slug>/', views.show),
 ]
 ```
 
@@ -183,20 +185,22 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('users/<uuid:075194d3-6885-417e-a8a8-6c931e272f00>/', views.show),
+    path('users/<uuid:uuid>/', views.show),
 ]
 ```
 
 ### 選填參數
 
-剛剛有提到，如果要傳參數進去，必須要在方法中也給他一個 `position argument` 
+剛剛有提到，如果要傳參數進去，必須要在方法中也給他一個 `positional argument` 
 
 但如果有兩個路徑要同時去找同一個方法，一個路徑有傳遞參數，一個沒有傳遞參數呢？
 
-我們可以在方法中改成 `keyword argument` ，並且給他預設值，就算路徑沒有傳參數進來，也不會壞掉了
+我們可以在方法中 `parameter` 給他預設值，就算路徑沒有傳參數進來，也不會壞掉了
+
+不過應該只會在 `有分頁的時候` `有搜尋的時候` 用到
 
 ```
-# project/memeber/views.py
+# project/member/views.py
 
 ...
 
@@ -223,7 +227,7 @@ urlpatterns = [
 
 ### name
 
-如果未來想要在 form 表單中使用 url 這種方法，為了簡化路徑，我可以加上 `name` 關鍵字參數
+如果未來想要使用 url 這種方法，為了簡化路徑，我可以加上 `name` 關鍵字參數
 
 ```
 # project/member/urls.py
@@ -240,7 +244,7 @@ urlpatterns = [
 
 #### path reverse
 
-當加入了 `name` 這個 `keyword parameter` 之後，就可以在方法中用 `reverse` 簡化路徑的寫法
+當加入了 `name` 這個 `keyword argument` 之後，就可以在方法中用 `reverse` 簡化路徑的寫法
 
 ```
 # project/member/views.py
@@ -251,7 +255,7 @@ from django.http import HttpResponseRedirect
 
 ...
 
-def show(request, id=None):
+def show(request, id = None):
     return HttpResponseRedirect(reverse("index"))
 ```
 
