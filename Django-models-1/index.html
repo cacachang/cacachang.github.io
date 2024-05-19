@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>Django - 基礎 models 概念與關聯 · NingLab</title><meta name="description" content="Django - ModelsDjango 所採用的模式是 MTV 模式
+上週介紹的 Views 文章有提到 MTV 模式，我們再來複習一下
+使用者瀏覽網頁時，伺服器的運作流程如下：
+
+urls.py 會將 request 傳送至 View
+View 收到 request，處理過程中需要資料庫的資料"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><script async src="https://www.googletagmanager.com/gtag/js?id=G-4P2R013PGL"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-4P2R013PGL')
+</script><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.jpeg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/ning.jpg" style="width:200px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://twitter.com/ningchang_"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="https://github.com/cacachang"><i class="fa fa-github"></i></a></li><li><a href="mailto:a24701770@gmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.instagram.com/web543_/"><i class="fa fa-instagram"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%E7%8F%88%E5%AF%A7-%E5%BC%B5-140a86125/"><i class="fa fa-linkedin"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCwRiNPzYITZWaif23HTmHZQ"><i class="fa fa-youtube"></i></a></li></ul><div class="footer"><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首頁</a></li><li><a href="/archives">文章</a></li><li><a href="/categories">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.jpeg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Django - 基礎 models 概念與關聯</a></h3></div><div class="post-content"><h1 id="Django-Models"><a href="#Django-Models" class="headerlink" title="Django - Models"></a>Django - Models</h1><p>Django 所採用的模式是 MTV 模式</p>
+<p>上週介紹的 Views 文章有提到 MTV 模式，我們再來複習一下</p>
+<p>使用者瀏覽網頁時，伺服器的運作流程如下：</p>
+<p><img src="https://imgur.com/wg4bxVE.jpg" alt="MTV"></p>
+<p>urls.py 會將 request 傳送至 View</p>
+<p>View 收到 request，處理過程中需要資料庫的資料時，就會向 Model 要資料</p>
+<p>Model 收到 View 來的指令，將處理好的資料給 View (* Model 不是代表資料庫，而是 負責與資料庫溝通 的一個 Layer )</p>
+<p>View 收到資料後，將資料做最後的處理</p>
+<p>View 拿 Template 的東西來進行 render，最後由 View 回應給使用者</p>
+<h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>我們這週要來介紹的是 Model</p>
+<p>當我們需要處理資料時，就會需要 Model</p>
+<p>Model 並不是只資料庫，而是跟資料庫溝通的一層 Layer</p>
+<p>我們先來了解什麼是 <code>ORM</code></p>
+<h3 id="ORM"><a href="#ORM" class="headerlink" title="ORM"></a>ORM</h3><p>Django 採用 ORM 來處理資料，ORM 全名為 <code>Object Relational Mapping</code> ，</p>
+<p>原本我們要使用 SQL 語法 跟資料庫溝通</p>
+<p>不過 ORM 讓我們可以用 <code>物件</code> 的方式來處理資料</p>
+<p>假設我想看某個 table 的所有資料</p>
+<p>我必須要用 SQL 語法來查詢</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM table_name;</span><br></pre></td></tr></table></figure>
+
+<p>但如果是用 Django 的 ORM 語法呢？會簡單易懂許多</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.objects.all()</span><br></pre></td></tr></table></figure>
+
+<p>了解了 ORM 語法後，我們可以先來看一下該怎麼定義 table 以及 column</p>
+<h2 id="models-py"><a href="#models-py" class="headerlink" title="models.py"></a>models.py</h2><p>我們會將要定義的 table 以及 column 放在 models.py 這個檔案之中</p>
+<h3 id="fields"><a href="#fields" class="headerlink" title="fields"></a>fields</h3><p>在 Django 的手冊中指出，每個 model 都是 class，因此可以繼承 django.db.models.Model 的特性</p>
+<blockquote>
+<p>Each model is a Python class that subclasses django.db.models.Model</p>
+</blockquote>
+<p>所以第一件事就是用 <code>class</code> 的方式定義 <code>table</code></p>
+<p>並在該 class 中定義屬性，這些屬性代表 <code>table</code> 中的 <code>column</code> ，在 Django 稱作為 field</p>
+<blockquote>
+<p>Each field is specified as a class attribute, and each attribute maps to a database column.</p>
+</blockquote>
+<p>我們要先 import <code>models</code>，讓 class 去繼承 models 中的 Model</p>
+<p>接著定義 table 的名稱以及屬性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line">class User(models.Model):</span><br><span class="line">    name = models.CharField(max_length=20, default=&quot;&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>理解基本的 table 以及 column 定義後，我們可以來點關聯！</p>
+<h3 id="one-to-one"><a href="#one-to-one" class="headerlink" title="one to one"></a>one to one</h3><p>有些資料會有一對一的關聯，舉例來說</p>
+<p>除了基本 User 資料，需要有另一個 Model 來存個人資訊，像是 地址 &#x2F; mail &#x2F; 電話等等</p>
+<p>這時候 User 與個人資料 table 就會有一對一的關聯</p>
+<p>該怎麼做呢？</p>
+<h4 id="ForeignKey"><a href="#ForeignKey" class="headerlink" title="ForeignKey"></a>ForeignKey</h4><p>當我們知道一個 User 會有一個 Profile 之後，</p>
+<p>就可以用 <code>關係</code> 來想看看 <code>ForeignKey</code> 設定該放在哪裡</p>
+<p>通常我們會將 Foreign Key 放置在「屬於」的 Model 中</p>
+<p>以剛剛的例子來說，是 Profile 會 <code>屬於</code> 一個 User</p>
+<p>所以我們會將 <code>ForeignKey</code> 放在 <code>Profile</code> 該 table 中</p>
+<p>ForeignKey 就像是一條線索， Profile 會透過該線索，去找到 User</p>
+<p><img src="https://imgur.com/6CSSwpF.jpg" alt="one to one"></p>
+<p>接著我們就來把它轉變成程式碼吧！</p>
+<p>在 ForeignKey 中有幾個必填的參數</p>
+<blockquote>
+<p>class ForeignKey(to, on_delete, **options)</p>
+</blockquote>
+<p>第一個參數是 ForeignKey 會指向哪個 model</p>
+<p>第二個參數 on_delete 意思是當 <code>關聯 model</code> 的資料被刪除時，要做什麼事，這邊我們設定成 models.CASCADE ，代表當 User 被刪除時，跟該筆有關的 Profile 都會被刪除</p>
+<p>第三個參數是為了一對一的關聯而設定的，我們希望一筆 User 只對應一筆 Profile ，對於 Profile 來說，每一個 User 的 id 都是獨特的，不可重複</p>
+<p>(如果沒有設定這個參數，那就會變成 User 可以有多筆 Profile 囉)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line">class User(models.Model):</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Profile(models.Model):</span><br><span class="line">    ...</span><br><span class="line">    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="OneToOneField"><a href="#OneToOneField" class="headerlink" title="OneToOneField"></a>OneToOneField</h4><p>Django 也有提供更明確的一對一關聯方法，</p>
+<p>也就是 OneToOneField</p>
+<p>這個方法會會直接在 Profile 中增加一個欄位，存放 Foreign Key (也就是 User 的 id )</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line">class User(models.Model):</span><br><span class="line">    name = models.CharField(max_length=10)</span><br><span class="line">    age = models.IntegerField()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Profile(models.Model):</span><br><span class="line">    email = models.CharField(max_length=10, default=&quot;&quot;)</span><br><span class="line">    address = models.CharField(max_length=50, default=&quot;&quot;)</span><br><span class="line">    phone = models.CharField(max_length=10, default=&quot;&quot;)</span><br><span class="line">    user = models.OneToOneField(User, on_delete=models.CASCADE)</span><br></pre></td></tr></table></figure>
+
+<p>上述兩種方法都可以建立一對一的關聯，</p>
+<p>相較於 <code>ForeignKey</code> 的方式，<code>OneToOneField</code> 在程式碼中會顯得更易讀明確</p>
+<h3 id="many-to-one"><a href="#many-to-one" class="headerlink" title="many to one"></a>many to one</h3><p>再來就是稍微複雜的關聯，多對一，</p>
+<p>舉例來說，今天一個 User 會有多筆 Order</p>
+<p>但一筆 Order 只能對應一個 User</p>
+<p>這時候就會形成 <code>多對一</code> 的關聯</p>
+<p>我們來看一下該怎麼設定</p>
+<h4 id="ForeignKey-1"><a href="#ForeignKey-1" class="headerlink" title="ForeignKey"></a>ForeignKey</h4><p>就像剛剛舉例的，我們會將 <code>Foreign Key</code> 放在 「屬於」 的 table </p>
+<p>這次的例子是 多筆 Order 會屬於一個 User</p>
+<p>所以我們會將 <code>ForeignKey</code> 該設定放在 Order 中</p>
+<p>我們直接用圖片來理解比較快</p>
+<p><img src="https://imgur.com/NR6Jwsv.jpg" alt="many to one"></p>
+<p>理解了多對一的關係後，我們就可以來轉變成程式碼了</p>
+<p>跟剛剛的一對一不同，這時每個 Order 的 User 是可以重複的，所以我們不需要加上 <code>unique=True</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line">class User(models.Model):</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">class Order(models.Model):</span><br><span class="line">    user = models.ForeignKey(User, on_delete=models.CASCADE)</span><br></pre></td></tr></table></figure>
+
+<h3 id="many-to-many"><a href="#many-to-many" class="headerlink" title="many to many"></a>many to many</h3><p>再來就會更複雜一點，也就是多對多的關聯</p>
+<p>舉例來說，使用者與群組的關聯，</p>
+<p>一個使用者可以參加多個群組，</p>
+<p>而一個群組可以擁有多個使用者，</p>
+<p>這時候就會形成多對多的關聯</p>
+<p><img src="https://imgur.com/NWvEUxd.jpg" alt="many to many"></p>
+<h4 id="ManyToManyField"><a href="#ManyToManyField" class="headerlink" title="ManyToManyField"></a>ManyToManyField</h4><p>Django 提供了我們 ManyToManyField 的方法</p>
+<p>這次的關係是 一個使用者可以 <code>屬於</code> 多個群組 且 一個群組可以 <code>屬於</code> 多個使用者</p>
+<p>不過通常多對多的關係，都會用第三方表格來存放雙方的關聯</p>
+<p>所以 <code>ForeignKey</code> 會放在第三方表格中</p>
+<p>而 User 及 Group 則是要設定 <code>ManyToManyField</code> 以及 through 參數，</p>
+<p>當你需要用 User 去查詢 Group 的時候就會比較方便，不需要透過第三方表格</p>
+<ul>
+<li>屬性的定義 是要用複數，不然會跑出提醒你要改名的錯誤訊息</li>
+<li>User 在建立的時候，Group 還不存在，因此要用字串來取代</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line">class User(models.Model):</span><br><span class="line">  groups = models.ManyToManyField(&#x27;Group&#x27;, through=&quot;UserGroup&quot;)</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">class Group(models.Model):</span><br><span class="line">  users = models.ManyToManyField(User, through=&quot;UserGroup&quot;)</span><br><span class="line">  </span><br><span class="line">class UserGroup(models.Model):</span><br><span class="line">  user = models.ForeignKey(User, on_delete=models.CASCADE)</span><br><span class="line">  group = models.ForeignKey(Group, on_delete=models.CASCADE)</span><br></pre></td></tr></table></figure>
+
+<p>雖然多對多的關係可以在第三方表格用 <code>ForeignKey</code> 來設定關聯，</p>
+<p>但如果沒有透過 <code>ManyToManyField</code></p>
+<p>在查找資料的時候就都得透過第三方表格，其實蠻不方便的</p>
+<p>所以還是要設定 <code>ManyToManyField</code> 以及 <code>through</code> 參數唷</p>
+<p>基本的關聯差不多都介紹完了，接下來就剩怎麼將定義變成資料庫中的 table 以及 column</p>
+<h3 id="migration"><a href="#migration" class="headerlink" title="migration"></a>migration</h3><p>當我們將 table 及 column 都設定好之後，就可以來做 migration 啦</p>
+<p>migration 是什麼呢？</p>
+<p>我們可以把它想像成是 Database 的歷史紀錄</p>
+<p>有任何的更動都會被記錄在 migration 中</p>
+<p>在 Django 中，我們只要下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span><br></pre></td></tr></table></figure>
+
+<p>就會依照更動來做出新的 migration 囉</p>
+<h3 id="migrate"><a href="#migrate" class="headerlink" title="migrate"></a>migrate</h3><p>當 migration 做完，我們就該來改變資料庫的 table 以及 column</p>
+<p>這時候就需要下 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure>
+
+<p>資料庫這時候就會依據設定改變了</p>
+<h4 id="狀況題：如果-migrate-之後，又要做更動該怎麼辦？"><a href="#狀況題：如果-migrate-之後，又要做更動該怎麼辦？" class="headerlink" title="狀況題：如果 migrate 之後，又要做更動該怎麼辦？"></a>狀況題：如果 migrate 之後，又要做更動該怎麼辦？</h4><p>只要動到 models 這個檔案，再重新做一次 makemigrations 再 migrate 就可以了</p>
+<h4 id="狀況題：如果需要更改-migration-的時候該怎麼辦"><a href="#狀況題：如果需要更改-migration-的時候該怎麼辦" class="headerlink" title="狀況題：如果需要更改 migration 的時候該怎麼辦"></a>狀況題：如果需要更改 migration 的時候該怎麼辦</h4><p>在 Django 中，有可以讓我們 rollback 的指令</p>
+<p>什麼是 rollback 呢？可以把它想像成是鍵盤的 ctrl + z 復原鍵</p>
+<p>我們要將 migration 復原可以下該指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./manage.py migrate YOUR-APP-NAME YOUR-ROLLBACK-MIGRATION-NUMBER</span><br></pre></td></tr></table></figure>
+
+<p>這時候就可以進行復原</p>
+<p>以上是基礎的 Django model 使用介紹</p>
+<p>如果還有狀況題想要提出討論，歡迎在底下留言，會傳送到我的 github 作為 issue 通知我，屆時可以一起討論</p>
+<p>如果有幫助的話也歡迎按讚 ヾ(<em>´∀ ˋ</em>)ﾉ</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-05-19</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Django/" title="Django">Django </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/Django-models-1/,NingLab,Django - 基礎 models 概念與關聯,;"></a></div></div><div><script src="https://utteranc.es/client.js" repo="cacachang/cacachang.github.io" issue-term="title" theme="github-light" crossorigin="anonymous" async></script></div><div><script type="text/javascript">document.write("<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/a24701770/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");</script></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/Django-views/" title="Django - views 的職責與方式">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
