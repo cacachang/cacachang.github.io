@@ -130,7 +130,7 @@ gtag('config', 'G-4P2R013PGL')
 <h4 id="狀況題：如果需要更改-migration-的時候該怎麼辦"><a href="#狀況題：如果需要更改-migration-的時候該怎麼辦" class="headerlink" title="狀況題：如果需要更改 migration 的時候該怎麼辦"></a>狀況題：如果需要更改 migration 的時候該怎麼辦</h4><p>在 Django 中，有可以讓我們 rollback 的指令</p>
 <p>什麼是 rollback 呢？可以把它想像成是鍵盤的 ctrl + z 復原鍵</p>
 <p>我們要將 migration 復原可以下該指令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./manage.py migrate YOUR-APP-NAME YOUR-ROLLBACK-MIGRATION-NUMBER</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py migrate YOUR-APP-NAME YOUR-ROLLBACK-MIGRATION-NUMBER</span><br></pre></td></tr></table></figure>
 
 <p>這時候就可以進行復原</p>
 <p>以上是基礎的 Django model 使用介紹</p>
