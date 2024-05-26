@@ -69,7 +69,7 @@ gtag('config', 'G-4P2R013PGL')
 <p>A method is a function that “belongs to” an object.</p>
 </blockquote>
 <p>而單純的 function object，即是指沒有被綁定在物件上、不屬於任何物件的 function</p>
-<h2 id="類別方法"><a href="#類別方法" class="headerlink" title="類別方法"></a>類別方法</h2><p>除了實體方法，Python 中也有類別方法，聽起來也像是專門給類別使用的</p>
+<h3 id="Class-Method-類別方法"><a href="#Class-Method-類別方法" class="headerlink" title="Class Method 類別方法"></a>Class Method 類別方法</h3><p>除了實體方法，Python 中也有類別方法，聽起來也像是專門給類別使用的</p>
 <p>不過說穿了，類別方法也只是一般的 function object 而已</p>
 <p>用類別來呼叫方法時，會印出預期中的結果</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line">    def show_method():</span><br><span class="line">        print(&quot;This is show method&quot;)</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">Person.show_method() // This is show method</span><br></pre></td></tr></table></figure>
@@ -108,7 +108,7 @@ gtag('config', 'G-4P2R013PGL')
 </blockquote>
 <p>當實體呼叫的時候，實體會被忽略，實際上是該實體的類別在呼叫，</p>
 <p>所以實體呼叫時也不會有錯誤訊息，因為會去找該實體的類別</p>
-<h2 id="靜態方法"><a href="#靜態方法" class="headerlink" title="靜態方法"></a>靜態方法</h2><p>靜態方法不需要傳遞 類別 或者 實體 做為參數進去 function</p>
+<h3 id="Static-Method-靜態方法"><a href="#Static-Method-靜態方法" class="headerlink" title="Static Method 靜態方法"></a>Static Method 靜態方法</h3><p>靜態方法不需要傳遞 類別 或者 實體 做為參數進去 function</p>
 <p>通常沒有涉及到更改 類別 或 實體 的 attribute ，就可以用靜態方法來做</p>
 <p>例如今天要計算傳進來的參數 * 100 等於多少，就很適合用靜態方法</p>
 <p>(當然要傳 類別 或 實體 的 attribute 進去也可以，不過比起靜態方法，實體方法或類別方法可能更適合)</p>
