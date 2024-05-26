@@ -36,15 +36,15 @@ gtag('config', 'G-4P2R013PGL')
 
 
 <p>這時候的 <code>getting_old</code> 會是一個 <code>bound method</code></p>
-<p>而 <code>bound method</code> 為 <code>method object</code> 的實體</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(ning.getting_old.__class__) // &lt;class &#x27;method&#x27;&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line"></span><br><span class="line">    def __init__(self, age):</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    def getting_old(self):</span><br><span class="line">        self.age += 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ning = Person(age = 17)</span><br><span class="line"></span><br><span class="line">print(ning.getting_old) // &lt;bound method Person.getting_old of &lt;__main__.Person object at 0x102f626c0&gt;&gt;</span><br></pre></td></tr></table></figure>
 
+<p>而 <code>bound method</code> 為 <code>method object</code> 的實體</p>
 <p>據 Python 官方手冊對於 <code>method object</code> 的解釋：</p>
 <p>當實體在呼叫該方法時，它會將實體作為第一個引數，並進行呼叫</p>
 <blockquote>
 <p>the special thing about methods is that the instance object is passed as the first argument of the function.</p>
 </blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line"></span><br><span class="line">    def __init__(self, age):</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    def getting_old(self):</span><br><span class="line">        self.age += 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ning = Person(age = 17)</span><br><span class="line"></span><br><span class="line">print(ning.getting_old) // &lt;bound method Person.getting_old of &lt;__main__.Person object at 0x102f626c0&gt;&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(ning.getting_old.__class__) // &lt;class &#x27;method&#x27;&gt;</span><br></pre></td></tr></table></figure>
 
 <p>那如果改成類別呢？</p>
 <p>此時 <code>getting_old</code> 會是一個 function 物件</p>
