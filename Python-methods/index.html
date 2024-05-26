@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>Python - 實體方法與類別方法的小故事 · NingLab</title><meta name="description" content="開發時難免會需要許多邏輯，為了讓程式碼好閱讀及好整理，通常我們會整理成方法
+今天會來介紹 Python 中的幾種方法
+
+實體方法 Instance Method
+類別方法 Class Method
+靜態方法 Static Method
+
+理解這些方法以前，
+我們先來看看什麼是 「 Class 類別 "><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><script async src="https://www.googletagmanager.com/gtag/js?id=G-4P2R013PGL"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-4P2R013PGL')
+</script><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.jpeg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/ning.jpg" style="width:200px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://twitter.com/ningchang_"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="https://github.com/cacachang"><i class="fa fa-github"></i></a></li><li><a href="mailto:a24701770@gmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.instagram.com/web543_/"><i class="fa fa-instagram"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%E7%8F%88%E5%AF%A7-%E5%BC%B5-140a86125/"><i class="fa fa-linkedin"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCwRiNPzYITZWaif23HTmHZQ"><i class="fa fa-youtube"></i></a></li></ul><div class="footer"><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首頁</a></li><li><a href="/archives">文章</a></li><li><a href="/categories">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.jpeg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>Python - 實體方法與類別方法的小故事</a></h3></div><div class="post-content"><p>開發時難免會需要許多邏輯，為了讓程式碼好閱讀及好整理，通常我們會整理成方法</p>
+<p>今天會來介紹 Python 中的幾種方法</p>
+<ul>
+<li>實體方法 Instance Method</li>
+<li>類別方法 Class Method</li>
+<li>靜態方法 Static Method</li>
+</ul>
+<p>理解這些方法以前，</p>
+<p>我們先來看看什麼是 「 Class 類別 」、「 Instance 實體 」</p>
+<h3 id="Class-類別"><a href="#Class-類別" class="headerlink" title="Class 類別"></a>Class 類別</h3><p>Class 類別就像是模型，並且會有屬性(attribute)</p>
+<p>我們可以依照模型來製造許多的成品(就是所謂的 Instance 實體)</p>
+<h3 id="Instance-實體"><a href="#Instance-實體" class="headerlink" title="Instance 實體"></a>Instance 實體</h3><p>從類別中創造出來的實體，會繼承類別的屬性</p>
+<p>Python 為物件導向語言 (Object Oriented Programming)，</p>
+<p>類別與實體都是物件，</p>
+<p>物件導向的繼承特性讓實體繼承類別的屬性</p>
+<h3 id="function-方法"><a href="#function-方法" class="headerlink" title="function 方法"></a>function 方法</h3><p>物件導向還有另一個特性：封裝</p>
+<p>就像遙控器一樣，使用者不需要遙控器的運作原理，廠商只要將它封裝，並且教導使用者如何按按鈕開啟功能就好</p>
+<p>在物件導向語言中，我們會將程式邏輯寫在方法中</p>
+<p>當需要的時候就會呼叫該方法</p>
+<p>使用的時候我們不需要知道裡面的運作原理</p>
+<p>只要確保得到我們要的結果符合預期即可</p>
+<p>接著我們就要來深入方法</p>
+<h3 id="Instance-Method-實體方法"><a href="#Instance-Method-實體方法" class="headerlink" title="Instance Method 實體方法"></a>Instance Method 實體方法</h3><p>看名字就像是實體專用的方法，不過真的是這樣嗎？</p>
+<p>在 Python 中，當實體在使用方法的時候，會將自己做為方法的引數來呼叫，我們來看看例子</p>
+<p>當 <code>ning</code> 作為 <code>getting_old</code> 的 receiver 的時候，</p>
+<p>會把自己作為引數來做呼叫</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line">    def __init__(self, age):</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    def getting_old(self):</span><br><span class="line">        self.age += 1</span><br><span class="line">      </span><br><span class="line">ning = Person(age=17)</span><br><span class="line"></span><br><span class="line">ning.getting_old() // 18</span><br></pre></td></tr></table></figure>
+
+
+<p>這時候的 <code>getting_old</code> 會是一個 <code>bound method</code></p>
+<p>據 GeeksforGeeks 對於 <code>bound method</code> 的解釋：</p>
+<p>當實體在呼叫該方法時，它會將實體作為第一個引數，並進行呼叫</p>
+<blockquote>
+<p>A bound method is the one which is dependent on the instance of the class as the first argument. It passes the instance as the first argument which is used to access the variables and functions.</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line"></span><br><span class="line">    def __init__(self, age):</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    def getting_old(self):</span><br><span class="line">        self.age += 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ning = Person(age = 17)</span><br><span class="line"></span><br><span class="line">print(ning.getting_old) // &lt;bound method Person.getting_old of &lt;__main__.Person object at 0x102f626c0&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>那如果改成類別呢？</p>
+<p>此時 <code>getting_old</code> 會是一個 function 物件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line">    def __init__(self, age):</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    def getting_old(self):</span><br><span class="line">        self.age += 1</span><br><span class="line"></span><br><span class="line">print(Person.getting_old) // &lt;function Person.getting_old at 0x100c40e00&gt;</span><br></pre></td></tr></table></figure>
+
+<p>不過這時候就會出現錯誤訊息，因為 <code>getting_old</code> 必須要有一個參數(self)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line">    def __init__(self, age):</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    def getting_old(self):</span><br><span class="line">        self.age += 1</span><br><span class="line"></span><br><span class="line">print(Person.getting_old()) // TypeError: Person.getting_old() missing 1 required positional argument: &#x27;self&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>為什麼同樣的方法，不同的 receiver 會變成不同的物件呢？</p>
+<p>當物件找到方法後，會透過一個叫做 <code>__get__</code> 的方法來判斷物件是 <code>類別</code> 還是 <code>實體</code> ，並且回傳 <code>method-wrapper</code> 的實體</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(ning.getting_old.__get__) // &lt;method-wrapper &#x27;__get__&#x27; of function object at 0x10498cd60&gt;</span><br><span class="line"></span><br><span class="line">print(Person.getting_old.__get__) // &lt;method-wrapper &#x27;__get__&#x27; of function object at 0x10498cd60&gt;</span><br></pre></td></tr></table></figure>
+
+
+<p>接著我們來看一下 <code>__init__</code> 初始化樣子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(ning.getting_old.__init__) // &lt;method-wrapper &#x27;__init__&#x27; of method object at 0x100af5ec0&gt;</span><br><span class="line"></span><br><span class="line">print(Person.getting_old.__init__) // &lt;method-wrapper &#x27;__init__&#x27; of function object at 0x100af0e00&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在這邊我們就可以看到兩者的差異</p>
+<p>用 ning(實體) 來存取方法，方法會被轉為 <code>method object</code>，也就是我們剛剛看到的 <code>bound method</code><br>用 Person(類別) 來存取方法，一樣會是 <code>function object</code></p>
+<p>再複習一下 <code>bound method</code> 為方法將屬於該物件，可想像成是將方法綁在該物件上，只有該物件能做使用，並且在呼叫時，會將物件本身作為引數帶入</p>
+<blockquote>
+<p>A method is a function that “belongs to” an object.</p>
+</blockquote>
+<p>而單純的 function object，即是指沒有被綁定在物件上、不屬於任何物件的 function</p>
+<h2 id="類別方法"><a href="#類別方法" class="headerlink" title="類別方法"></a>類別方法</h2><p>除了實體方法，Python 中也有類別方法，聽起來也像是專門給類別使用的</p>
+<p>不過說穿了，類別方法也只是一般的 function object 而已</p>
+<p>用類別來呼叫方法時，會印出預期中的結果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line">    def show_method():</span><br><span class="line">        print(&quot;This is show method&quot;)</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">Person.show_method() // This is show method</span><br></pre></td></tr></table></figure>
+
+<p>這時候的 <code>show_method</code> 就只是一般的方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line">    def show_method():</span><br><span class="line">        print(&quot;This is show method&quot;)</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">print(Person.show_method) // &lt;function Person.show_method at 0x104e60cc0&gt;</span><br></pre></td></tr></table></figure>
+
+<p>有實驗精神的我們，用 <code>__init__</code> 來看一下</p>
+<p>的確是一般的 function object</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(Person.show_method.__init__) // &lt;method-wrapper &#x27;__init__&#x27; of function object at 0x102364cc0&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果換成是實體來作為 receiver 呢？</p>
+<p>首先在 <code>__get__</code> 之後就被轉為 <code>method object</code>（也就是 <code>bound method</code>）</p>
+<p>將方法綁在 ning 身上了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ning = Person(age=17)</span><br><span class="line">print(ning.show_method.__init__) // &lt;method-wrapper &#x27;__init__&#x27; of method object at 0x10040a040&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line">    def show_method():</span><br><span class="line">        print(&quot;This is show method&quot;)</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">ning = Person(age=17)</span><br><span class="line">print(ning.show_method) // &lt;bound method Person.show_method of &lt;__main__.Person object at 0x10433a690&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>但由於 <code>bound method</code> 是需要將物件本身當作引數傳進 function 並互叫，</p>
+<p>類別方法並沒有任何參數，因此引發錯誤</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line">    def show_method():</span><br><span class="line">        print(&quot;This is show method&quot;)</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">ning = Person(age=17)</span><br><span class="line">ning.show_method() // TypeError: Person.show_method() takes 0 positional arguments but 1 was given</span><br></pre></td></tr></table></figure>
+
+<h3 id="實體方法與類別方法"><a href="#實體方法與類別方法" class="headerlink" title="實體方法與類別方法"></a>實體方法與類別方法</h3><p>其實實體方法與類別方法，本質上都是單純的 function，甚至跟有沒有參數無關</p>
+<p>差別在於存取及呼叫的時候：</p>
+<p>如果 receiver 是實體，就會轉成 <code>method object</code> ，將方法綁定在物件上，並將物件作為引數帶入呼叫</p>
+<p>如果 receiver 是類別，依舊為一般的 <code>function object</code></p>
+<p>所以並沒有實體不能使用類別方法，類別不能使用實體方法的規則，只是因為在呼叫時期的動作不同，就會引發錯誤</p>
+<h3 id="classmethod"><a href="#classmethod" class="headerlink" title="@classmethod"></a>@classmethod</h3><p>由於版本相容性的問題 Python3 推出了一個裝飾器 <code>@classmethod</code> (忘記裝飾器可參考 <a href="https://ninglab.com/Python-function-decorator/">PYTHON - 函式裝飾器 FUNCTION DECORATOR</a></p>
+<p>必須要使用 <code>cls</code> 作為參數帶入，這時候不管是實體還是類別，</p>
+<p>存取的時候都變成了 <code>bound method</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line"></span><br><span class="line">    @classmethod</span><br><span class="line">    def show_method(cls):</span><br><span class="line">        print(&quot;This is show method&quot;)</span><br><span class="line">        </span><br><span class="line">print(ning.show_method) // &lt;bound method Person.show_method of &lt;class &#x27;__main__.Person&#x27;&gt;&gt;</span><br><span class="line">print(Person.show_method) // &lt;bound method Person.show_method of &lt;class &#x27;__main__.Person&#x27;&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>而實體跟類別都可以做使用</p>
+<blockquote>
+<p>A class method can be called either on the class (such as C.f()) or on an instance (such as C().f()).</p>
+</blockquote>
+<p>當實體呼叫的時候，實體會被忽略，實際上是該實體的類別在呼叫，</p>
+<p>所以實體呼叫時也不會有錯誤訊息，因為會去找該實體的類別</p>
+<h2 id="靜態方法"><a href="#靜態方法" class="headerlink" title="靜態方法"></a>靜態方法</h2><p>靜態方法不需要傳遞 類別 或者 實體 做為參數進去 function</p>
+<p>通常沒有涉及到更改 類別 或 實體 的 attribute ，就可以用靜態方法來做</p>
+<p>例如今天要計算傳進來的參數 * 100 等於多少，就很適合用靜態方法</p>
+<p>(當然要傳 類別 或 實體 的 attribute 進去也可以，不過比起靜態方法，實體方法或類別方法可能更適合)</p>
+<p>Python3 有提供靜態方法的裝飾器 <code>@staticmethod</code></p>
+<p>裝上去即可使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    def show_method(yoyo):</span><br><span class="line">        print(yoyo*100)</span><br><span class="line">        </span><br><span class="line">ning = Person(age=17)</span><br><span class="line">        </span><br><span class="line">Person.show_method(10) // 1000</span><br><span class="line">ning.show_method(ning.age) // 1700</span><br></pre></td></tr></table></figure>
+
+<p>參考資料：</p>
+<p><a target="_blank" rel="noopener" href="https://docs.python.org/3/tutorial/classes.html">https://docs.python.org/3/tutorial/classes.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://realpython.com/instance-class-and-static-methods-demystified/">https://realpython.com/instance-class-and-static-methods-demystified/</a></p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-05-26</span><i class="fa fa-tag"></i><a class="tag" href="/categories/Python/" title="Python">Python </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/Python-methods/,NingLab,Python - 實體方法與類別方法的小故事,;"></a></div></div><div><script src="https://utteranc.es/client.js" repo="cacachang/cacachang.github.io" issue-term="title" theme="github-light" crossorigin="anonymous" async></script></div><div><script type="text/javascript">document.write("<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/a24701770/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");</script></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/Django-models-1/" title="Django - 基礎 models 概念與關聯">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
