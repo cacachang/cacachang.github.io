@@ -19,19 +19,15 @@ gtag('config', 'G-4P2R013PGL')
 </ul>
 <p>理解這些方法以前，</p>
 <p>我們先來看看什麼是 「 Class 類別 」、「 Instance 實體 」</p>
-<h3 id="Class-類別"><a href="#Class-類別" class="headerlink" title="Class 類別"></a>Class 類別</h3><p>Class 類別就像是模型，並且會有屬性(attribute)</p>
+<p>Python 為物件導向語言 (Object Oriented Programming)</p>
+<p>也就是說，在 Python 的世界中，幾乎所有的東西都是物件，</p>
+<p><code>物件</code> 會有 <code>狀態 (state)</code> 與 <code>行為 (behavior)</code></p>
+<p>包括我們待會會討論到的 <code>類別</code> 與 <code>實體</code> ，在 Python 中也都是物件</p>
+<h3 id="Class-類別"><a href="#Class-類別" class="headerlink" title="Class 類別"></a>Class 類別</h3><p>在 Python 中，Class 類別就像是模型</p>
 <p>我們可以依照模型來製造許多的成品(就是所謂的 Instance 實體)</p>
-<h3 id="Instance-實體"><a href="#Instance-實體" class="headerlink" title="Instance 實體"></a>Instance 實體</h3><p>從類別中創造出來的實體，會繼承類別的屬性</p>
-<p>Python 為物件導向語言 (Object Oriented Programming)，</p>
-<p>類別與實體都是物件，</p>
-<p>物件導向的繼承特性讓實體繼承類別的屬性</p>
-<h3 id="function-方法"><a href="#function-方法" class="headerlink" title="function 方法"></a>function 方法</h3><p>物件導向還有另一個特性：封裝</p>
-<p>就像遙控器一樣，使用者不需要遙控器的運作原理，廠商只要將它封裝，並且教導使用者如何按按鈕開啟功能就好</p>
-<p>在物件導向語言中，我們會將程式邏輯寫在方法中</p>
-<p>當需要的時候就會呼叫該方法</p>
-<p>使用的時候我們不需要知道裡面的運作原理</p>
-<p>只要確保得到我們要的結果符合預期即可</p>
-<p>接著我們就要來深入方法</p>
+<h3 id="Instance-實體"><a href="#Instance-實體" class="headerlink" title="Instance 實體"></a>Instance 實體</h3><p>從類別中產生出來的物件，會保有類別的 <code>狀態</code> 與 <code>行為</code></p>
+<h3 id="function-方法"><a href="#function-方法" class="headerlink" title="function 方法"></a>function 方法</h3><p>在 Python 中，方法也是物件</p>
+<p>現在我們就來看看方法的種類吧</p>
 <h3 id="Instance-Method-實體方法"><a href="#Instance-Method-實體方法" class="headerlink" title="Instance Method 實體方法"></a>Instance Method 實體方法</h3><p>看名字就像是實體專用的方法，不過真的是這樣嗎？</p>
 <p>在 Python 中，當實體在使用方法的時候，會將自己做為方法的引數來呼叫，我們來看看例子</p>
 <p>當 <code>ning</code> 作為 <code>getting_old</code> 的 receiver 的時候，</p>
@@ -40,10 +36,13 @@ gtag('config', 'G-4P2R013PGL')
 
 
 <p>這時候的 <code>getting_old</code> 會是一個 <code>bound method</code></p>
-<p>據 GeeksforGeeks 對於 <code>bound method</code> 的解釋：</p>
+<p>而 <code>bound method</code> 為 <code>Method Object</code> 的實體</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(ning.getting_old.__class__) // &lt;class &#x27;method&#x27;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>據 Python 官方手冊對於 <code>Method Object</code> 的解釋：</p>
 <p>當實體在呼叫該方法時，它會將實體作為第一個引數，並進行呼叫</p>
 <blockquote>
-<p>A bound method is the one which is dependent on the instance of the class as the first argument. It passes the instance as the first argument which is used to access the variables and functions.</p>
+<p>the special thing about methods is that the instance object is passed as the first argument of the function.</p>
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line"></span><br><span class="line">    def __init__(self, age):</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    def getting_old(self):</span><br><span class="line">        self.age += 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ning = Person(age = 17)</span><br><span class="line"></span><br><span class="line">print(ning.getting_old) // &lt;bound method Person.getting_old of &lt;__main__.Person object at 0x102f626c0&gt;&gt;</span><br></pre></td></tr></table></figure>
 
@@ -88,7 +87,7 @@ gtag('config', 'G-4P2R013PGL')
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line">    def show_method():</span><br><span class="line">        print(&quot;This is show method&quot;)</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">ning = Person(age=17)</span><br><span class="line">print(ning.show_method) // &lt;bound method Person.show_method of &lt;__main__.Person object at 0x10433a690&gt;&gt;</span><br></pre></td></tr></table></figure>
 
-<p>但由於 <code>bound method</code> 是需要將物件本身當作引數傳進 function 並互叫，</p>
+<p>但由於 <code>bound method</code> 是需要將物件本身當作引數傳進 function 並呼叫，</p>
 <p>類別方法並沒有任何參數，因此引發錯誤</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Person:</span><br><span class="line">    def show_method():</span><br><span class="line">        print(&quot;This is show method&quot;)</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">ning = Person(age=17)</span><br><span class="line">ning.show_method() // TypeError: Person.show_method() takes 0 positional arguments but 1 was given</span><br></pre></td></tr></table></figure>
 
