@@ -137,5 +137,13 @@ gtag('config', 'G-4P2R013PGL')
 <p><img src="https://imgur.com/4L1j1p1.jpg" alt="EC2"></p>
 <p>接著輸入 <code>ping 54.180.247.118</code> ，有回應時間就可以囉</p>
 <p><img src="https://imgur.com/N420Mfx.jpg" alt="EC2"></p>
-<p>在 AWS 架設服務是會被收錢的唷，分別要關掉 EC2 &#x2F; 刪除 VPC (刪除後需要檢查一下 VPC &#x2F; Subnet &#x2F; Internet Gateway &#x2F; Route Table &#x2F; Network ACLs ) </p>
+<p>在 AWS 架設服務是會被收錢的唷，</p>
+<p>分別要</p>
+<ol>
+<li>關掉 EC2 </li>
+<li>刪除 VPC (刪除後需要檢查一下 VPC &#x2F; Subnet &#x2F; Internet Gateway &#x2F; Route Table &#x2F; Network ACLs ) </li>
+<li>釋放 IP address  (在 EC2 左邊選單的 Elastic IP addresses，點進去把 IP release 即可)</li>
+</ol>
+<p>上面步驟可以參照官方文件去做</p>
+<p>以上若有任何疑問或指教也歡迎留言！有幫助的話也歡迎給個讚，謝謝！</p>
 </div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-07-25</span><i class="fa fa-tag"></i><a class="tag" href="/categories/AWS/" title="AWS">AWS </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/AWS-vpc-and-public-subnet/,NingLab,AWS 小探險 - 建立 VPC 與 Public Subnet,;"></a></div></div><div><script src="https://utteranc.es/client.js" repo="cacachang/cacachang.github.io" issue-term="title" theme="github-light" crossorigin="anonymous" async></script></div><div><script type="text/javascript">document.write("<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/a24701770/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");</script></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/Django-line-pay/" title="Django - LINE Pay 串接實戰">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
