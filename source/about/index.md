@@ -18,4 +18,4 @@ type: "about"
 
 ### Skill
 
-Ruby / Rails / JavaScript / React / SQL / Git / HTML / CSS / Tailwind
+Ruby / Rails / JavaScript / React / SQL / Git / HTML / CSS / Tailwind / Python / Django
