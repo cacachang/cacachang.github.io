@@ -11,6 +11,7 @@ type: "about"
 
 ### Experience
 
+COSCUP 講者 (2023)
 五倍學院程式教育機構 (2022 Nov ~ Now)
 行銷顧問公司 (2021 Oct ~ 2022 Apr)
 行銷代理商 (2020 Jul ~ 2021 Sep)
@@ -18,4 +19,4 @@ type: "about"
 
 ### Skill
 
-Ruby / Rails / JavaScript / React / SQL / Git / HTML / CSS / Tailwind / Python / Django
+Ruby / Rails / JavaScript / React / SQL / Git / HTML / CSS / Tailwind / Python / Django / Flask

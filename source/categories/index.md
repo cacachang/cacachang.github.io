@@ -10,6 +10,8 @@ type: 'categories'
 
 [Ruby](https://ninglab.com/categories/Ruby/)
 
+[Rust](https://ninglab.com/categories/Rust/)
+
 [Python](https://ninglab.com/categories/Python/)
 
 [Django](https://ninglab.com/categories/Django/)
