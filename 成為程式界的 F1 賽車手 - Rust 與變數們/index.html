@@ -26,7 +26,7 @@ gtag('config', 'G-4P2R013PGL')
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; rustc --version</span><br><span class="line"></span><br><span class="line"># rustc 1.80.1 (3f5fd8dd4 2024-08-06)</span><br></pre></td></tr></table></figure>
 
 
-<h3 id="印出-Hello-World"><a href="#印出-Hello-World" class="headerlink" title="印出 Hello World"></a>印出 Hello World</h3><p>我們先來做一個 rs 檔案 ( Rust 的原始碼檔案) 吧</p>
+<h3 id="印出-Hello-World"><a href="#印出-Hello-World" class="headerlink" title="印出 Hello World"></a>印出 Hello World</h3><p>我們先來做一個 rs 檔案 ( Rust 的原始碼檔案) </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ touch hello.rs</span><br></pre></td></tr></table></figure>
 
 <p>打開 hello.rs 檔案，輸入下列這段程式碼後存檔</p>
@@ -65,8 +65,7 @@ gtag('config', 'G-4P2R013PGL')
 <p>不過這個只能印字串，如果要印變數，必須這樣使用</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let a = &quot;Hello&quot;;</span><br><span class="line">println!(&quot;&#123;&#125;&quot;, a);</span><br></pre></td></tr></table></figure>
 
-<p>有時候會跑出該型態不支援預設 formatter 的錯誤，這時我們就必須這樣用</p>
-<p>cannot be formatted with the default formatter</p>
+<p>cannot be formatted with the default formatter<br>有時候會跑出該型態不支援預設 formatter 的錯誤，這時我們就必須這樣用</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let a = [1, 2, 3];</span><br><span class="line">println!(&quot;&#123;:?&#125;&quot;, a);</span><br></pre></td></tr></table></figure>
 
 <h3 id="變數"><a href="#變數" class="headerlink" title="變數"></a>變數</h3><p>當我們需要將一個值儲存起來，在日後做使用的時候，我們就需要用到變數</p>
@@ -133,7 +132,7 @@ gtag('config', 'G-4P2R013PGL')
 <li>整數 Integer</li>
 <li>浮點數 Floating-Point</li>
 <li>布林值 Boolean</li>
-<li>字 Character</li>
+<li>字元 Character</li>
 </ul>
 <h4 id="整數-Integer"><a href="#整數-Integer" class="headerlink" title="整數 Integer"></a>整數 Integer</h4><p>年齡都是用整數來算，用以下範例來舉例</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fn main() &#123;</span><br><span class="line">  let age: i8 = 18;</span><br><span class="line">  println!(&quot;&#123;&#125;&quot;, age);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -154,7 +153,7 @@ gtag('config', 'G-4P2R013PGL')
 <h4 id="布林值-Boolean"><a href="#布林值-Boolean" class="headerlink" title="布林值 Boolean"></a>布林值 Boolean</h4><p>布林值的定義很簡單，只要加上 <code>bool</code> 即可</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fn main() &#123;</span><br><span class="line">  let have_fun: bool = true;</span><br><span class="line">  println!(&quot;&#123;&#125;&quot;, have_fun);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 結果： true</span><br></pre></td></tr></table></figure>
 
-<h4 id="字-Character"><a href="#字-Character" class="headerlink" title="字 Character"></a>字 Character</h4><p>我們可以定義任何符號，甚至是數字為字的型別，型別設定為 <code>char</code> 即可<br>但只能放<code>一個字</code>喔，後面務必要用<code>單引號</code>，雙引號是用來定義字串的</p>
+<h4 id="字元-Character"><a href="#字元-Character" class="headerlink" title="字元 Character"></a>字元 Character</h4><p>我們可以定義任何符號，甚至是數字為字元的型別，型別設定為 <code>char</code> 即可<br>但只能放<code>一個字元</code>喔，後面務必要用<code>單引號</code>，雙引號是用來定義字串的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fn main() &#123;</span><br><span class="line">  let money: char = &#x27;$&#x27;;</span><br><span class="line">  println!(&quot;&#123;&#125;&quot;, money);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 結果： $</span><br></pre></td></tr></table></figure>
 
 <p>型別一旦定義後就不能再變了嗎？ Rust 提供了變換型別的方法，下一篇將介紹型別轉換方法！</p>
