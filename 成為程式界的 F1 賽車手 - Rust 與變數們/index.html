@@ -50,10 +50,11 @@ gtag('config', 'G-4P2R013PGL')
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fn main() &#123;</span><br><span class="line">    /* </span><br><span class="line">    I&#x27;m beginner of rust,</span><br><span class="line">    but I&#x27;ll work hard!</span><br><span class="line">    */</span><br><span class="line">    println!(&quot;Hello, World!&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>寫好再重新編譯，結果依然是印出 Hello, World! 唷</p>
-<h3 id="print"><a href="#print" class="headerlink" title="print"></a>print</h3><p>在 Rust 中，要印出東西，可以用兩種 macro，<br>分別是 print! 跟 println!</p>
+<h3 id="print"><a href="#print" class="headerlink" title="print"></a>print</h3><p>在 Rust 中，要印出東西，可以用兩種 Macro，<br>分別是 print! 跟 println!</p>
 <ul>
-<li>什麼是 macro?</li>
+<li>什麼是 Macro?</li>
 </ul>
+<p>Macro 有點像 Function ，但其實不能跟 Function 劃上等號，Macro 的概念更像是 Meta Programming，就是以程式來撰寫程式的意思</p>
 <p>我們直接在 hello.rs 中試試</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fn main() &#123;</span><br><span class="line">  print!(&quot;Hello,&quot;);</span><br><span class="line">  print!(&quot;World!&quot;);</span><br><span class="line">  </span><br><span class="line">  println!(&quot;Hello,&quot;);</span><br><span class="line">  println!(&quot;World!&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
