@@ -1,29 +1,48 @@
-<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>輕量化前端組合技： htmx 與 Alpine.js 開發應用 · NingLab</title><meta name="description" content="身為後端 &amp;#x2F; 全端工程師，在處理前端的時候，
-不是要去學框架就是要用純 JavaScript 做出效果，
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author"><title>輕量化前端組合技： htmx 與 Alpine.js 開發應用 · NingLab</title><meta name="description" content="身為後端工程師，在處理前端的時候，
+不是要去學框架就是要用純 JavaScript ，
 在 Ruby on Rails 有 Hotwire 與 Stimulus.js，
 可以輕鬆達到即時渲染及前端互動的效果，
 不過在其他框架就沒有這麼簡單，
-htmx 的出現，可以省去非前"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><script async src="https://www.googletagmanager.com/gtag/js?id=G-4P2R013PGL"></script><script>window.dataLayer = window.dataLayer || [];
+htmx 的出現，可以省去後端工程師打 API &amp;#x2F"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><script async src="https://www.googletagmanager.com/gtag/js?id=G-4P2R013PGL"></script><script>window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-4P2R013PGL')
-</script><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.jpeg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/ning.jpg" style="width:200px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://twitter.com/ningchang_"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="https://github.com/cacachang"><i class="fa fa-github"></i></a></li><li><a href="mailto:a24701770@gmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.instagram.com/web543_/"><i class="fa fa-instagram"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%E7%8F%88%E5%AF%A7-%E5%BC%B5-140a86125/"><i class="fa fa-linkedin"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCwRiNPzYITZWaif23HTmHZQ"><i class="fa fa-youtube"></i></a></li></ul><div class="footer"><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首頁</a></li><li><a href="/archives">文章</a></li><li><a href="/categories">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.jpeg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>輕量化前端組合技： htmx 與 Alpine.js 開發應用</a></h3></div><div class="post-content"><p>身為後端 &#x2F; 全端工程師，在處理前端的時候，</p>
-<p>不是要去學框架就是要用純 JavaScript 做出效果，</p>
+</script><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.jpeg" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><meta name="generator" content="Hexo 7.1.1"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/ning.jpg" style="width:200px;"><h3 title=""><a href="/">NingLab</a></h3></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://twitter.com/ningchang_"><i class="fa fa-twitter"></i></a></li><li><a target="_blank" rel="noopener" href="https://github.com/cacachang"><i class="fa fa-github"></i></a></li><li><a href="mailto:a24701770@gmail.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.instagram.com/web543_/"><i class="fa fa-instagram"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%E7%8F%88%E5%AF%A7-%E5%BC%B5-140a86125/"><i class="fa fa-linkedin"></i></a></li><li><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCwRiNPzYITZWaif23HTmHZQ"><i class="fa fa-youtube"></i></a></li></ul><div class="footer"><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首頁</a></li><li><a href="/archives">文章</a></li><li><a href="/categories">目錄</a></li><li><a href="/about">關於 Ning</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div><div class="avatar"><img src="/images/favicon.jpeg"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>輕量化前端組合技： htmx 與 Alpine.js 開發應用</a></h3></div><div class="post-content"><p>身為後端工程師，在處理前端的時候，</p>
+<p>不是要去學框架就是要用純 JavaScript ，</p>
 <p>在 Ruby on Rails 有 Hotwire 與 Stimulus.js，</p>
 <p>可以輕鬆達到即時渲染及前端互動的效果，</p>
 <p>不過在其他框架就沒有這麼簡單，</p>
-<p>htmx 的出現，可以省去非前端工程師做即時渲染的繁複程序</p>
+<p>htmx 的出現，可以省去後端工程師打 API &#x2F; 做即時渲染的繁複程序</p>
 <p>而前端互動效果，就可以交給 Alpine.js</p>
 <p>兩者搭配起來，寫出基本的前端功能並不是難事</p>
 <p>今天就要來介紹這兩個工具如何使用</p>
-<h3 id="htmx"><a href="#htmx" class="headerlink" title="htmx"></a>htmx</h3><p>在 http 的傳輸協議中，僅有支援 <code>GET</code> 與 <code>POST</code> 方法</p>
+<h3 id="htmx"><a href="#htmx" class="headerlink" title="htmx"></a>htmx</h3><p>在 HTML 中，僅有支援 <code>GET</code> 與 <code>POST</code> 方法</p>
 <p>當我們用純 HTML 來發送 request 為 POST 方法的話，會是這樣寫</p>
 <p>並且只有 <code>form</code> 表單才能送 <code>POST</code> 方法</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot;&quot; method=&quot;POST&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
 
 <p>一般的 a 標籤只能發送 <code>GET</code> 方法</p>
-<p>為了解決這個問題， htmx 讓更多標籤透過 attribute 可以使用 POST 及 GET 方法來發送 request</p>
-<p>不僅如此，還可以使用其他的 HTTP 方法，例如 PUT &#x2F; PATCH &#x2F; DELETE 等</p>
+<p>如果我們要遵守 RESTful API 的規範，要使用 PUT &#x2F; PATCH &#x2F; DELETE 這些方法</p>
+<p>就必須要另外抓 DOM 元素 &#x2F; 監聽事件 &#x2F; 打 API ，</p>
+<p>甚至還必須處理 JSON 格式的資料</p>
+<p>一個畫面可能不是只處理一個，可能是好幾十個，這時候就會很頭痛</p>
+<p>為了解決這個問題， htmx 讓我們除了透過 attribute 用 POST &#x2F; GET 方法</p>
+<p>還可以使用其他的 HTTP 方法，例如 PUT &#x2F; PATCH &#x2F; DELETE 等來發送 request</p>
+<p>接著有另外一個問題是，當我們發送 request 出去時，頁面會重整換掉，</p>
+<p>如果今天老闆希望我們做的是點下按鈕就即時渲染，</p>
+<p>就必須透過 AJAX 來做，</p>
+<p>不過透過 AJAX ，還是得抓 DOM 元素 &#x2F; 監聽事件 &#x2F; 非同步方式打 API ，</p>
+<p>累積下來也是要耗不少工， htmx 在發送 request 的時候都是採用 AJAX 方式，</p>
+<p>所以我們就不需要這麼辛苦了</p>
+<ul>
+<li>AJAX</li>
+</ul>
+<p>AJAX 的全名為 Asynchronous JavaScript and XML ，這些字詞的意思為 非同步 JavaScript 與 XML</p>
+<p>非同步 JavaScript 大家應該都不陌生，指的是不需要等待上一個任務執行完再執行下一個，因此系統同時可以處理多個任務</p>
+<p>而 AJAX 使用 XMLHttpRequest 來發送 Request，格式是採用 XML 格式</p>
+<p>回傳的 Response 可以採用 XML 或者是 JSON ，現階段大多以 JSON 格式回傳</p>
+<p><img src="https://i.imgur.com/vxXZ5xN.jpeg"></p>
+<p>如此一來，就能馬上渲染資料</p>
 <h3 id="Alpine-js"><a href="#Alpine-js" class="headerlink" title="Alpine.js"></a>Alpine.js</h3><p>當我們在全端框架時，偶爾會需要做出前端互動效果，</p>
 <p>這時候通常都會使用前端框架來達成，</p>
 <p>不過如果只是簡單的互動效果，不使用框架，寫單純的 JavaScript ，光是抓 DOM 元素就會抓到頭痛</p>
@@ -163,5 +182,10 @@ gtag('config', 'G-4P2R013PGL')
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># templates/items/_items.html</span><br><span class="line"></span><br><span class="line">&lt;tbody id=&quot;items&quot;&gt;</span><br><span class="line">  &#123;% for item in items %&#125;</span><br><span class="line">    &lt;tr x-data=&quot;&#123; completed: &#123;&#123; item.status|is_completed &#125;&#125; &#125;&quot;&gt;</span><br><span class="line">      &lt;th :class=&quot;completed ? &#x27;text-xl cursor-pointer text-green-600&#x27; : </span><br><span class="line">      &#x27;text-xl cursor-pointer&#x27;&quot;&gt;☑&lt;/th&gt;</span><br><span class="line">      ...</span><br><span class="line">    &lt;/tr&gt;</span><br><span class="line">  &#123;% endfor %&#125;</span><br><span class="line">&lt;/tbody&gt;</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmRxcWJ1c28xbm81d2N2YmFwN2Jrbnhpc21xYXBmbTR3Z2I2MHdociZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/aknBKAquwJduDvCzz6/giphy.gif"></p>
-<p>以上，是 htmx 與 Alpine.js 的簡單應用介紹，如果本文章對你有幫助，歡迎按讚或者留言討論 ヽ(●´∀&#96;●)ﾉ</p>
+<p>以上，是 htmx 與 Alpine.js 的簡單應用介紹，</p>
+<p>htmx 與 Alpine.js 並不是用來取代前端框架的，</p>
+<p>他的目的是要讓後端工程師用更輕便且不需要打包的方式來完成前端效果，</p>
+<p>增加網頁開發效率，也減少後端工程師的前端框架學習成本，</p>
+<p>如果有興趣的話也可以至 <a target="_blank" rel="noopener" href="https://htmx.org/docs/#introduction">htmx</a> 與 <a target="_blank" rel="noopener" href="https://alpinejs.dev/">Alpine.js</a> 官網研究，</p>
+<p>如果本文章對你有幫助，歡迎按讚或者留言討論 ヽ(●´∀&#96;●)ﾉ</p>
 </div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2024-09-09</span><i class="fa fa-tag"></i><a class="tag" href="/categories/JavaScript/" title="JavaScript">JavaScript </a></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://ninglab.com/輕量化前端組合技：-htmx-與-Alpine-js-開發應用/,NingLab,輕量化前端組合技： htmx 與 Alpine.js 開發應用,;"></a></div></div><div><script src="https://utteranc.es/client.js" repo="cacachang/cacachang.github.io" issue-term="title" theme="github-light" crossorigin="anonymous" async></script></div><div><script type="text/javascript">document.write("<iframe scrolling='no' frameborder='0' sandbox='allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' style='height: 212px; width: 100%;' src='https://button.like.co/in/embed/a24701770/button?referrer=" + encodeURIComponent(location.href.split("?")[0].split("#")[0]) + "'></iframe>");</script></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/%E6%88%90%E7%82%BA%E7%A8%8B%E5%BC%8F%E7%95%8C%E7%9A%84-F1-%E8%B3%BD%E8%BB%8A%E6%89%8B-Rust-%E6%A8%99%E6%BA%96%E5%87%BD%E5%BC%8F%E5%BA%AB%E5%9E%8B%E5%88%A5/" title="成為程式界的 F1 賽車手 - Rust 標準函式庫型別">下一篇</a></li></ul></div></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
