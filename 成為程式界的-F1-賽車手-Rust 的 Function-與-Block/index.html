@@ -12,12 +12,12 @@ gtag('config', 'G-4P2R013PGL')
 <p>當程式碼開始變多，且開始在不同的地方寫了相同的程式碼之後，我們就會用 Function 把這些相同地方包起來</p>
 <p>對我來說，使用 Function 有幾個不同的意義</p>
 <ol>
-<li>定義輸入值與輸出值的關係（可參考龍哥的 Function 文章 <a target="_blank" rel="noopener" href="https://kaochenlong.com/2023/09/22/function.html">https://kaochenlong.com/2023/09/22/function.html</a> )</li>
+<li>定義輸入值與輸出值的關係（可參考<a target="_blank" rel="noopener" href="https://kaochenlong.com/2023/09/22/function.html">龍哥的文章</a>)</li>
 <li>針對該 Function 內的程式碼，賦予名稱意義，使開發者更容易懂</li>
 <li>減少程式碼重複的部分，用 Function 包起來可達成重複使用的效果</li>
 </ol>
 <p>現在我們就來看一下 Rust 中的 Function</p>
-<h3 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h3><p>在 Rust 中，Function 會從 <code>fn</code> 開始，來看以下範例</p>
+<h3 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h3><p>在 Rust 中，Function 以 fn 關鍵字開頭，並有一個名稱、參數和返回值</p>
 <p>這邊我們定義了一個叫做 hello 的 Function</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fn hello()&#123;</span><br><span class="line">    println!(&quot;hello&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -26,21 +26,22 @@ gtag('config', 'G-4P2R013PGL')
 <p>而 Function 回傳的結果則是輸出值</p>
 <p>我們會透過 Function 來讓開發者知道，輸入值與輸出值的關係</p>
 <p>讓我們來看一下該怎麼使用吧</p>
+<p>要注意的是，Function 的參數是需要指定型別的，有助於在編譯的時候就找到錯誤</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fn calculator(a: i32, b: i32) &#123;</span><br><span class="line">    let result = (a + b) * b;</span><br><span class="line"></span><br><span class="line">    println!(&quot;&#123;&#125;&quot;, result)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><p>每個 Rust 的專案都一定會有 main 這個 Function</p>
-<p>main Function 不能放任何參數，也不能有 return 值</p>
+<p>main Function 不能放任何參數(但某些特殊狀況會需要放參數)，也不能有 return 值</p>
 <p>我們可以將 main Function 想像成是專案程式進入點，它會比任何 Function 還優先執行</p>
 <p>因此我們會將 main 作用域以外的 Function 放在 main 裡面呼叫</p>
 <p>以剛剛的例子來看，我們會這樣寫</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fn calculator(a: i32, b: i32) &#123;</span><br><span class="line">    let result = (a + b) * b;</span><br><span class="line"></span><br><span class="line">    println!(&quot;&#123;&#125;&quot;, result)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fn main()&#123;</span><br><span class="line">    calculator(1, 2)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 6</span><br></pre></td></tr></table></figure>
 
-<h3 id="return-指定型別"><a href="#return-指定型別" class="headerlink" title="return 指定型別"></a>return 指定型別</h3><p>要注意的是，Function 的參數是需要指定型別的，<br>不過 return 不一定要指定型別的哦，如果沒指定的話，就會是以 <code>()</code> 來代替</p>
+<h3 id="return-指定型別"><a href="#return-指定型別" class="headerlink" title="return 指定型別"></a>return 指定型別</h3><p>return 不一定要指定型別，如果沒指定的話，就會是以 <code>()</code> 來代替</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fn calculator(a: i32, b: i32) -&gt; i32 &#123;</span><br><span class="line">    let result = (a + b) * b;</span><br><span class="line"></span><br><span class="line">    println!(&quot;&#123;&#125;&quot;, result)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fn main() &#123;</span><br><span class="line">    calculator(10, 2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">結果： 24</span><br></pre></td></tr></table></figure>
 
 
 <h3 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h3><p>接下來我們就來談談 Rust 的作用域吧！</p>
-<p>我們所定義的變數只會存在於產出他的 block 中，</p>
+<p>每個 block 都是獨立的作用域，我們所定義的變數只會存在於產出他的 block 中，</p>
 <p>function 跟 {} 都算是 block</p>
 <p>讓我們來看看範例吧</p>
 <p>在 {} ，character 被重新賦予值了，所以在 {} 中的 character 就會變成 B</p>
@@ -58,7 +59,7 @@ gtag('config', 'G-4P2R013PGL')
 <p>重新定義就變成了 C</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">fn main() &#123;</span><br><span class="line">    let character: char = &#x27;A&#x27;;</span><br><span class="line">    &#123;</span><br><span class="line">        let character: char = &#x27;B&#x27;;</span><br><span class="line">        println!(&quot;&#123;&#125;&quot;, character)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    println!(&quot;&#123;&#125;&quot;, character);</span><br><span class="line"></span><br><span class="line">    let character = &#x27;C&#x27;;</span><br><span class="line">    println!(&quot;&#123;&#125;&quot;, character)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">結果：</span><br><span class="line">B</span><br><span class="line">A</span><br><span class="line">C</span><br></pre></td></tr></table></figure>
 
-<p>如果想要讓變數不被改，我們可以將它指向某個變數，用 Variable Shadow 來遮蔽原本的 character 的值，且該變數原本沒有加上 mut ，所以是不可更改的</p>
+<p>如果想要讓變數不被改，我們可以用 Variable Shadowing 來遮蔽原本的 character 的值，且該變數沒有加上 mut (表示該變數原本就不可變)，所以是不可更改的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">fn main() &#123;</span><br><span class="line">    let character: char = &#x27;A&#x27;;</span><br><span class="line">    &#123;</span><br><span class="line">        let character = character;</span><br><span class="line"></span><br><span class="line">        character = &#x27;B&#x27;;</span><br><span class="line">        println!(&quot;&#123;&#125;&quot;, character)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    println!(&quot;&#123;&#125;&quot;, character)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">結果：</span><br><span class="line">error[E0384]: cannot assign twice to immutable variable `character`</span><br><span class="line"> --&gt; src/main.rs:6:9</span><br><span class="line">  |</span><br><span class="line">4 |         let character = character;</span><br><span class="line">  |             ---------</span><br><span class="line">  |             |</span><br><span class="line">  |             first assignment to `character`</span><br><span class="line">  |             help: consider making this binding mutable: `mut character`</span><br><span class="line">5 |</span><br><span class="line">6 |         character = &#x27;B&#x27;;</span><br><span class="line">  |         ^^^^^^^^^^^^^^^ cannot assign twice to immutable variable</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
@@ -67,6 +68,10 @@ gtag('config', 'G-4P2R013PGL')
 <p>我們先來看閉包是什麼意思</p>
 <p>當作用域中有需要使用到外部作用域的變數時，</p>
 <p>閉包可以向外部作用域拿取該變數進行使用</p>
+<p>引用的方式有三種</p>
+<p>分別為借用(分成可變與不可變) &#x2F; 轉移所有權</p>
+<p>Rust 會依照狀況來決定要使用哪種方式</p>
+<p>而我們之後也會提到所有權</p>
 <p>舉例來說</p>
 <p>我們在 block 中定義了一個匿名函式，會需要使用到 y 變數</p>
 <p>這時候匿名函式就會去外部作用域抓 y 的值，並進行處理</p>
