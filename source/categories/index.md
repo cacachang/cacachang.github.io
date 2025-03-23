@@ -28,4 +28,6 @@ type: 'categories'
 
 [小玩具](https://ninglab.com/categories/小玩具/)
 
+[AI](https://ninglab.com/categories/AI/)
+
 

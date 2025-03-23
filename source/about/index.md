@@ -11,6 +11,7 @@ type: "about"
 
 ### Experience
 
+Hello World Dev Conference 講者 (2024)
 COSCUP 講者 (2023)
 五倍學院程式教育機構 (2022 Nov ~ Now)
 行銷顧問公司 (2021 Oct ~ 2022 Apr)
