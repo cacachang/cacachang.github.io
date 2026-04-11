@@ -21,3 +21,10 @@ COSCUP 講者 (2023)
 ### Skill
 
 Ruby / Rails / JavaScript / React / SQL / Git / HTML / CSS / Tailwind / Python / Django / Flask
+
+### Contact
+
+有任何問題或合作邀約，歡迎聯繫：
+- Email: a24701770@gmail.com
+- GitHub: [cacachang](https://github.com/cacachang)
+- LinkedIn: [cacachang](https://www.linkedin.com/in/cacachang/)
